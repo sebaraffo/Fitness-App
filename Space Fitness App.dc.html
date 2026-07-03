@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="sf-images.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0a0a0c;font-family:'Barlow',sans-serif;-webkit-font-smoothing:antialiased;}
+  .ph{width:390px;height:844px;background:#0C0D11;border-radius:48px;position:relative;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,0.55),0 0 0 11px #16171c,0 0 0 12px #2a2c34;flex:0 0 auto;color:#F4F5F7;}
+  .scr{position:absolute;inset:0;overflow:hidden;}
+  .screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;}
+  .screen::-webkit-scrollbar{display:none;}
+</style>
+<template id="__bundler_thumbnail"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="24" fill="#0C0D11"/><rect x="30" y="43" width="40" height="14" rx="4" fill="#CDFF4A"/><rect x="22" y="36" width="10" height="28" rx="3" fill="#CDFF4A"/><rect x="68" y="36" width="10" height="28" rx="3" fill="#CDFF4A"/></svg></template>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1100px 700px at 50% -10%,#151519 0%,#0a0a0c 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;gap:20px;">
+
+  <div style="display:flex;align-items:center;gap:12px;opacity:0.85;">
+    <img src="assets/space-logo.jpg" alt="Space Fitness" style="width:34px;height:34px;border-radius:9px;object-fit:cover;">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:3px;font-size:14px;color:#8A8F9C;text-transform:uppercase;">Space Fitness · prototipo navegable</span>
+  </div>
+
+  <div class="ph">
+    <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:40;"></div>
+    <div class="scr">
+
+      <!-- ============ LOGIN ============ -->
+      <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+        <div class="screen" style="padding:0;">
+          <img src="assets/img/poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,13,17,0.35) 0%,rgba(12,13,17,0.2) 40%,rgba(12,13,17,0.85) 64%,#0C0D11 92%);"></div>
+          <div style="position:absolute;top:82px;left:0;right:0;display:flex;flex-direction:column;align-items:center;z-index:15;"><img src="assets/space-logo.jpg" alt="Space Fitness" style="width:92px;height:92px;border-radius:22px;object-fit:cover;box-shadow:0 14px 34px rgba(0,0,0,0.55);"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;letter-spacing:3px;margin-top:12px;">SPACE FITNESS</div></div>
+          <div style="position:absolute;left:28px;right:28px;bottom:44px;z-index:15;">
+            <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:38px;line-height:0.95;">ENTRENÁ CON<br>PROPÓSITO</h2>
+            <p style="color:#9aa0ac;font-size:14px;margin-top:10px;line-height:1.4;">Tu gimnasio, tus rutinas y tu progreso en un solo lugar.</p>
+            <button onClick="{{ goHome }}" style="width:100%;height:56px;margin-top:22px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Ingresar · Soy socio</button>
+            <button onClick="{{ enterFree }}" style="width:100%;height:56px;margin-top:12px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:16px;font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Explorar gratis</button>
+            <p style="text-align:center;color:#6b7080;font-size:11.5px;margin-top:14px;">Modo gratuito: solo ejercicios básicos</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ ONBOARDING (primera vez) ============ -->
+      <sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:70px 24px 40px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">¡Bienvenido!</div>
+          <p style="color:#8A8F9C;font-size:13.5px;margin-top:6px;line-height:1.4;">Contanos quién sos para personalizar tu experiencia.</p>
+
+          <div style="display:flex;justify-content:center;margin-top:26px;">
+            <label style="position:relative;cursor:pointer;">
+              <div ref="{{ onboardPhotoRef }}" style="width:104px;height:104px;border-radius:50%;background-color:#15171E;background-size:cover;background-position:center;border:2px dashed rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                <sc-if value="{{ noOnboardPhoto }}" hint-placeholder-val="{{ true }}"><span style="font-size:28px;color:#5a5f6b;">📷</span></sc-if>
+              </div>
+              <div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:#CDFF4A;display:flex;align-items:center;justify-content:center;font-size:15px;border:3px solid #0C0D11;">＋</div>
+              <input type="file" accept="image/*" onChange="{{ setProfilePhoto }}" style="position:absolute;inset:0;opacity:0;cursor:pointer;">
+            </label>
+          </div>
+          <p style="text-align:center;color:#5a5f6b;font-size:11.5px;margin-top:8px;">Foto de perfil (opcional)</p>
+
+          <div style="margin-top:22px;">
+            <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Nombre y apellido</div>
+            <input type="text" value="{{ profileNameVal }}" onChange="{{ setProfileName }}" placeholder="Ej: Sebastián Rodríguez" style="width:100%;height:52px;background:#15171E;border:1px solid rgba(255,255,255,0.09);border-radius:13px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;padding:0 16px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+          </div>
+
+          <button onClick="{{ finishOnboarding }}" style="width:100%;height:54px;margin-top:26px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15.5px;cursor:pointer;" style-hover="filter:brightness(1.08);">Continuar</button>
+          <p style="text-align:center;color:#5a5f6b;font-size:11px;margin-top:12px;">Podés cambiar estos datos después desde Cuenta.</p>
+        </div>
+      </sc-if>
+
+      <!-- ============ HOME ============ -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:60px 24px 108px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="color:#8A8F9C;font-size:13px;">Buenas,</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;">{{ displayName }}</div></div>
+            <div onClick="{{ goAccount }}" ref="{{ avatarRef }}" style="width:46px;height:46px;border-radius:14px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);border:1px solid rgba(255,255,255,0.08);cursor:pointer;background-size:cover;background-position:center;"></div>
+          </div>
+          <div onClick="{{ goAccount }}" style="margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:{{ chipBg }};border:1px solid {{ chipBorder }};border-radius:999px;padding:6px 12px;cursor:pointer;"><span style="width:7px;height:7px;border-radius:50%;background:{{ memColor }};"></span><span style="font-size:12px;font-weight:600;color:{{ memColor }};">{{ chipText }}</span></div>
+          <div style="margin-top:18px;border-radius:22px;overflow:hidden;background:#15171E;border:1px solid rgba(255,255,255,0.07);">
+            <img src="assets/img/hero.png" alt="" style="width:100%;height:120px;object-fit:cover;display:block;">
+            <div style="padding:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;letter-spacing:2px;color:#CDFF4A;text-transform:uppercase;font-weight:700;">Rutina activa</span><span style="font-size:12px;color:#8A8F9C;">{{ homeRoutineDay }}</span></div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:23px;margin-top:4px;">{{ homeRoutineName }}</div>
+              <div style="color:#8A8F9C;font-size:13px;margin-top:2px;">{{ homeRoutineMeta }}</div>
+              <button onClick="{{ startActive }}" style="width:100%;height:48px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Comenzar entrenamiento</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:14px;">
+            <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;color:#CDFF4A;">14</div><div style="color:#8A8F9C;font-size:12px;">días de racha</div></div>
+            <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">4<span style="color:#5a5f6b;font-size:18px;">/5</span></div><div style="color:#8A8F9C;font-size:12px;">esta semana</div></div>
+          </div>
+          <div onClick="{{ goPersonalized }}" style="margin-top:14px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(255,194,74,0.14),rgba(255,194,74,0.05));border:1px solid rgba(255,194,74,0.3);border-radius:18px;padding:14px;cursor:pointer;">
+            <span style="width:40px;height:40px;border-radius:12px;background:rgba(255,194,74,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;">✦</span>
+            <div style="flex:1;"><div style="font-weight:700;font-size:14.5px;color:#FFC24A;">Plan personalizado</div><div style="color:#8A8F9C;font-size:12px;">Pedile una rutina a tu profe</div></div>
+            <span style="color:#8A8F9C;font-size:18px;">›</span>
+          </div>
+          <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;">GRUPOS MUSCULARES</span><span onClick="{{ goGroups }}" style="color:#CDFF4A;font-size:13px;cursor:pointer;">Ver todo</span></div>
+          <div style="display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding-bottom:4px;">
+            <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+              <div onClick="{{ g.open }}" style="flex:0 0 auto;padding:9px 15px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">{{ g.name }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ GRUPOS ============ -->
+      <sc-if value="{{ isGroups }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:58px 24px 108px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;">Grupos musculares</div>
+          <div style="color:#8A8F9C;font-size:13px;margin-bottom:14px;">Elegí qué vas a entrenar hoy</div>
+          <div style="display:flex;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:4px;margin-bottom:16px;">
+            <div onClick="{{ setGym }}" style="flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;background:{{ gymBg }};color:{{ gymFg }};">🏋 En el gimnasio</div>
+            <div onClick="{{ setHome }}" style="flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;background:{{ homeBg }};color:{{ homeFg }};">🏠 En casa</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+              <div onClick="{{ g.open }}" style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;cursor:pointer;" style-hover="border-color:rgba(205,255,74,0.4);">
+                <div ref="{{ g.bgRef }}" style="width:100%;height:74px;background:#20232c;"></div>
+                <div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">{{ g.name }}</div><div style="color:#8A8F9C;font-size:11.5px;">{{ g.count }} ejercicios</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ LISTA DE EJERCICIOS ============ -->
+      <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:56px 24px 108px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;"><span onClick="{{ goGroups }}" style="font-size:26px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">{{ groupName }}</div></div>
+          <div style="display:flex;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:4px;margin-bottom:16px;">
+            <div onClick="{{ setGym }}" style="flex:1;text-align:center;padding:9px;border-radius:9px;font-weight:700;font-size:13.5px;cursor:pointer;background:{{ gymBg }};color:{{ gymFg }};">En el gimnasio</div>
+            <div onClick="{{ setHome }}" style="flex:1;text-align:center;padding:9px;border-radius:9px;font-weight:700;font-size:13.5px;cursor:pointer;background:{{ homeBg }};color:{{ homeFg }};">En casa</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;">
+            <sc-for list="{{ list }}" as="e" hint-placeholder-count="4">
+              <div onClick="{{ e.open }}" style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;cursor:pointer;" style-hover="border-color:rgba(205,255,74,0.4);">
+                <div ref="{{ e.bgRef }}" style="width:60px;height:60px;border-radius:12px;background:#20232c;flex:0 0 auto;"></div>
+                <div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;"><div style="font-weight:700;font-size:15.5px;">{{ e.name }}</div><sc-if value="{{ e.swapped }}" hint-placeholder-val="{{ false }}"><span style="font-size:9px;font-weight:700;color:#CDFF4A;background:rgba(205,255,74,0.14);padding:2px 6px;border-radius:5px;letter-spacing:0.5px;">⇄ SUSTITUIDO</span></sc-if></div><div style="color:#8A8F9C;font-size:12px;margin-top:1px;">{{ e.musclesText }}</div>
+                  <div style="display:flex;gap:6px;margin-top:6px;"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:2px 8px;border-radius:6px;">{{ e.sets }}×{{ e.reps }}</span><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:2px 8px;border-radius:6px;">{{ e.subCount }} sustitutos</span></div>
+                </div>
+                <span style="color:#5a5f6b;font-size:20px;">›</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ DETALLE ============ -->
+      <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:0 0 108px;">
+          <div style="position:relative;height:270px;overflow:hidden;background:#171922;"><div ref="{{ exImgRef }}" style="position:absolute;inset:0;"></div>
+            <sc-if value="{{ hasVideo }}" hint-placeholder-val="{{ false }}">
+              {{ videoEl }}
+            </sc-if>
+            <sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(205,255,74,0.92);display:flex;align-items:center;justify-content:center;"><span style="border-left:16px solid #0C0D11;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;"></span></div><div style="color:#F4F5F7;font-size:11.5px;font-weight:600;margin-top:10px;text-shadow:0 1px 6px rgba(0,0,0,0.6);">Demostración próximamente</div></div>
+            </sc-if>
+            <div style="position:absolute;top:54px;left:24px;z-index:3;"><span onClick="{{ goList }}" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;">‹</span></div>
+          </div>
+          <div style="padding:16px 24px 0;">
+            <div style="display:flex;gap:7px;"><span style="font-size:11px;font-weight:700;color:#0C0D11;background:#CDFF4A;padding:3px 9px;border-radius:6px;">{{ exEnv }}</span><span style="font-size:11px;font-weight:600;color:#8A8F9C;background:#1D212B;padding:3px 9px;border-radius:6px;">{{ groupName }}</span></div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;margin-top:8px;">{{ exName }}</div>
+            <sc-if value="{{ hasSwap }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:10px;display:flex;align-items:center;gap:10px;background:rgba(205,255,74,0.1);border:1px solid rgba(205,255,74,0.3);border-radius:12px;padding:10px 13px;"><span style="font-size:13px;color:#CDFF4A;font-weight:600;flex:1;">⇄ Reemplaza a {{ swapOrigName }}</span><span onClick="{{ clearSub }}" style="font-size:12px;color:#8A8F9C;cursor:pointer;text-decoration:underline;">deshacer</span></div>
+            </sc-if>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+              <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:11px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:#CDFF4A;">{{ exSets }}</div><div style="color:#8A8F9C;font-size:11px;">series</div></div>
+              <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:11px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">{{ exReps }}</div><div style="color:#8A8F9C;font-size:11px;">reps</div></div>
+              <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:11px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">{{ exRest }}</div><div style="color:#8A8F9C;font-size:11px;">descanso</div></div>
+            </div>
+            <div style="margin-top:16px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Músculos que trabaja</div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;">
+              <sc-for list="{{ exMuscles }}" as="m" hint-placeholder-count="3"><span style="font-size:12.5px;background:#1D212B;padding:5px 11px;border-radius:8px;">{{ m }}</span></sc-for>
+            </div>
+            <div style="margin-top:16px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Técnica</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+              <sc-for list="{{ exTips }}" as="t" hint-placeholder-count="2"><div style="display:flex;gap:9px;align-items:flex-start;"><span style="color:#CDFF4A;font-size:14px;line-height:1.3;">•</span><span style="font-size:13px;color:#c3c8d2;line-height:1.35;">{{ t }}</span></div></sc-for>
+            </div>
+            <div style="margin-top:16px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Registro · última sesión</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:12px 14px;"><span style="color:#8A8F9C;font-size:13px;">Último: <span style="color:#F4F5F7;font-weight:600;">{{ exLast }}</span></span><button onClick="{{ openLog }}" style="background:#CDFF4A;color:#0C0D11;border:none;border-radius:9px;padding:7px 14px;font-weight:700;font-size:13px;cursor:pointer;">Registrar</button></div>
+            <sc-if value="{{ exLogged }}" hint-placeholder-val="{{ false }}"><div style="margin-top:6px;color:#CDFF4A;font-size:11.5px;">✓ Registrado en tu sesión de hoy</div></sc-if>
+            <sc-if value="{{ hasHistory }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px;">
+                <sc-for list="{{ logHistory }}" as="lh" hint-placeholder-count="2">
+                  <div style="display:flex;justify-content:space-between;gap:10px;background:#111318;border:1px solid rgba(255,255,255,0.05);border-radius:11px;padding:9px 12px;"><span style="color:#8A8F9C;font-size:12px;flex:0 0 auto;">{{ lh.date }}</span><span style="color:#c3c8d2;font-size:12px;text-align:right;">{{ lh.text }}</span></div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <button onClick="{{ goSubs }}" style="width:100%;height:52px;margin-top:16px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">⇄ Ver sustitutivos</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ SUSTITUTIVOS ============ -->
+      <sc-if value="{{ isSubs }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:54px 24px 108px;">
+          <div style="display:flex;align-items:center;margin-bottom:6px;"><span onClick="{{ goDetail }}" style="font-size:26px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span></div>
+          <div style="color:#8A8F9C;font-size:13px;">Sustitutos de</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;">{{ exName }}</div>
+          <p style="color:#8A8F9C;font-size:12.5px;margin-top:8px;line-height:1.4;">Mismo estímulo, distinto equipamiento. Elegí según dónde entrenes.</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:18px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(205,255,74,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;">🏋</span><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;">EN EL GIMNASIO</span></div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:11px;">
+            <sc-for list="{{ subsGym }}" as="s" hint-placeholder-count="2">
+              <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:10px;"><div ref="{{ s.bgRef }}" style="width:52px;height:52px;border-radius:11px;background:#20232c;flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">{{ s.name }}</div><div style="color:#8A8F9C;font-size:11.5px;">{{ s.note }}</div></div><button onClick="{{ s.apply }}" style="background:rgba(205,255,74,0.14);color:#CDFF4A;border:1px solid rgba(205,255,74,0.35);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12px;cursor:pointer;" style-hover="background:rgba(205,255,74,0.24);">{{ s.btnLabel }}</button></div>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:20px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(255,194,74,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;">🏠</span><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;">EN CASA</span><span style="font-size:10.5px;color:#FFC24A;background:rgba(255,194,74,0.12);padding:2px 8px;border-radius:6px;">sin equipo</span></div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:11px;">
+            <sc-for list="{{ subsHome }}" as="s" hint-placeholder-count="2">
+              <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:10px;"><div ref="{{ s.bgRef }}" style="width:52px;height:52px;border-radius:11px;background:#20232c;flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">{{ s.name }}</div><div style="color:#8A8F9C;font-size:11.5px;">{{ s.note }}</div></div><button onClick="{{ s.apply }}" style="background:rgba(255,194,74,0.14);color:#FFC24A;border:1px solid rgba(255,194,74,0.35);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12px;cursor:pointer;" style-hover="background:rgba(255,194,74,0.24);">{{ s.btnLabel }}</button></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ RUTINAS ============ -->
+      <sc-if value="{{ isRoutines }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:58px 24px 108px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;line-height:1;">Mis rutinas</div>
+          <div style="color:#8A8F9C;font-size:13px;margin-top:2px;">{{ routineCount }} rutinas creadas</div>
+          <button onClick="{{ newRoutine }}" style="width:100%;height:52px;margin-top:16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">＋ Crear rutina nueva</button>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+            <sc-for list="{{ routines }}" as="r" hint-placeholder-count="3">
+              <div onClick="{{ r.open }}" style="background:#15171E;border:{{ r.border }};border-radius:18px;padding:15px;cursor:pointer;" style-hover="border-color:rgba(205,255,74,0.4);">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">{{ r.name }}</div><sc-if value="{{ r.active }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:3px 9px;border-radius:6px;flex:0 0 auto;">★ Activa</span></sc-if><sc-if value="{{ r.notActive }}" hint-placeholder-val="{{ false }}"><span onClick="{{ r.activate }}" style="font-size:11px;font-weight:700;color:#8A8F9C;background:#1D212B;border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:7px;flex:0 0 auto;cursor:pointer;" style-hover="color:#CDFF4A;border-color:rgba(205,255,74,0.4);">Activar</span></sc-if></div>
+                <div style="color:#8A8F9C;font-size:12.5px;margin-top:3px;">{{ r.muscleText }}</div>
+                <div style="display:flex;gap:14px;margin-top:10px;color:#8A8F9C;font-size:12px;flex-wrap:wrap;"><span>{{ r.exText }}</span><span>·</span><span>{{ r.durText }}</span><span>·</span><span>{{ r.daysText }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ CONSTRUCTOR ============ -->
+      <sc-if value="{{ isBuilder }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:54px 24px 108px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span onClick="{{ goRoutines }}" style="font-size:22px;color:#8A8F9C;cursor:pointer;">✕</span><span onClick="{{ saveRoutine }}" style="color:#CDFF4A;font-weight:700;font-size:15px;cursor:pointer;">Guardar</span></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">{{ builderTitle }}</div>
+          <input type="text" value="{{ builderNameVal }}" onChange="{{ setBuilderName }}" placeholder="Nombre de la rutina" style="width:100%;margin-top:14px;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:13px 14px;color:#F4F5F7;font-weight:600;font-size:15px;font-family:'Barlow',sans-serif;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+            <sc-for list="{{ dayChips }}" as="d" hint-placeholder-count="7">
+              <div onClick="{{ d.toggle }}" style="padding:8px 13px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;background:{{ d.bg }};color:{{ d.fg }};border:1px solid {{ d.bd }};">{{ d.d }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ hasBuilderDays }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:18px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Ejercicios por día</div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+            <sc-for list="{{ dayTabs }}" as="t" hint-placeholder-count="2">
+              <div onClick="{{ t.pick }}" style="padding:7px 14px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bd }};">{{ t.d }} · {{ t.count }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Ejercicios del {{ builderDayName }}</span><span style="font-size:12px;color:#8A8F9C;">{{ builderCount }} este día</span></div>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:11px;">
+            <sc-for list="{{ builder }}" as="b" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;align-items:flex-start;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px;">
+                <div style="display:flex;flex-direction:column;gap:3px;flex:0 0 auto;padding-top:2px;">
+                  <span onClick="{{ b.up }}" style="width:26px;height:21px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:#1D212B;color:#8A8F9C;font-size:11px;cursor:pointer;" style-hover="color:#CDFF4A;">▲</span>
+                  <span onClick="{{ b.down }}" style="width:26px;height:21px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:#1D212B;color:#8A8F9C;font-size:11px;cursor:pointer;" style-hover="color:#CDFF4A;">▼</span>
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+                    <div><div style="font-weight:700;font-size:14px;line-height:1.15;">{{ b.name }}</div><div style="color:#6b7080;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">{{ b.groupName }}</div></div>
+                    <span onClick="{{ b.remove }}" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,96,96,0.12);color:#ff8080;font-size:13px;cursor:pointer;flex:0 0 auto;" style-hover="background:rgba(255,96,96,0.22);">✕</span>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:10px;align-items:flex-end;">
+                    <div style="flex:0 0 auto;">
+                      <div style="color:#8A8F9C;font-size:9.5px;letter-spacing:1px;margin-bottom:4px;">SERIES</div>
+                      <div style="display:flex;align-items:center;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:9px;overflow:hidden;">
+                        <span onClick="{{ b.decSets }}" style="width:26px;height:32px;display:flex;align-items:center;justify-content:center;color:#CDFF4A;font-size:17px;cursor:pointer;user-select:none;">−</span>
+                        <span style="width:20px;text-align:center;font-weight:700;font-size:14px;">{{ b.sets }}</span>
+                        <span onClick="{{ b.incSets }}" style="width:26px;height:32px;display:flex;align-items:center;justify-content:center;color:#CDFF4A;font-size:16px;cursor:pointer;user-select:none;">+</span>
+                      </div>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="color:#8A8F9C;font-size:9.5px;letter-spacing:1px;margin-bottom:4px;">REPS</div>
+                      <input type="text" inputmode="numeric" value="{{ b.reps }}" onChange="{{ b.setReps }}" onBlur="{{ b.blurReps }}" placeholder="8-12" style="width:100%;height:34px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:9px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:600;font-size:13px;padding:0 10px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+                    </div>
+                    <div style="flex:0 0 76px;">
+                      <div style="color:#8A8F9C;font-size:9.5px;letter-spacing:1px;margin-bottom:4px;">DESCANSO</div>
+                      <input type="text" value="{{ b.rest }}" onChange="{{ b.setRest }}" style="width:100%;height:34px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:9px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:600;font-size:13px;padding:0 10px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ builderEmpty }}" hint-placeholder-val="{{ false }}"><div style="text-align:center;color:#6b7080;font-size:12.5px;padding:18px 0;border:1px dashed rgba(255,255,255,0.12);border-radius:14px;">Todavía no agregaste ejercicios</div></sc-if>
+          </div>
+          <button onClick="{{ openPicker }}" style="width:100%;height:50px;margin-top:14px;background:rgba(255,255,255,0.06);color:#CDFF4A;border:1px dashed rgba(205,255,74,0.4);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;" style-hover="background:rgba(205,255,74,0.08);">＋ Agregar ejercicio al {{ builderDayName }}</button>
+          </sc-if>
+          <sc-if value="{{ noBuilderDays }}" hint-placeholder-val="{{ false }}"><div style="margin-top:16px;text-align:center;color:#6b7080;font-size:12.5px;padding:16px;border:1px dashed rgba(255,255,255,0.12);border-radius:12px;">Elegí al menos un día de la semana para armar la rutina</div></sc-if>
+          <div style="margin-top:12px;text-align:center;color:#6b7080;font-size:11.5px;">Cada ejercicio conserva sus sustitutivos gym + casa</div>
+          <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}"><button onClick="{{ deleteRoutine }}" style="width:100%;height:46px;margin-top:14px;background:rgba(255,96,96,0.1);color:#ff8080;border:1px solid rgba(255,96,96,0.3);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;" style-hover="background:rgba(255,96,96,0.18);">Eliminar rutina</button></sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ============ PICKER (agregar ejercicio) ============ -->
+      <sc-if value="{{ isPicker }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:54px 24px 100px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;"><span onClick="{{ goBuilder }}" style="font-size:26px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">Agregar ejercicio</div></div>
+          <div style="color:#8A8F9C;font-size:13px;margin-bottom:14px;">Tocá para sumar o quitar del día <span style="color:#CDFF4A;font-weight:700;">{{ builderDayName }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <sc-for list="{{ catalog }}" as="c" hint-placeholder-count="8">
+              <div onClick="{{ c.add }}" style="display:flex;gap:12px;align-items:center;background:#15171E;border:{{ c.selBorder }};border-radius:14px;padding:11px;cursor:pointer;" style-hover="border-color:rgba(205,255,74,0.4);">
+                <div ref="{{ c.bgRef }}" style="width:46px;height:46px;border-radius:11px;background:#20232c;flex:0 0 auto;"></div>
+                <div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;">{{ c.name }}</div><div style="color:#8A8F9C;font-size:11.5px;">{{ c.groupName }}</div></div>
+                <span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:9px;font-size:16px;font-weight:700;flex:0 0 auto;background:{{ c.addBg }};color:{{ c.addFg }};">{{ c.addIcon }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 22px 20px;background:rgba(12,13,17,0.95);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.07);z-index:36;display:flex;gap:12px;">
+          <button onClick="{{ goBuilder }}" style="flex:0 0 auto;width:96px;height:52px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Atrás</button>
+          <button onClick="{{ goBuilder }}" style="flex:1;height:52px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Listo · {{ builderCount }} el {{ builderDayName }}</button>
+        </div>
+      </sc-if>
+
+      <!-- ============ MY ACCOUNT ============ -->
+      <sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:56px 24px 108px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div ref="{{ avatarRef }}" style="width:58px;height:58px;border-radius:18px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);border:1px solid rgba(255,255,255,0.08);flex:0 0 auto;background-size:cover;background-position:center;"></div>
+            <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">{{ displayName }}</div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #A-2481 · Plan Full</div></div>
+          </div>
+          <div style="margin-top:16px;border-radius:20px;padding:17px;background:{{ memCardBg }};color:{{ memCardFg }};">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;">MEMBRESÍA</span><span style="font-size:11px;font-weight:700;background:{{ memBadgeBg }};padding:3px 9px;border-radius:6px;">{{ memLabel }}</span></div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;margin-top:10px;">{{ memDateLabel }}</div>
+            <div style="height:7px;background:rgba(12,13,17,0.18);border-radius:99px;margin-top:12px;overflow:hidden;"><div style="width:{{ memProgressW }};height:100%;background:{{ memFill }};border-radius:99px;"></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:7px;font-size:12px;font-weight:600;"><span>{{ memDaysText }}</span><span onClick="{{ renew }}" style="text-decoration:underline;cursor:pointer;">Renovar</span></div>
+          </div>
+          <button onClick="{{ renew }}" style="width:100%;height:50px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Renovar cuota (+30 días)</button>
+          <div style="margin-top:14px;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:15px;">
+            <div style="display:flex;align-items:center;gap:8px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(205,255,74,0.14);display:flex;align-items:center;justify-content:center;font-size:14px;">🏦</span><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.5px;">PAGO POR TRANSFERENCIA</span></div>
+            <div style="color:#8A8F9C;font-size:11.5px;margin-top:8px;line-height:1.4;">Podés abonar la cuota por giro / transferencia a la cuenta del gimnasio:</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;"><span style="color:#8A8F9C;font-size:12px;">Banco</span><span style="font-weight:600;font-size:13.5px;">Banco Galicia</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;"><span style="color:#8A8F9C;font-size:12px;">Titular</span><span style="font-weight:600;font-size:13.5px;">Space Fitness S.R.L.</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid rgba(255,255,255,0.06);padding-top:9px;"><span style="color:#8A8F9C;font-size:12px;flex:0 0 auto;">Número de cuenta</span><span style="font-weight:700;font-size:13.5px;color:#CDFF4A;font-family:monospace;">4012345678</span></div>
+            </div>
+            <div style="margin-top:12px;background:rgba(255,194,74,0.1);border:1px solid rgba(255,194,74,0.25);border-radius:10px;padding:10px 12px;color:#FFC24A;font-size:11.5px;line-height:1.4;">Enviá el comprobante por WhatsApp para que activemos tu cuota.</div>
+          </div>
+          <div onClick="{{ goPersonalized }}" style="margin-top:14px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(255,194,74,0.14),rgba(255,194,74,0.05));border:1px solid rgba(255,194,74,0.3);border-radius:16px;padding:13px;cursor:pointer;"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;">✦</span><div style="flex:1;"><div style="font-weight:700;font-size:14px;color:#FFC24A;">Plan personalizado</div><div style="color:#8A8F9C;font-size:11.5px;">Rutina y comida a medida</div></div><span style="color:#8A8F9C;font-size:18px;">›</span></div>
+          <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;">NOVEDADES DEL GYM</span><span style="color:#CDFF4A;font-size:12px;">Ver todo</span></div>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:11px;">
+            <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(205,255,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Feriado: horario reducido</div><div style="color:#8A8F9C;font-size:11.5px;">9 Jul · abrimos 8-14h</div></div></div>
+            <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(255,194,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Nueva sala de funcional</div><div style="color:#8A8F9C;font-size:11.5px;">Ya disponible · piso 2</div></div></div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:14px;justify-content:center;align-items:center;"><span onClick="{{ openStaff }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Panel de staff</span><span style="color:#2a2e38;">|</span><span onClick="{{ goLogin }}" style="color:#6b7080;font-size:13px;cursor:pointer;">Cerrar sesión</span></div>
+        </div>
+      </sc-if>
+
+      <!-- ============ PERSONALIZADO ============ -->
+      <sc-if value="{{ isPersonalized }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:54px 24px 108px;">
+          <div style="display:flex;align-items:center;margin-bottom:8px;"><span onClick="{{ goAccount }}" style="font-size:26px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span></div>
+          <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,194,74,0.12);border:1px solid rgba(255,194,74,0.3);border-radius:999px;padding:5px 12px;"><span style="color:#FFC24A;font-size:12px;font-weight:700;letter-spacing:1px;">✦ PERSONALIZADO</span></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:29px;margin-top:10px;line-height:1;">Entrená con tu<br>profe asignado</div>
+          <div style="margin-top:16px;background:#15171E;border:1px solid rgba(255,194,74,0.25);border-radius:20px;padding:15px;display:flex;gap:13px;align-items:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div>
+            <div style="flex:1;"><div style="font-weight:700;font-size:16px;">Lucía Fernández</div><div style="color:#8A8F9C;font-size:12px;">Tu personal trainer</div><div style="color:#FFC24A;font-size:11.5px;margin-top:3px;">● Disponible ahora</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:14px;">
+            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">🏋</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Rutina a medida</div><div style="color:#8A8F9C;font-size:11.5px;">Según tu objetivo y nivel</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">🥗</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Plan de comidas</div><div style="color:#8A8F9C;font-size:11.5px;">Calorías y macros a tu medida</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">💬</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Chat con tu profe</div><div style="color:#8A8F9C;font-size:11.5px;">Dudas y ajustes cuando quieras</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">📸</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Seguimiento y fotos</div><div style="color:#8A8F9C;font-size:11.5px;">Progreso semana a semana</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+          </div>
+          <button style="width:100%;height:54px;margin-top:16px;background:#FFC24A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15.5px;cursor:pointer;" style-hover="filter:brightness(1.06);">Solicitar plan personalizado</button>
+        </div>
+      </sc-if>
+
+      <!-- ============ ACCESO LIBRE ============ -->
+      <sc-if value="{{ isFree }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:54px 24px 28px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><div style="display:flex;align-items:center;gap:10px;"><span onClick="{{ goLogin }}" style="font-size:24px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">Modo gratuito</div></div><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:4px 10px;border-radius:7px;">Vista previa</span></div>
+          <p style="color:#8A8F9C;font-size:13px;margin-top:4px;line-height:1.4;">Un ejercicio por grupo. Sin rutinas, sin sustitutivos, sin registro.</p>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px;">
+            <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><img src="assets/img/g-pecho.png" alt="" style="width:56px;height:56px;border-radius:12px;object-fit:cover;flex:0 0 auto;"><div style="flex:1;"><div style="color:#8A8F9C;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Pecho</div><div style="font-weight:700;font-size:15px;">Press de banca</div></div></div>
+            <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><img src="assets/img/g-espalda.png" alt="" style="width:56px;height:56px;border-radius:12px;object-fit:cover;flex:0 0 auto;"><div style="flex:1;"><div style="color:#8A8F9C;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Espalda</div><div style="font-weight:700;font-size:15px;">Dominadas</div></div></div>
+            <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><img src="assets/img/g-piernas.png" alt="" style="width:56px;height:56px;border-radius:12px;object-fit:cover;flex:0 0 auto;"><div style="flex:1;"><div style="color:#8A8F9C;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Piernas</div><div style="font-weight:700;font-size:15px;">Sentadilla</div></div></div>
+          </div>
+          <div style="position:relative;margin-top:14px;">
+            <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;display:flex;gap:13px;align-items:center;filter:blur(3px);opacity:0.5;"><div style="width:56px;height:56px;border-radius:12px;background:#232630;"></div><div style="flex:1;"><div style="height:10px;width:70px;background:#2a2e38;border-radius:4px;"></div><div style="height:14px;width:130px;background:#2a2e38;border-radius:4px;margin-top:8px;"></div></div></div>
+          </div>
+          <div style="margin-top:16px;background:linear-gradient(135deg,rgba(205,255,74,0.14),rgba(205,255,74,0.05));border:1px solid rgba(205,255,74,0.3);border-radius:18px;padding:16px;text-align:center;">
+            <div style="font-size:22px;">🔒</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;margin-top:6px;">Hacete socio para desbloquear todo</div>
+            <div style="color:#8A8F9C;font-size:12px;margin-top:3px;">Rutinas, sustitutivos, registro y plan del profe</div>
+            <button onClick="{{ goHome }}" style="width:100%;height:48px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;" style-hover="filter:brightness(1.08);">Ver planes del gimnasio</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ MODO ENTRENAMIENTO ============ -->
+      <sc-if value="{{ isWorkout }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:0;background:#0C0D11;">
+          <sc-if value="{{ restToast }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:64px;left:20px;right:20px;z-index:12;background:#CDFF4A;color:#0C0D11;border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 12px 34px rgba(0,0,0,0.45);font-weight:700;font-size:14.5px;">🔔 ¡Descanso terminado! A por la próxima serie</div>
+          </sc-if>
+          <sc-if value="{{ wk.isWork }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;">
+              <div ref="{{ wk.exImgRef }}" style="height:44%;position:relative;background:#171922;">
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,13,17,0.55) 0%,rgba(12,13,17,0.15) 40%,rgba(12,13,17,0.9) 100%);"></div>
+                <div style="position:absolute;top:56px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:center;"><span onClick="{{ wkExit }}" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;">✕</span><span style="font-size:12px;color:#CDFF4A;font-weight:700;letter-spacing:1px;text-transform:uppercase;">{{ wk.rName }}</span></div>
+                <div style="position:absolute;left:22px;right:22px;bottom:16px;"><div style="font-size:12px;color:#9aa0ac;font-weight:600;">Ejercicio {{ wk.exIndex }} de {{ wk.exTotal }}</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:32px;line-height:1;margin-top:2px;">{{ wk.exName }}</div></div>
+              </div>
+              <div style="flex:1;padding:22px;display:flex;flex-direction:column;">
+                <div style="height:6px;background:#1D212B;border-radius:99px;overflow:hidden;"><div style="height:100%;background:#CDFF4A;border-radius:99px;width:{{ wk.progressW }};transition:width .3s;"></div></div>
+                <div style="display:flex;gap:12px;margin-top:22px;">
+                  <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;color:#CDFF4A;line-height:1;">{{ wk.setNum }}<span style="color:#5a5f6b;font-size:22px;">/{{ wk.setTotal }}</span></div><div style="color:#8A8F9C;font-size:12px;margin-top:6px;">serie actual</div></div>
+                  <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;line-height:1;">{{ wk.reps }}</div><div style="color:#8A8F9C;font-size:12px;margin-top:6px;">reps objetivo</div></div>
+                </div>
+                <div style="flex:1;"></div>
+                <button onClick="{{ wkComplete }}" style="width:100%;height:60px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:17px;font-family:'Barlow',sans-serif;font-weight:700;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" style-hover="filter:brightness(1.08);">✓ Serie completada</button>
+                <button onClick="{{ wkExit }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,255,255,0.05);color:#8A8F9C;border:1px solid rgba(255,255,255,0.1);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:600;font-size:14px;cursor:pointer;" style-hover="color:#FF8080;border-color:rgba(255,90,90,0.3);">Terminar entrenamiento</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ wk.isRest }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;">
+              <div style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#CDFF4A;font-weight:700;">Descanso</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:96px;line-height:1;margin-top:10px;letter-spacing:1px;">{{ wk.remainingText }}</div>
+              <div style="color:#8A8F9C;font-size:14px;margin-top:14px;">Sigue: <span style="color:#F4F5F7;font-weight:600;">{{ wk.nextName }}</span></div>
+              <div style="display:flex;gap:12px;margin-top:36px;width:100%;">
+                <button onClick="{{ wkAdd }}" style="flex:1;height:54px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">+15s</button>
+                <button onClick="{{ wkSkip }}" style="flex:1;height:54px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Saltar descanso</button>
+              </div>
+              <button onClick="{{ wkExit }}" style="width:100%;height:52px;margin-top:22px;background:rgba(255,90,90,0.1);color:#FF8080;border:1px solid rgba(255,90,90,0.32);border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="background:rgba(255,90,90,0.18);">Terminar entrenamiento</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ wk.isDone }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
+              <div style="width:88px;height:88px;border-radius:50%;background:rgba(205,255,74,0.14);border:2px solid #CDFF4A;display:flex;align-items:center;justify-content:center;font-size:44px;color:#CDFF4A;">✓</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;margin-top:20px;line-height:1;">¡Entrenamiento<br>completado!</div>
+              <div style="color:#8A8F9C;font-size:14px;margin-top:12px;">{{ wk.doneCount }} ejercicios · {{ wk.rName }}</div>
+              <button onClick="{{ wkExit }}" style="width:100%;height:56px;margin-top:34px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Volver al inicio</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ============ BLOQUEO POR CUOTA ============ -->
+      <sc-if value="{{ showLock }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:42;background:#0C0D11;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
+          <div style="width:96px;height:96px;border-radius:50%;background:rgba(255,90,90,0.14);border:2px solid #FF5A5A;display:flex;align-items:center;justify-content:center;font-size:44px;">🔒</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:32px;margin-top:20px;line-height:1;color:#FF5A5A;">Cuota vencida</div>
+          <p style="color:#9aa0ac;font-size:14px;margin-top:12px;line-height:1.5;max-width:280px;">Tu membresía venció. Renová para volver a acceder a tus rutinas, ejercicios y entrenamientos.</p>
+          <button onClick="{{ renew }}" style="width:100%;max-width:300px;height:54px;margin-top:26px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Renovar cuota</button>
+          <button onClick="{{ enterFree }}" style="width:100%;max-width:300px;height:52px;margin-top:12px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:16px;font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Ver modo gratuito</button>
+          <span onClick="{{ openStaff }}" style="margin-top:22px;color:#6b7080;font-size:13px;cursor:pointer;text-decoration:underline;">Panel de staff</span>
+        </div>
+      </sc-if>
+
+      <!-- ============ PANEL DE STAFF (modal) ============ -->
+      <sc-if value="{{ staffOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:48;background:rgba(6,7,10,0.8);display:flex;align-items:center;justify-content:center;padding:26px;">
+          <div style="width:100%;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;">Panel de staff</div><span onClick="{{ closeStaff }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
+            <sc-if value="{{ staffAuthed }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#8A8F9C;font-size:13px;margin-top:6px;">Socio: <span style="color:#F4F5F7;font-weight:600;">Seba R. · #A-2481</span></div>
+              <button onClick="{{ staffMarkPaid }}" style="width:100%;height:52px;margin-top:16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">✓ Marcar cuota como pagada (+30 días)</button>
+              <button onClick="{{ expireDemo }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,90,90,0.1);color:#FF8080;border:1px solid rgba(255,90,90,0.3);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;" style-hover="background:rgba(255,90,90,0.18);">Simular cuota vencida (demo)</button>
+              <button onClick="{{ openQrShow }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Generar QR de pago</button>
+              <sc-if value="{{ hasQrShow }}" hint-placeholder-val="{{ false }}">
+                {{ qrImgEl }}
+                <div style="text-align:center;color:#8A8F9C;font-size:11.5px;margin-top:8px;">El socio lo escanea desde “Renovar cuota” para activarla</div>
+              </sc-if>
+            </sc-if>
+            <sc-if value="{{ staffNotAuthed }}" hint-placeholder-val="{{ true }}">
+              <div style="color:#8A8F9C;font-size:13px;margin-top:6px;">Ingresá el PIN del staff para gestionar la cuota.</div>
+              <input type="tel" inputmode="numeric" value="{{ staffPinVal }}" onChange="{{ setPin }}" placeholder="PIN" style="width:100%;height:52px;margin-top:14px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:13px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:700;font-size:22px;text-align:center;letter-spacing:8px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+              <button onClick="{{ submitPin }}" style="width:100%;height:50px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Ingresar</button>
+              <div style="text-align:center;color:#6b7080;font-size:11.5px;margin-top:10px;">Demo: PIN 2468</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ ESCANER QR (renovar cuota) ============ -->
+      <sc-if value="{{ isQrScan }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:49;background:#000;display:flex;flex-direction:column;">
+          <div style="flex:1;position:relative;overflow:hidden;background:#0a0a0c;">
+            <video ref="{{ qrVideoRef }}" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:200px;height:200px;border:3px solid rgba(205,255,74,0.9);border-radius:22px;box-shadow:0 0 0 2000px rgba(0,0,0,0.45);"></div></div>
+            <div style="position:absolute;top:56px;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;z-index:2;"><span onClick="{{ closeQrScan }}" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;cursor:pointer;">✕</span><span style="color:#fff;font-size:13px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,0.7);">Escaneá el QR del gimnasio</span></div>
+            <sc-if value="{{ qrCamError }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:22px;right:22px;bottom:18px;text-align:center;color:#FFC24A;font-size:12.5px;background:rgba(0,0,0,0.55);border-radius:10px;padding:9px;z-index:2;">No pudimos acceder a la cámara — usá el botón de demo.</div></sc-if>
+          </div>
+          <div style="padding:16px 22px 24px;background:#0C0D11;">
+            <div style="color:#8A8F9C;font-size:12.5px;text-align:center;line-height:1.4;">Pedile al staff el QR de pago. Al escanearlo se valida tu cuota al instante.</div>
+            <button onClick="{{ qrValid }}" style="width:100%;height:52px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">✓ Simular escaneo válido (demo)</button>
+            <button onClick="{{ closeQrScan }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Cancelar</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ STATUS BAR (global) ============ -->
+      <div style="position:absolute;top:0;left:0;right:0;height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 5px;font-size:14px;font-weight:700;color:#F4F5F7;z-index:35;pointer-events:none;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+
+      <!-- ============ BOTTOM NAV (global) ============ -->
+      <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(12,13,17,0.94);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-around;align-items:flex-start;padding-top:14px;z-index:35;">
+          <div onClick="{{ goHome }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ homeColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ homeBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11 L12 4 L20 11 V20 H4 Z"/></svg>Inicio</div>
+          <div onClick="{{ goGroups }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ groupsColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ groupsBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Grupos</div>
+          <div onClick="{{ goRoutines }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ routinesColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ routinesBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas</div>
+          <div onClick="{{ goAccount }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ accountColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ accountBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Cuenta</div>
+        </div>
+      </sc-if>
+
+      <!-- ============ REGISTRO (modal) ============ -->
+      <sc-if value="{{ isLogOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:45;background:rgba(6,7,10,0.72);display:flex;align-items:flex-end;">
+          <div style="width:100%;background:#14161C;border-top-left-radius:26px;border-top-right-radius:26px;border-top:1px solid rgba(255,255,255,0.08);padding:20px 22px 26px;max-height:88%;overflow-y:auto;">
+            <div style="width:40px;height:4px;border-radius:2px;background:rgba(255,255,255,0.18);margin:0 auto 14px;"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;">Registrar sesión</div><span onClick="{{ closeLog }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
+            <div style="color:#8A8F9C;font-size:13px;margin-top:2px;">{{ logExName }} · hoy</div>
+            <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:9px 10px;align-items:center;margin-top:16px;">
+              <div></div>
+              <div style="color:#8A8F9C;font-size:10px;letter-spacing:1px;text-transform:uppercase;text-align:center;">Peso (kg)</div>
+              <div style="color:#8A8F9C;font-size:10px;letter-spacing:1px;text-transform:uppercase;text-align:center;">Reps</div>
+              <sc-for list="{{ logSets }}" as="ls" hint-placeholder-count="4">
+                <div style="font-weight:700;font-size:13px;color:#CDFF4A;white-space:nowrap;">Serie {{ ls.n }}</div>
+                <input type="number" inputmode="decimal" value="{{ ls.w }}" onChange="{{ ls.setW }}" placeholder="—" style="width:100%;height:40px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:10px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;text-align:center;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+                <input type="number" inputmode="numeric" value="{{ ls.reps }}" onChange="{{ ls.setReps }}" placeholder="—" style="width:100%;height:40px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:10px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;text-align:center;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+              </sc-for>
+            </div>
+            <button onClick="{{ saveLog }}" style="width:100%;height:52px;margin-top:18px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Guardar registro</button>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <div style="color:#5a5f6b;font-size:12px;font-family:'Barlow',sans-serif;">Tocá para navegar · login → home · grupo → ejercicio → sustitutivos</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 'login', location: 'gym', groupId: null, exId: null, swap: {},
+    editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null,
+    logs: {}, logOpen: null, logDraft: [], sessions: [],
+    paidUntil: Date.now() + 12 * 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '', qrScanOpen: false, qrCamError: false, qrShow: '',
+    onboardingDone: false, onboardTarget: 'home', profileName: '', profilePhoto: '',
+    routines: [
+      { id: 'r1', name: 'Push · Empuje', days: ['Lun', 'Jue'], active: true, schedule: {
+        'Lun': [{ id: 'press-banca', sets: 4, reps: '8-10', rest: '90s' }, { id: 'press-inclinado', sets: 3, reps: '10-12', rest: '75s' }],
+        'Jue': [{ id: 'press-militar', sets: 4, reps: '8', rest: '90s' }, { id: 'laterales', sets: 4, reps: '12-15', rest: '45s' }] } },
+      { id: 'r2', name: 'Pull · Tracción', days: ['Mar', 'Vie'], active: false, schedule: {
+        'Mar': [{ id: 'dominadas', sets: 4, reps: '6-10', rest: '90s' }, { id: 'remo-barra', sets: 4, reps: '8-10', rest: '90s' }],
+        'Vie': [{ id: 'jalon', sets: 3, reps: '10-12', rest: '75s' }, { id: 'curl-barra', sets: 3, reps: '10', rest: '60s' }] } },
+      { id: 'r3', name: 'Pierna completa', days: ['Sáb'], active: false, schedule: {
+        'Sáb': [{ id: 'sentadilla', sets: 4, reps: '6-8', rest: '120s' }, { id: 'prensa', sets: 3, reps: '10-12', rest: '90s' }, { id: 'zancadas', sets: 3, reps: '12', rest: '75s' }, { id: 'hip-thrust', sets: 4, reps: '10-12', rest: '90s' }] } },
+    ],
+  };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem('sf_state_v1');
+      if (raw) { const d = JSON.parse(raw); const mig = (arr) => (arr || []).map(r => { if (r.schedule) return r; const days = (r.days && r.days.length) ? r.days : ((r.ex && r.ex.length) ? ['Lun'] : []); const schedule = {}; days.forEach(dd => schedule[dd] = (r.ex || []).map(x => ({ ...x }))); return { ...r, days, schedule }; }); this.setState({ routines: (d.routines && d.routines.length) ? mig(d.routines) : this.state.routines, logs: d.logs || {}, swap: d.swap || {}, sessions: d.sessions || [], paidUntil: d.paidUntil || this.state.paidUntil, onboardingDone: !!d.onboardingDone, profileName: d.profileName || '', profilePhoto: d.profilePhoto || '' }); }
+    } catch (e) {}
+  }
+  persist() { try { localStorage.setItem('sf_state_v1', JSON.stringify({ routines: this.state.routines, logs: this.state.logs, swap: this.state.swap, sessions: this.state.sessions, paidUntil: this.state.paidUntil, onboardingDone: this.state.onboardingDone, profileName: this.state.profileName, profilePhoto: this.state.profilePhoto })); } catch (e) {} }
+  recordSession(ses) { const d = new Date(); const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const date = d.getDate() + ' ' + months[d.getMonth()]; const exNames = ses.list.map(x => x.name); this.setState(s => ({ sessions: [{ id: 's' + Date.now(), date, rName: ses.rName, exCount: ses.list.length, exNames }, ...s.sessions] }), () => this.persist()); }
+  nav(screen) { this.setState({ screen }); }
+  enterApp(target) { if (!this.state.onboardingDone) { this.setState({ screen: 'onboarding', onboardTarget: target }); } else { this.nav(target); } }
+  setProfileName(ev) { this.setState({ profileName: ev.target.value }); }
+  setProfilePhoto(ev) {
+    const file = ev.target.files && ev.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => this.setState({ profilePhoto: reader.result });
+    reader.readAsDataURL(file);
+  }
+  finishOnboarding() { if (!this.state.profileName.trim()) return; this.setState(s => ({ onboardingDone: true, screen: s.onboardTarget || 'home' }), () => this.persist()); }
+  openGroup(id) { this.setState({ groupId: id, screen: 'exerciseList' }); }
+  openEx(id) { this.setState({ exId: id, screen: 'exerciseDetail' }); }
+  setLoc(l) { this.setState({ location: l }); }
+  applySub(name) { this.setState(s => ({ swap: { ...s.swap, [s.exId]: name }, screen: 'exerciseDetail' }), () => this.persist()); }
+  clearSub() { this.setState(s => { const sw = { ...s.swap }; delete sw[s.exId]; return { swap: sw }; }, () => this.persist()); }
+  toggleAdd(id) { this.setState(s => { const d = s.builderDay; if (!d) return {}; const list = s.builderSched[d] || []; let nl; if (list.some(b => b.id === id)) { nl = list.filter(b => b.id !== id); } else { let def = null; this.data.forEach(g => g.exercises.forEach(e => { if (e.id === id) def = e; })); nl = [...list, { id, sets: def.sets, reps: def.reps, rest: def.rest }]; } return { builderSched: { ...s.builderSched, [d]: nl } }; }); }
+  removeB(i) { this.setState(s => { const d = s.builderDay; if (!d) return {}; const b = [...(s.builderSched[d] || [])]; b.splice(i, 1); return { builderSched: { ...s.builderSched, [d]: b } }; }); }
+  moveB(i, dd) { this.setState(s => { const d = s.builderDay; if (!d) return {}; const b = [...(s.builderSched[d] || [])]; const j = i + dd; if (j < 0 || j >= b.length) return {}; const t = b[i]; b[i] = b[j]; b[j] = t; return { builderSched: { ...s.builderSched, [d]: b } }; }); }
+  setB(i, key, val) { this.setState(s => { const d = s.builderDay; if (!d) return {}; const b = (s.builderSched[d] || []).map((x, k) => k === i ? { ...x, [key]: val } : x); return { builderSched: { ...s.builderSched, [d]: b } }; }); }
+  repsLive(v) { v = String(v).replace(/[^0-9-]/g, ''); const p = v.split('-'); if (p.length > 2) v = p[0] + '-' + p.slice(1).join(''); return v.slice(0, 7); }
+  repsNormalize(v) { v = this.repsLive(v); if (v.endsWith('-')) v = v.slice(0, -1); if (v.startsWith('-')) v = v.slice(1); const m = v.match(/^(\d+)-(\d+)$/); if (m) { let a = parseInt(m[1]), b = parseInt(m[2]); if (b < a) { const t = a; a = b; b = t; } v = a + '-' + b; } return v || ''; }
+  newRoutine() { this.setState({ editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null, screen: 'builder' }); }
+  editRoutine(id) { this.setState(s => { const r = s.routines.find(x => x.id === id); if (!r) return {}; const days = [...(r.days || [])]; const sched = {}; days.forEach(dd => { sched[dd] = ((r.schedule && r.schedule[dd]) || r.ex || []).map(x => ({ ...x })); }); return { editingId: id, builderName: r.name, builderDays: days, builderSched: sched, builderDay: days[0] || null, screen: 'builder' }; }); }
+  saveRoutine() { this.setState(s => { const name = (s.builderName || '').trim() || 'Rutina sin nombre'; const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']; const days = DAYS.filter(d => s.builderDays.includes(d)); const schedule = {}; days.forEach(d => schedule[d] = (s.builderSched[d] || []).map(x => ({ ...x }))); let routines = [...s.routines]; if (s.editingId) { routines = routines.map(r => r.id === s.editingId ? { ...r, name, days, schedule } : r); } else { routines.push({ id: 'r' + Date.now(), name, days, schedule, active: false }); } return { routines, screen: 'routines', editingId: null }; }, () => this.persist()); }
+  deleteRoutine(id) { this.setState(s => ({ routines: s.routines.filter(r => r.id !== id), screen: 'routines', editingId: null }), () => this.persist()); }
+  setBuilderName(ev) { const v = ev.target.value; this.setState({ builderName: v }); }
+  toggleDay(d) { this.setState(s => { const has = s.builderDays.includes(d); let days; const sched = { ...s.builderSched }; let day = s.builderDay; if (has) { days = s.builderDays.filter(x => x !== d); delete sched[d]; if (day === d) day = days[0] || null; } else { days = [...s.builderDays, d]; sched[d] = sched[d] || []; day = d; } return { builderDays: days, builderSched: sched, builderDay: day }; }); }
+  setBuilderDay(d) { this.setState({ builderDay: d }); }
+  setActive(id) { this.setState(s => ({ routines: s.routines.map(r => ({ ...r, active: r.id === id })) }), () => this.persist()); }
+  openLog() { this.setState(s => { const g = this.data.find(x => x.id === s.groupId); const ex = g && g.exercises.find(e => e.id === s.exId); if (!ex) return {}; const raw = s.logs[s.exId]; const prev = Array.isArray(raw) ? raw[0] : raw; const n = typeof ex.sets === 'number' ? ex.sets : 1; const draft = []; for (let i = 0; i < n; i++) { const p = prev && prev.sets[i]; draft.push({ w: p ? p.w : '', reps: p ? p.reps : '' }); } return { logOpen: s.exId, logDraft: draft }; }); }
+  setLog(i, key, val) { this.setState(s => ({ logDraft: s.logDraft.map((x, k) => k === i ? { ...x, [key]: val } : x) })); }
+  saveLog() { this.setState(s => { const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const d = new Date(); const dateKey = d.getDate() + ' ' + months[d.getMonth()]; const entry = { date: dateKey, sets: s.logDraft.map(x => ({ w: x.w, reps: x.reps })) }; let arr = s.logs[s.logOpen]; arr = Array.isArray(arr) ? [...arr] : (arr && arr.sets ? [{ date: arr.date || 'antes', sets: arr.sets }] : []); if (arr[0] && arr[0].date === dateKey) arr[0] = entry; else arr.unshift(entry); arr = arr.slice(0, 20); return { logs: { ...s.logs, [s.logOpen]: arr }, logOpen: null }; }, () => this.persist()); }
+  closeLog() { this.setState({ logOpen: null }); }
+  fmt(sec) { const m = Math.floor(sec / 60); const ss = sec % 60; return m + ':' + (ss < 10 ? '0' : '') + ss; }
+  clearTimer() { if (this._t) { clearInterval(this._t); this._t = null; } }
+  initAudio() { try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; if (!this._ac) this._ac = new AC(); if (this._ac.state === 'suspended') this._ac.resume(); const ac = this._ac; const o = ac.createOscillator(); const g = ac.createGain(); g.gain.value = 0.0001; o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime + 0.05); } catch (e) {} }
+  playBeep() {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      if (!this._ac) this._ac = new AC(); const ac = this._ac;
+      const fire = () => {
+        const t0 = ac.currentTime;
+        const notes = [[880, 0, 0.25], [1100, 0.28, 0.25], [1320, 0.56, 0.25], [880, 0.92, 0.75]];
+        notes.forEach(nn => { const f = nn[0], dt = nn[1], dur = nn[2]; const o = ac.createOscillator(); const g = ac.createGain(); o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(ac.destination); g.gain.setValueAtTime(0.0001, t0 + dt); g.gain.exponentialRampToValueAtTime(0.5, t0 + dt + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dt + dur); o.start(t0 + dt); o.stop(t0 + dt + dur + 0.03); });
+      };
+      if (ac.state === 'suspended') { ac.resume().then(fire).catch(() => {}); } else { fire(); }
+    } catch (e) {}
+  }
+  notifyRestDone() {
+    this.playBeep();
+    try { if (navigator.vibrate) navigator.vibrate([300, 120, 300, 120, 400]); } catch (e) {}
+    try { if (window.Notification && Notification.permission === 'granted') new Notification('Space Fitness', { body: '¡Descanso terminado! A por la próxima serie 💪' }); } catch (e) {}
+    this.setState({ restToast: true });
+    clearTimeout(this._toastT); this._toastT = setTimeout(() => this.setState({ restToast: false }), 2600);
+  }
+  startTimer() { this.clearTimer(); this._t = setInterval(() => this.tick(), 1000); }
+  componentWillUnmount() { this.clearTimer(); }
+  startWorkout(routineId) {
+    const r = this.state.routines.find(x => x.id === routineId) || this.state.routines[0];
+    if (!r) return;
+    const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    const today = DOW[new Date().getDay()];
+    let exArr = [];
+    if (r.schedule) { const day = (r.days || []).includes(today) ? today : (r.days || [])[0]; exArr = (day && r.schedule[day]) ? r.schedule[day] : []; if (!exArr.length) { (r.days || []).forEach(dd => { if (!exArr.length && r.schedule[dd] && r.schedule[dd].length) exArr = r.schedule[dd]; }); } } else { exArr = r.ex || []; }
+    const flat = {}; this.data.forEach(g => g.exercises.forEach(e => flat[e.id] = { name: e.name, gid: g.id }));
+    const list = exArr.map(x => { const f = flat[x.id] || { name: x.id, gid: 'pecho' }; const m = String(x.rest || '').match(/\d+/); return { id: x.id, name: f.name, gid: f.gid, sets: (typeof x.sets === 'number' ? x.sets : 1), reps: x.reps, restSec: m ? parseInt(m[0]) : 60 }; });
+    if (!list.length) return;
+    this.clearTimer(); this.initAudio();
+    try { if (window.Notification && Notification.permission === 'default') Notification.requestPermission(); } catch (e) {}
+    this.setState({ screen: 'workout', session: { rName: r.name, list, i: 0, set: 0, phase: 'work', remaining: 0 } });
+  }
+  completeSet() {
+    this.initAudio();
+    this.setState(s => { const ses = s.session; if (!ses) return {}; const cur = ses.list[ses.i]; const isLastSet = ses.set >= cur.sets - 1; const isLastEx = ses.i >= ses.list.length - 1; if (isLastSet && isLastEx) { this.clearTimer(); return { session: { ...ses, phase: 'done' } }; } return { session: { ...ses, phase: 'rest', remaining: cur.restSec } }; },
+      () => { if (this.state.session && this.state.session.phase === 'rest') this.startTimer(); else if (this.state.session && this.state.session.phase === 'done') this.recordSession(this.state.session); });
+  }
+  tick() {
+    this.setState(s => { const ses = s.session; if (!ses || ses.phase !== 'rest') return {}; return { session: { ...ses, remaining: Math.max(0, ses.remaining - 1) } }; },
+      () => { if (this.state.session && this.state.session.phase === 'rest' && this.state.session.remaining <= 0) { this.notifyRestDone(); this.advance(); } });
+  }
+  advance() {
+    this.clearTimer();
+    this.setState(s => { const ses = s.session; if (!ses) return {}; const cur = ses.list[ses.i]; let i = ses.i, set = ses.set; if (set >= cur.sets - 1) { i++; set = 0; } else { set++; } if (i >= ses.list.length) return { session: { ...ses, phase: 'done' } }; return { session: { ...ses, i, set, phase: 'work', remaining: 0 } }; }, () => { if (this.state.session && this.state.session.phase === 'done') this.recordSession(this.state.session); });
+  }
+  skipRest() { this.advance(); }
+  addRest(sec) { this.setState(s => { const ses = s.session; if (!ses || ses.phase !== 'rest') return {}; return { session: { ...ses, remaining: ses.remaining + sec } }; }); }
+  exitWorkout() { this.clearTimer(); this.setState({ screen: 'home', session: null }); }
+  renew(months) { this.setState(s => ({ paidUntil: Math.max(Date.now(), s.paidUntil) + (months || 1) * 30 * 86400000 }), () => this.persist()); }
+  expireDemo() { this.setState({ paidUntil: Date.now() - 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '' }, () => this.persist()); }
+  openStaff() { this.setState({ staffOpen: true, staffAuthed: false, staffPinInput: '' }); }
+  closeStaff() { this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '' }); }
+  setPin(ev) { this.setState({ staffPinInput: String(ev.target.value).replace(/[^0-9]/g, '').slice(0, 4) }); }
+  submitPin() { this.setState(s => ({ staffAuthed: s.staffPinInput === '2468' })); }
+  staffMarkPaid() { this.renew(1); this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '' }); }
+  openQrScan() {
+    this.setState({ qrScanOpen: true, qrCamError: false });
+    try { navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(st => { this._qrStream = st; if (this._qrVideo) { this._qrVideo.srcObject = st; const p = this._qrVideo.play(); if (p && p.catch) p.catch(() => {}); } }).catch(() => this.setState({ qrCamError: true })); } catch (e) { this.setState({ qrCamError: true }); }
+  }
+  closeQrScan() { try { if (this._qrStream) { this._qrStream.getTracks().forEach(t => t.stop()); this._qrStream = null; } } catch (e) {} this.setState({ qrScanOpen: false }); }
+  qrValid() { this.closeQrScan(); this.renew(1); this.playBeep(); }
+  makeQr() {
+    const c = document.createElement('canvas'); c.width = 220; c.height = 220; const x = c.getContext('2d');
+    x.fillStyle = '#fff'; x.fillRect(0, 0, 220, 220);
+    let seed = 137; const rnd = () => { seed = (seed * 73 + 41) % 997; return seed / 997; };
+    const n = 21, cs = 180 / n, off = 20; x.fillStyle = '#0C0D11';
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { if (rnd() > 0.55) x.fillRect(off + i * cs, off + j * cs, cs - 1, cs - 1); }
+    [[0, 0], [n - 7, 0], [0, n - 7]].forEach(ab => { const a = ab[0], b = ab[1]; x.fillStyle = '#0C0D11'; x.fillRect(off + a * cs, off + b * cs, 7 * cs, 7 * cs); x.fillStyle = '#fff'; x.fillRect(off + (a + 1) * cs, off + (b + 1) * cs, 5 * cs, 5 * cs); x.fillStyle = '#0C0D11'; x.fillRect(off + (a + 2) * cs, off + (b + 2) * cs, 3 * cs, 3 * cs); });
+    return c.toDataURL();
+  }
+  openQrShow() { this.setState({ qrShow: this.makeQr() }); }
+  closeQrShow() { this.setState({ qrShow: '' }); }
+
+  data = [
+    { id: 'pecho', name: 'Pecho', exercises: [
+      { id: 'press-banca', name: 'Press de banca', env: 'gym', muscles: ['Pectoral mayor', 'Tríceps', 'Deltoides ant.'], sets: 4, reps: '8-10', rest: '90s', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', tips: ['Escápulas retraídas, pies firmes en el piso', 'Bajá la barra al esternón con codos a ~45°'], last: '60kg × 10',
+        subsGym: [{ name: 'Press en máquina Smith', note: 'Más control · principiantes' }, { name: 'Press con mancuernas', note: 'Mayor rango de movimiento' }],
+        subsHome: [{ name: 'Flexiones lastradas', note: 'Mochila con peso' }, { name: 'Flexiones declinadas', note: 'Pies elevados en silla' }] },
+      { id: 'press-inclinado', name: 'Press inclinado c/ mancuernas', env: 'gym', muscles: ['Pectoral superior', 'Deltoides ant.'], sets: 3, reps: '10-12', rest: '75s', tips: ['Banco entre 30° y 45°', 'Controlá la fase excéntrica'], last: '22kg × 10',
+        subsGym: [{ name: 'Press inclinado en máquina', note: 'Trayectoria guiada' }], subsHome: [{ name: 'Flexiones pica', note: 'Cadera elevada, énfasis superior' }] },
+      { id: 'aperturas', name: 'Aperturas en polea', env: 'gym', muscles: ['Pectoral', 'Aislamiento'], sets: 3, reps: '12-15', rest: '60s', tips: ['Codos levemente flexionados y fijos', 'Apretá el pecho en el centro'], last: '12kg × 14',
+        subsGym: [{ name: 'Aperturas con mancuernas', note: 'En banco plano' }], subsHome: [{ name: 'Aperturas con banda', note: 'Banda anclada a la puerta' }] },
+      { id: 'flexiones', name: 'Flexiones', env: 'home', muscles: ['Pectoral', 'Tríceps', 'Core'], sets: 4, reps: 'máx', rest: '60s', tips: ['Cuerpo en línea recta, glúteos activos', 'Codos a ~45°, no abiertos'], last: '4 × 20',
+        subsGym: [{ name: 'Press en máquina', note: 'Carga progresiva' }], subsHome: [{ name: 'Flexiones inclinadas', note: 'Manos en el sofá' }] },
+      { id: 'press-declinado', name: 'Press declinado con barra', env: 'gym', muscles: ['Pectoral inferior', 'Tríceps'], sets: 3, reps: '8-10', rest: '90s', tips: ['Banco a -15°, pies asegurados', 'Bajá la barra a la parte baja del pecho'], last: '55kg × 10',
+        subsGym: [{ name: 'Press declinado con mancuernas', note: 'Mayor rango' }], subsHome: [{ name: 'Flexiones con pies elevados', note: 'Énfasis en pectoral inferior' }] },
+      { id: 'cruce-poleas', name: 'Cruce de poleas', env: 'gym', muscles: ['Pectoral', 'Aislamiento'], sets: 3, reps: '12-15', rest: '60s', tips: ['Inclinate levemente al frente', 'Cruzá las manos al final del recorrido'], last: '15kg × 12',
+        subsGym: [{ name: 'Aperturas en polea', note: 'Ángulo alto a bajo' }], subsHome: [{ name: 'Aperturas con banda', note: 'Banda anclada baja' }] },
+      { id: 'pullover-mancuerna', name: 'Pullover con mancuerna', env: 'gym', muscles: ['Pectoral', 'Dorsal', 'Serrato'], sets: 3, reps: '12', rest: '60s', tips: ['Apoyá solo la parte alta de la espalda en el banco', 'Bajá la mancuerna detrás de la cabeza sin perder la cadera'], last: '18kg × 12',
+        subsGym: [{ name: 'Pullover en polea alta', note: 'Tensión constante' }], subsHome: [{ name: 'Pullover con mochila', note: 'Controlado, poco peso' }] },
+      { id: 'flexiones-diamante', name: 'Flexiones diamante', env: 'home', muscles: ['Pectoral interno', 'Tríceps'], sets: 3, reps: 'máx', rest: '60s', tips: ['Manos formando un diamante bajo el pecho', 'Codos cerca del cuerpo'], last: '3 × 14',
+        subsGym: [{ name: 'Press cerrado en máquina', note: 'Agarre estrecho' }], subsHome: [{ name: 'Flexiones diamante de rodillas', note: 'Versión regresiva' }] },
+    ] },
+    { id: 'espalda', name: 'Espalda', exercises: [
+      { id: 'dominadas', name: 'Dominadas', env: 'home', muscles: ['Dorsal ancho', 'Bíceps'], sets: 4, reps: '6-10', rest: '90s', tips: ['Agarre un poco más ancho que hombros', 'Llevá el pecho a la barra'], last: '4 × 8',
+        subsGym: [{ name: 'Jalón al pecho', note: 'Regulá la carga' }], subsHome: [{ name: 'Remo invertido', note: 'Bajo una mesa firme' }] },
+      { id: 'remo-barra', name: 'Remo con barra', env: 'gym', muscles: ['Dorsal', 'Romboides', 'Trapecio'], sets: 4, reps: '8-10', rest: '90s', tips: ['Espalda neutra, tronco a ~45°', 'Llevá la barra al ombligo'], last: '50kg × 10',
+        subsGym: [{ name: 'Remo en máquina', note: 'Pecho apoyado' }], subsHome: [{ name: 'Remo con mochila', note: 'A una mano en silla' }] },
+      { id: 'jalon', name: 'Jalón al pecho', env: 'gym', muscles: ['Dorsal ancho'], sets: 3, reps: '10-12', rest: '75s', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', tips: ['No te balancees', 'Bajá la barra al pecho'], last: '45kg × 12',
+        subsGym: [{ name: 'Pullover en polea', note: 'Aislamiento de dorsal' }], subsHome: [{ name: 'Dominadas asistidas', note: 'Con banda elástica' }] },
+      { id: 'peso-muerto', name: 'Peso muerto', env: 'gym', muscles: ['Lumbar', 'Dorsal', 'Glúteo', 'Femoral'], sets: 4, reps: '5-6', rest: '120s', tips: ['Barra pegada a las piernas todo el recorrido', 'Espalda neutra, pecho arriba'], last: '90kg × 6',
+        subsGym: [{ name: 'Peso muerto rumano', note: 'Más énfasis en femoral' }], subsHome: [{ name: 'Peso muerto con mochila', note: 'Técnica primero, poco peso' }] },
+      { id: 'remo-mancuerna', name: 'Remo a una mano con mancuerna', env: 'gym', muscles: ['Dorsal', 'Romboides'], sets: 3, reps: '10-12', rest: '75s', tips: ['Apoyate en el banco con rodilla y mano', 'Llevá el codo hacia atrás, no hacia arriba'], last: '24kg × 10',
+        subsGym: [{ name: 'Remo en polea baja a una mano', note: 'Tensión constante' }], subsHome: [{ name: 'Remo con mochila a una mano', note: 'Apoyo en silla' }] },
+      { id: 'remo-t', name: 'Remo en T', env: 'gym', muscles: ['Dorsal', 'Trapecio medio'], sets: 3, reps: '10', rest: '90s', tips: ['Pecho apoyado o tronco fijo a 45°', 'Apretá las escápulas al final'], last: '40kg × 10',
+        subsGym: [{ name: 'Remo con barra', note: 'Agarre cerrado' }], subsHome: [{ name: 'Remo invertido bajo mesa', note: 'Cuerpo recto, talones apoyados' }] },
+      { id: 'superman', name: 'Superman', env: 'home', muscles: ['Lumbar', 'Glúteo'], sets: 3, reps: '15', rest: '30s', tips: ['Elevá brazos y piernas a la vez', 'Sostené 1-2 segundos arriba'], last: '3 × 15',
+        subsGym: [{ name: 'Hiperextensión lumbar', note: 'En banco romano' }], subsHome: [{ name: 'Superman alterno', note: 'Brazo y pierna opuestos' }] },
+      { id: 'remo-banda-puerta', name: 'Remo con banda en puerta', env: 'home', muscles: ['Dorsal', 'Romboides'], sets: 3, reps: '15', rest: '45s', tips: ['Anclá la banda a la altura del pecho', 'Codos pegados al cuerpo al tirar'], last: '3 × 15',
+        subsGym: [{ name: 'Remo en polea sentado', note: 'Agarre neutro' }], subsHome: [{ name: 'Remo con toalla en puerta', note: 'Tirá sosteniendo el marco' }] },
+    ] },
+    { id: 'piernas', name: 'Piernas', exercises: [
+      { id: 'sentadilla', name: 'Sentadilla', env: 'gym', muscles: ['Cuádriceps', 'Glúteo', 'Core'], sets: 4, reps: '6-8', rest: '120s', tips: ['Rodillas siguen la punta del pie', 'Bajá hasta al menos paralelo'], last: '80kg × 8',
+        subsGym: [{ name: 'Prensa 45°', note: 'Menos exigencia técnica' }], subsHome: [{ name: 'Sentadilla búlgara', note: 'Pie trasero en silla' }] },
+      { id: 'prensa', name: 'Prensa de piernas', env: 'gym', muscles: ['Cuádriceps', 'Glúteo'], sets: 3, reps: '10-12', rest: '90s', tips: ['No bloquees las rodillas arriba', 'Pies al ancho de hombros'], last: '140kg × 12',
+        subsGym: [{ name: 'Hack squat', note: 'Trayectoria guiada' }], subsHome: [{ name: 'Sentadilla con mochila', note: 'Peso pegado al pecho' }] },
+      { id: 'zancadas', name: 'Zancadas', env: 'home', muscles: ['Cuádriceps', 'Glúteo'], sets: 3, reps: '12 x pierna', rest: '75s', tips: ['Torso erguido', 'Rodilla no pasa la punta del pie'], last: '3 × 12',
+        subsGym: [{ name: 'Zancadas en Smith', note: 'Mayor estabilidad' }], subsHome: [{ name: 'Step-ups', note: 'Subí a un banco firme' }] },
+      { id: 'peso-muerto-rumano', name: 'Peso muerto rumano', env: 'gym', muscles: ['Femoral', 'Glúteo'], sets: 4, reps: '8-10', rest: '90s', tips: ['Rodillas apenas flexionadas y fijas', 'Barra pegada a las piernas, cadera hacia atrás'], last: '60kg × 10',
+        subsGym: [{ name: 'Peso muerto rumano con mancuernas', note: 'Mayor rango' }], subsHome: [{ name: 'Peso muerto con mochila a una pierna', note: 'Énfasis en equilibrio' }] },
+      { id: 'extension-cuadriceps', name: 'Extensión de cuádriceps', env: 'gym', muscles: ['Cuádriceps'], sets: 3, reps: '12-15', rest: '60s', tips: ['No uses impulso', 'Pausa 1 segundo arriba'], last: '35kg × 14',
+        subsGym: [{ name: 'Sentadilla sissy', note: 'Sin equipo, mayor dificultad' }], subsHome: [{ name: 'Sentadilla isométrica en pared', note: 'Wall sit' }] },
+      { id: 'curl-femoral', name: 'Curl femoral acostado', env: 'gym', muscles: ['Femoral'], sets: 3, reps: '12', rest: '60s', tips: ['Cadera pegada al banco', 'Bajá controlado, sin soltar de golpe'], last: '30kg × 12',
+        subsGym: [{ name: 'Curl femoral sentado', note: 'Máquina alternativa' }], subsHome: [{ name: 'Curl nórdico asistido', note: 'Con compañero sosteniendo tobillos' }] },
+      { id: 'sentadilla-goblet', name: 'Sentadilla goblet', env: 'home', muscles: ['Cuádriceps', 'Glúteo', 'Core'], sets: 3, reps: '15', rest: '60s', tips: ['Sostené el peso contra el pecho', 'Codos rozan las rodillas abajo'], last: '16kg × 15',
+        subsGym: [{ name: 'Sentadilla con barra', note: 'Mayor carga' }], subsHome: [{ name: 'Sentadilla con mochila', note: 'Peso al pecho' }] },
+      { id: 'elevacion-talones', name: 'Elevación de talones (gemelos)', env: 'gym', muscles: ['Gemelos'], sets: 4, reps: '15-20', rest: '45s', tips: ['Subí hasta la punta del pie', 'Bajá con control por debajo del escalón'], last: '50kg × 18',
+        subsGym: [{ name: 'Gemelos en prensa', note: 'Con la máquina de prensa' }], subsHome: [{ name: 'Elevación de talones en escalón', note: 'A una pierna para más intensidad' }] },
+    ] },
+    { id: 'hombros', name: 'Hombros', exercises: [
+      { id: 'press-militar', name: 'Press militar', env: 'gym', muscles: ['Deltoides', 'Tríceps'], sets: 4, reps: '8', rest: '90s', tips: ['Abdomen y glúteo firmes', 'No arquees en exceso la espalda'], last: '35kg × 8',
+        subsGym: [{ name: 'Press en máquina', note: 'Trayectoria guiada' }], subsHome: [{ name: 'Press con mancuernas', note: 'Sentado, espalda apoyada' }] },
+      { id: 'laterales', name: 'Elevaciones laterales', env: 'home', muscles: ['Deltoides lateral'], sets: 4, reps: '12-15', rest: '45s', tips: ['Codos apenas flexionados', 'Subí hasta la altura del hombro'], last: '8kg × 14',
+        subsGym: [{ name: 'Laterales en polea', note: 'Tensión constante' }], subsHome: [{ name: 'Laterales con banda', note: 'Pisá la banda' }] },
+      { id: 'pajaros', name: 'Pájaros (posterior)', env: 'home', muscles: ['Deltoides posterior'], sets: 3, reps: '15', rest: '45s', tips: ['Tronco inclinado adelante', 'Apretá las escápulas'], last: '6kg × 15',
+        subsGym: [{ name: 'Peck deck invertido', note: 'En máquina de aperturas' }], subsHome: [{ name: 'Pájaros con banda', note: 'Banda al frente' }] },
+      { id: 'press-arnold', name: 'Press Arnold', env: 'gym', muscles: ['Deltoides', 'Tríceps'], sets: 3, reps: '10', rest: '75s', tips: ['Rotá las palmas de adentro hacia afuera al subir', 'Controlá bien la bajada'], last: '14kg × 10',
+        subsGym: [{ name: 'Press militar con mancuernas', note: 'Sin rotación' }], subsHome: [{ name: 'Press pike', note: 'Flexión en V invertida' }] },
+      { id: 'elevacion-frontal', name: 'Elevación frontal', env: 'gym', muscles: ['Deltoides anterior'], sets: 3, reps: '12-15', rest: '45s', tips: ['No balancees el tronco', 'Subí hasta la altura del hombro'], last: '8kg × 14',
+        subsGym: [{ name: 'Elevación frontal en polea', note: 'Tensión constante' }], subsHome: [{ name: 'Elevación frontal con mochila', note: 'Agarrada de los tirantes' }] },
+      { id: 'face-pull', name: 'Face pull', env: 'gym', muscles: ['Deltoides posterior', 'Trapecio'], sets: 3, reps: '15', rest: '45s', tips: ['Tirá hacia la cara, codos altos', 'Apretá bien las escápulas al final'], last: '15kg × 15',
+        subsGym: [{ name: 'Pájaros en polea', note: 'Similar patrón de tirón' }], subsHome: [{ name: 'Face pull con banda', note: 'Banda anclada a la altura de la cara' }] },
+      { id: 'press-pike', name: 'Press pike (flexión en V)', env: 'home', muscles: ['Deltoides', 'Tríceps'], sets: 3, reps: '10-12', rest: '60s', tips: ['Cadera bien elevada, forma de V invertida', 'Bajá la cabeza hacia el piso entre las manos'], last: '3 × 10',
+        subsGym: [{ name: 'Press militar', note: 'Con barra o mancuernas' }], subsHome: [{ name: 'Press pike con pies elevados', note: 'Mayor dificultad' }] },
+      { id: 'encogimientos', name: 'Encogimientos de hombros', env: 'gym', muscles: ['Trapecio'], sets: 3, reps: '12-15', rest: '60s', tips: ['Subí los hombros hacia las orejas', 'No rotes, solo subí y bajá'], last: '40kg × 12',
+        subsGym: [{ name: 'Encogimientos en máquina', note: 'Trayectoria guiada' }], subsHome: [{ name: 'Encogimientos con mochila', note: 'Un peso en cada mano si tenés' }] },
+    ] },
+    { id: 'brazos', name: 'Brazos', exercises: [
+      { id: 'curl-barra', name: 'Curl con barra', env: 'gym', muscles: ['Bíceps'], sets: 3, reps: '10', rest: '60s', tips: ['Codos pegados al torso', 'Sin balanceo de la cadera'], last: '25kg × 10',
+        subsGym: [{ name: 'Curl en banco Scott', note: 'Más aislamiento' }], subsHome: [{ name: 'Curl con banda', note: 'Pisá la banda' }] },
+      { id: 'martillo', name: 'Curl martillo', env: 'home', muscles: ['Bíceps', 'Braquial'], sets: 3, reps: '12', rest: '60s', tips: ['Agarre neutro (palmas enfrentadas)', 'Controlá la bajada'], last: '12kg × 12',
+        subsGym: [{ name: 'Curl martillo en polea', note: 'Con cuerda' }], subsHome: [{ name: 'Curl con botellas', note: 'Llená de agua/arena' }] },
+      { id: 'fondos-tri', name: 'Fondos de tríceps', env: 'home', muscles: ['Tríceps'], sets: 3, reps: 'máx', rest: '60s', tips: ['Codos hacia atrás, no afuera', 'Bajá controlado'], last: '3 × 15',
+        subsGym: [{ name: 'Extensión en polea', note: 'Con cuerda o barra' }], subsHome: [{ name: 'Fondos en silla', note: 'Manos en el borde' }] },
+      { id: 'curl-predicador', name: 'Curl en banco Scott', env: 'gym', muscles: ['Bíceps'], sets: 3, reps: '10-12', rest: '60s', tips: ['Apoyá bien el tríceps en el banco', 'No extiendas el codo del todo arriba'], last: '20kg × 10',
+        subsGym: [{ name: 'Curl con barra Z', note: 'Menos estrés en la muñeca' }], subsHome: [{ name: 'Curl concentrado', note: 'Codo apoyado en la pierna' }] },
+      { id: 'press-frances', name: 'Press francés', env: 'gym', muscles: ['Tríceps'], sets: 3, reps: '10-12', rest: '60s', tips: ['Codos fijos apuntando al techo', 'Bajá la barra hacia la frente con control'], last: '18kg × 10',
+        subsGym: [{ name: 'Extensión de tríceps con mancuerna', note: 'A dos manos por detrás de la cabeza' }], subsHome: [{ name: 'Fondos entre dos sillas', note: 'Mayor rango de movimiento' }] },
+      { id: 'curl-concentrado', name: 'Curl concentrado', env: 'home', muscles: ['Bíceps'], sets: 3, reps: '12 x brazo', rest: '45s', tips: ['Codo apoyado en la cara interna del muslo', 'Apretá arriba antes de bajar'], last: '10kg × 12',
+        subsGym: [{ name: 'Curl en polea baja', note: 'Tensión constante' }], subsHome: [{ name: 'Curl con banda', note: 'Pisá la banda con el pie' }] },
+      { id: 'fondos-banco', name: 'Fondos en banco', env: 'home', muscles: ['Tríceps', 'Pectoral'], sets: 3, reps: '12-15', rest: '60s', tips: ['Manos en el borde del banco, dedos hacia adelante', 'Piernas estiradas para más dificultad'], last: '3 × 14',
+        subsGym: [{ name: 'Fondos en paralelas', note: 'Mayor rango, más intenso' }], subsHome: [{ name: 'Fondos con piernas flexionadas', note: 'Versión regresiva' }] },
+      { id: 'curl-21', name: 'Curl 21', env: 'gym', muscles: ['Bíceps'], sets: 3, reps: '21', rest: '60s', tips: ['7 reps media inferior, 7 media superior, 7 completas', 'Mantené el codo fijo todo el ejercicio'], last: '15kg × 21',
+        subsGym: [{ name: 'Curl con mancuernas alterno', note: 'Un brazo a la vez' }], subsHome: [{ name: 'Curl 21 con banda', note: 'Misma cadencia con banda elástica' }] },
+    ] },
+    { id: 'core', name: 'Core', exercises: [
+      { id: 'plancha', name: 'Plancha', env: 'home', muscles: ['Abdomen', 'Core'], sets: 3, reps: '45s', rest: '45s', tips: ['Glúteo y abdomen apretados', 'Cadera ni arriba ni abajo'], last: '3 × 50s',
+        subsGym: [{ name: 'Plancha con peso', note: 'Disco en la espalda' }], subsHome: [{ name: 'Plancha con apoyo', note: 'Rodillas al piso' }] },
+      { id: 'crunch', name: 'Crunch', env: 'home', muscles: ['Recto abdominal'], sets: 3, reps: '20', rest: '30s', tips: ['No tires del cuello', 'Exhalá al subir'], last: '3 × 20',
+        subsGym: [{ name: 'Crunch en polea', note: 'Arrodillado' }], subsHome: [{ name: 'Crunch con talones altos', note: 'Piernas en silla' }] },
+      { id: 'elev-piernas', name: 'Elevación de piernas', env: 'home', muscles: ['Abdomen inferior'], sets: 3, reps: '15', rest: '45s', tips: ['Zona lumbar pegada al piso', 'Bajá sin tocar el suelo'], last: '3 × 15',
+        subsGym: [{ name: 'Elevación en paralelas', note: 'Apoyo de antebrazos' }], subsHome: [{ name: 'Rodillas al pecho', note: 'Sentado en el borde' }] },
+      { id: 'abs-bicicleta', name: 'Abdominales bicicleta', env: 'home', muscles: ['Recto abdominal', 'Oblicuos'], sets: 3, reps: '20', rest: '30s', tips: ['Codo hacia la rodilla contraria', 'Movimiento lento y controlado, sin tironear el cuello'], last: '3 × 20',
+        subsGym: [{ name: 'Crunch en polea con giro', note: 'Con carga añadida' }], subsHome: [{ name: 'Mountain climbers lentos', note: 'Foco en control, no velocidad' }] },
+      { id: 'russian-twist', name: 'Russian twist', env: 'home', muscles: ['Oblicuos'], sets: 3, reps: '20', rest: '30s', tips: ['Pies levemente elevados del piso', 'Girá desde el torso, no solo los brazos'], last: '3 × 20',
+        subsGym: [{ name: 'Giro ruso con disco', note: 'Con peso en las manos' }], subsHome: [{ name: 'Russian twist con botella', note: 'Agregá peso liviano' }] },
+      { id: 'plancha-lateral', name: 'Plancha lateral', env: 'home', muscles: ['Oblicuos', 'Core'], sets: 3, reps: '30-40s x lado', rest: '30s', tips: ['Cadera alineada, no caída', 'Apoyo en el antebrazo, codo bajo el hombro'], last: '3 × 35s',
+        subsGym: [{ name: 'Plancha lateral con peso', note: 'Disco sobre la cadera' }], subsHome: [{ name: 'Plancha lateral con rodilla apoyada', note: 'Versión regresiva' }] },
+      { id: 'rueda-abdominal', name: 'Rueda abdominal', env: 'home', muscles: ['Core', 'Recto abdominal'], sets: 3, reps: '10-12', rest: '60s', tips: ['Extendé sin arquear la lumbar', 'Volvé con el abdomen, no con la cadera'], last: '3 × 10',
+        subsGym: [{ name: 'Rueda abdominal de rodillas', note: 'Apoyo en rodillas para regular dificultad' }], subsHome: [{ name: 'Plancha con deslizamiento', note: 'Con toalla en piso liso' }] },
+      { id: 'dead-bug', name: 'Dead bug', env: 'home', muscles: ['Core', 'Estabilidad'], sets: 3, reps: '12 x lado', rest: '30s', tips: ['Lumbar siempre pegada al piso', 'Brazo y pierna opuestos, movimiento lento'], last: '3 × 12',
+        subsGym: [{ name: 'Dead bug con peso en tobillos', note: 'Mayor exigencia' }], subsHome: [{ name: 'Hollow hold', note: 'Isometría de todo el core' }] },
+      { id: 'crunch-polea', name: 'Crunch en polea alta', env: 'gym', muscles: ['Recto abdominal'], sets: 3, reps: '15', rest: '45s', tips: ['Arrodillado, cadera fija', 'Flexioná desde el abdomen, no tires con los brazos'], last: '25kg × 15',
+        subsGym: [{ name: 'Crunch en máquina', note: 'Trayectoria guiada' }], subsHome: [{ name: 'Crunch', note: 'En el piso, sin carga' }] },
+      { id: 'elev-piernas-paralelas', name: 'Elevación de piernas en paralelas', env: 'gym', muscles: ['Abdomen inferior', 'Core'], sets: 3, reps: '12-15', rest: '45s', tips: ['Apoyo en antebrazos, espalda pegada al respaldo', 'Subí las piernas sin balancear el cuerpo'], last: '3 × 12',
+        subsGym: [{ name: 'Elevación colgado de la barra', note: 'Mayor exigencia de agarre' }], subsHome: [{ name: 'Elevación de piernas', note: 'Acostado en el piso' }] },
+    ] },
+    { id: 'gluteos', name: 'Glúteos', exercises: [
+      { id: 'hip-thrust', name: 'Hip thrust', env: 'gym', muscles: ['Glúteo mayor', 'Femoral'], sets: 4, reps: '10-12', rest: '90s', tips: ['Empujá con los talones', 'Apretá arriba 1 segundo'], last: '60kg × 12',
+        subsGym: [{ name: 'Hip thrust en máquina', note: 'Carga guiada' }], subsHome: [{ name: 'Puente de glúteo', note: 'Con mochila en cadera' }] },
+      { id: 'patada', name: 'Patada de glúteo', env: 'home', muscles: ['Glúteo mayor'], sets: 3, reps: '15 x pierna', rest: '45s', tips: ['No arquees la lumbar', 'Apretá el glúteo arriba'], last: '3 × 15',
+        subsGym: [{ name: 'Patada en polea', note: 'Tobillera' }], subsHome: [{ name: 'Patada con banda', note: 'Banda en el tobillo' }] },
+      { id: 'puente', name: 'Puente de glúteo', env: 'home', muscles: ['Glúteo', 'Femoral'], sets: 3, reps: '20', rest: '45s', tips: ['Talones cerca del glúteo', 'Subí sin arquear la espalda'], last: '3 × 20',
+        subsGym: [{ name: 'Hip thrust', note: 'Con barra' }], subsHome: [{ name: 'Puente a una pierna', note: 'Más intensidad' }] },
+      { id: 'sentadilla-sumo', name: 'Sentadilla sumo', env: 'gym', muscles: ['Glúteo', 'Aductor', 'Cuádriceps'], sets: 4, reps: '10', rest: '90s', tips: ['Pies bien abiertos, puntas hacia afuera', 'Bajá manteniendo el torso lo más vertical posible'], last: '50kg × 10',
+        subsGym: [{ name: 'Sentadilla sumo con mancuerna', note: 'Goblet sumo' }], subsHome: [{ name: 'Sentadilla sumo con mochila', note: 'Peso al frente' }] },
+      { id: 'abduccion-maquina', name: 'Abducción de cadera en máquina', env: 'gym', muscles: ['Glúteo medio'], sets: 3, reps: '15', rest: '45s', tips: ['Espalda apoyada, movimiento controlado', 'No uses impulso'], last: '35kg × 15',
+        subsGym: [{ name: 'Abducción en polea baja', note: 'Tobillera en polea' }], subsHome: [{ name: 'Almeja con banda', note: 'De costado en el piso' }] },
+      { id: 'patada-cuadrupedia', name: 'Patada de glúteo en cuadrupedia', env: 'home', muscles: ['Glúteo mayor'], sets: 3, reps: '15 x pierna', rest: '30s', tips: ['No arquees la lumbar al patear', 'Apretá el glúteo arriba, bajá controlado'], last: '3 × 15',
+        subsGym: [{ name: 'Patada en polea baja', note: 'Con tobillera' }], subsHome: [{ name: 'Patada con banda en cuadrupedia', note: 'Banda por encima de la rodilla' }] },
+      { id: 'caminata-banda', name: 'Caminata lateral con banda', env: 'home', muscles: ['Glúteo medio'], sets: 3, reps: '15 pasos x lado', rest: '30s', tips: ['Rodillas semiflexionadas todo el ejercicio', 'Mantené tensión en la banda constantemente'], last: '3 × 15 pasos',
+        subsGym: [{ name: 'Abducción en máquina', note: 'Carga guiada' }], subsHome: [{ name: 'Monster walk', note: 'Banda arriba de los tobillos' }] },
+      { id: 'hip-thrust-unipodal', name: 'Hip thrust a una pierna', env: 'gym', muscles: ['Glúteo mayor'], sets: 3, reps: '12 x pierna', rest: '60s', tips: ['Apoyá bien la escápula en el banco', 'Empujá con el talón de la pierna de apoyo'], last: '20kg × 12',
+        subsGym: [{ name: 'Hip thrust con barra', note: 'A dos piernas' }], subsHome: [{ name: 'Puente a una pierna', note: 'En el piso, sin banco' }] },
+    ] },
+    { id: 'cardio', name: 'Cardio', exercises: [
+      { id: 'cinta', name: 'Cinta (trote)', env: 'gym', muscles: ['Sistema cardiovascular'], sets: 1, reps: '20-30 min', rest: '—', tips: ['Mantené un ritmo que te deje hablar', 'Ajustá inclinación 1-2%'], last: '25 min · 5.2 km',
+        subsGym: [{ name: 'Elíptica', note: 'Menor impacto' }], subsHome: [{ name: 'Trote al aire libre', note: 'Zona segura' }] },
+      { id: 'bici', name: 'Bicicleta', env: 'gym', muscles: ['Sistema cardiovascular', 'Piernas'], sets: 1, reps: '25 min', rest: '—', tips: ['Regulá la altura del asiento', 'Cadencia constante'], last: '25 min',
+        subsGym: [{ name: 'Remo ergómetro', note: 'Cuerpo completo' }], subsHome: [{ name: 'Saltar la cuerda', note: 'Intervalos' }] },
+      { id: 'burpees', name: 'Burpees', env: 'home', muscles: ['Cuerpo completo'], sets: 4, reps: '12', rest: '45s', tips: ['Mantené el core firme', 'Amortiguá la caída'], last: '4 × 12',
+        subsGym: [{ name: 'Battle ropes', note: 'Intervalos de 30s' }], subsHome: [{ name: 'Mountain climbers', note: 'Ritmo alto' }] },
+      { id: 'remo-ergometro', name: 'Remo ergómetro', env: 'gym', muscles: ['Sistema cardiovascular', 'Espalda', 'Piernas'], sets: 1, reps: '15-20 min', rest: '—', tips: ['Empujá primero con las piernas, después tronco y brazos', 'Mantené un ritmo constante de remada'], last: '18 min · 3.8 km',
+        subsGym: [{ name: 'Escaladora', note: 'Mayor impacto cardiovascular' }], subsHome: [{ name: 'Burpees en intervalos', note: '30s trabajo / 30s descanso' }] },
+      { id: 'escaladora', name: 'Escaladora (stairmaster)', env: 'gym', muscles: ['Sistema cardiovascular', 'Glúteo', 'Piernas'], sets: 1, reps: '15-20 min', rest: '—', tips: ['Postura erguida, no te cuelgues de las barandas', 'Pasos completos, no de puntas de pie'], last: '18 min',
+        subsGym: [{ name: 'Cinta con inclinación', note: 'Trote inclinado 10-12%' }], subsHome: [{ name: 'Subir y bajar escaleras', note: 'Intervalos de 3 minutos' }] },
+      { id: 'soga-saltar', name: 'Soga de saltar', env: 'home', muscles: ['Sistema cardiovascular', 'Gemelos'], sets: 4, reps: '1 min', rest: '30s', tips: ['Saltos cortos, apoyo en la punta del pie', 'Codos pegados al cuerpo, giro de muñeca'], last: '4 × 1 min',
+        subsGym: [{ name: 'Elíptica', note: 'Menor impacto articular' }], subsHome: [{ name: 'Jumping jacks', note: 'Sin necesitar soga' }] },
+      { id: 'jumping-jacks', name: 'Jumping jacks', env: 'home', muscles: ['Cuerpo completo', 'Sistema cardiovascular'], sets: 4, reps: '30-40', rest: '30s', tips: ['Aterrizá suave, rodillas semiflexionadas', 'Ritmo constante durante toda la serie'], last: '4 × 35',
+        subsGym: [{ name: 'Bicicleta a intervalos', note: 'Sprints de 30s' }], subsHome: [{ name: 'Soga de saltar', note: 'Mayor exigencia de gemelos' }] },
+      { id: 'sprints', name: 'Sprints al aire libre', env: 'home', muscles: ['Sistema cardiovascular', 'Piernas'], sets: 6, reps: '20-30s', rest: '60s', tips: ['Elegí una zona segura y plana', 'Calentá bien antes de la primera serie a máxima intensidad'], last: '6 × 25s',
+        subsGym: [{ name: 'Cinta a máxima velocidad', note: 'Intervalos de 20-30s' }], subsHome: [{ name: 'Burpees en intervalos', note: 'Alternativa sin espacio para correr' }] },
+    ] },
+  ];
+
+  renderVals() {
+    const s = this.state;
+    const IM = (k) => (window.SF_IMG && window.SF_IMG[k]) ? window.SF_IMG[k] : 'assets/img/' + k + '.png';
+    const bgRef = (uri) => (el) => { if (el) { el.style.backgroundImage = 'url("' + uri + '")'; el.style.backgroundSize = 'cover'; el.style.backgroundPosition = 'center'; } };
+    const group = this.data.find(g => g.id === s.groupId) || null;
+    const all = group ? group.exercises : [];
+    const list = all
+      .filter(e => s.location === 'gym' ? e.env !== 'home' : e.env !== 'gym')
+      .map(e => { const sw = s.swap[e.id]; return { ...e, name: sw || e.name, swapped: !!sw, origName: e.name, musclesText: e.muscles.join(' · '), subCount: e.subsGym.length + e.subsHome.length, img: IM('g-' + group.id), bg: 'url("' + IM('g-' + group.id) + '")', bgRef: bgRef(IM('g-' + group.id)), open: () => this.openEx(e.id) }; });
+    const ex = all.find(e => e.id === s.exId) || null;
+    const groups = this.data.map(g => ({ id: g.id, name: g.name, count: g.exercises.filter(e => s.location === 'gym' ? e.env !== 'home' : e.env !== 'gym').length, img: IM('g-' + g.id), bg: 'url("' + IM('g-' + g.id) + '")', bgRef: bgRef(IM('g-' + g.id)), open: () => this.openGroup(g.id) }));
+    const exImg = group ? IM('g-' + group.id) : IM('hero');
+    const exImgBg = 'url("' + exImg + '")';
+    const exVideo = (ex && ex.video) ? ex.video : '';
+    const videoEl = exVideo ? React.createElement('video', { src: exVideo, controls: true, playsInline: true, preload: 'metadata', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', background: '#000', zIndex: 1 } }) : null;
+    const swapName = ex ? (s.swap[ex.id] || '') : '';
+    let effName = ex ? ex.name : '', effEnv = ex ? ex.env : 'gym';
+    if (ex && swapName) { let cat = null; ex.subsGym.forEach(x => { if (x.name === swapName) cat = 'gym'; }); ex.subsHome.forEach(x => { if (x.name === swapName) cat = 'home'; }); if (cat) { effName = swapName; effEnv = cat; } }
+    let sgArr = [], shArr = [];
+    if (ex) {
+      sgArr = ex.subsGym.map(x => ({ ...x, cat: 'gym' }));
+      shArr = ex.subsHome.map(x => ({ ...x, cat: 'home' }));
+      if (swapName) {
+        sgArr = sgArr.filter(x => x.name !== swapName);
+        shArr = shArr.filter(x => x.name !== swapName);
+        const orig = { name: ex.name, note: 'Ejercicio original', isOriginal: true };
+        if (ex.env === 'home') shArr = [orig, ...shArr]; else sgArr = [orig, ...sgArr];
+      }
+    }
+    const mkSub = (x) => ({ ...x, img: exImg, bg: exImgBg, bgRef: bgRef(exImg), btnLabel: x.isOriginal ? 'Volver' : 'Sustituir', apply: () => (x.isOriginal ? this.clearSub() : this.applySub(x.name)) });
+    const subsGym = sgArr.map(mkSub);
+    const subsHome = shArr.map(mkSub);
+    const flat = {};
+    this.data.forEach(g => g.exercises.forEach(e => { flat[e.id] = { name: e.name, sets: e.sets, reps: e.reps, rest: e.rest, groupName: g.name, img: IM('g-' + g.id) }; }));
+    const bDay = s.builderDay;
+    const bList = bDay ? (s.builderSched[bDay] || []) : [];
+    const builder = bList.map((it, i) => { const e = flat[it.id]; return { id: it.id, name: e.name, groupName: e.groupName, img: e.img, sets: it.sets, reps: it.reps, rest: it.rest, up: () => this.moveB(i, -1), down: () => this.moveB(i, 1), remove: () => this.removeB(i), incSets: () => this.setB(i, 'sets', Math.min(20, (it.sets || 0) + 1)), decSets: () => this.setB(i, 'sets', Math.max(1, (it.sets || 1) - 1)), setReps: (ev) => this.setB(i, 'reps', this.repsLive(ev.target.value)), blurReps: (ev) => this.setB(i, 'reps', this.repsNormalize(ev.target.value)), setRest: (ev) => this.setB(i, 'rest', ev.target.value) }; });
+    const catalog = [];
+    this.data.forEach(g => g.exercises.forEach(e => { const added = bList.some(b => b.id === e.id); catalog.push({ id: e.id, name: e.name, groupName: g.name, img: IM('g-' + g.id), bg: 'url("' + IM('g-' + g.id) + '")', bgRef: bgRef(IM('g-' + g.id)), add: () => this.toggleAdd(e.id), addIcon: added ? '✓' : '＋', addBg: added ? 'rgba(205,255,74,0.10)' : '#1D212B', addFg: added ? '#CDFF4A' : '#F4F5F7' }); }));
+    const grpOf = {}; this.data.forEach(g => g.exercises.forEach(e => grpOf[e.id] = g.name));
+    const routinesView = s.routines.map(r => {
+      const allEx = r.schedule ? [].concat.apply([], (r.days || []).map(dd => r.schedule[dd] || [])) : (r.ex || []);
+      const uniq = [...new Set(allEx.map(x => x.id))];
+      const muscles = [...new Set(allEx.map(x => grpOf[x.id]).filter(Boolean))];
+      const avg = (r.days && r.days.length) ? allEx.length / r.days.length : allEx.length;
+      return { id: r.id, name: r.name, active: r.active,
+        muscleText: muscles.slice(0, 3).join(' · ') || 'Sin ejercicios',
+        daysText: (r.days && r.days.length) ? r.days.join(' / ') : 'Sin días',
+        exText: uniq.length + (uniq.length === 1 ? ' ejercicio' : ' ejercicios'),
+        durText: '~' + Math.max(10, Math.round(avg * 8)) + ' min/día',
+        border: r.active ? '1px solid rgba(205,255,74,0.25)' : '1px solid rgba(255,255,255,0.07)',
+        notActive: !r.active, activate: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.setActive(r.id); },
+        open: () => this.editRoutine(r.id) };
+    });
+    const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+    const dayChips = DAYS.map(d => { const on = s.builderDays.includes(d); return { d, bg: on ? '#CDFF4A' : '#1D212B', fg: on ? '#0C0D11' : '#F4F5F7', bd: on ? 'transparent' : 'rgba(255,255,255,0.08)', toggle: () => this.toggleDay(d) }; });
+    const selDays = DAYS.filter(d => s.builderDays.includes(d));    const dayTabs = selDays.map(d => { const on = d === s.builderDay; return { d, count: (s.builderSched[d] || []).length, bg: on ? 'rgba(205,255,74,0.15)' : '#15171E', fg: on ? '#CDFF4A' : '#8A8F9C', bd: on ? 'rgba(205,255,74,0.45)' : 'rgba(255,255,255,0.08)', pick: () => this.setBuilderDay(d) }; });
+    let exLast = ex ? ex.last : '';
+    let exLogged = false;
+    let logHistory = [];
+    if (ex && s.logs[ex.id]) { const raw = s.logs[ex.id]; const arr = Array.isArray(raw) ? raw : (raw && raw.sets ? [{ date: raw.date || 'antes', sets: raw.sets }] : []); if (arr.length) { exLogged = true; const f = arr[0].sets.find(st => st.w || st.reps); if (f) { exLast = (f.w ? f.w + 'kg' : '') + (f.reps ? (f.w ? ' × ' : '') + f.reps : ''); } logHistory = arr.slice(0, 3).map(e => ({ date: e.date, text: e.sets.filter(st => st.w || st.reps).map(st => (st.w || '—') + '×' + (st.reps || '—')).join(' · ') || '—' })); } }
+    const logSets = (s.logDraft || []).map((d, i) => ({ n: i + 1, w: d.w, reps: d.reps, setW: (ev) => this.setLog(i, 'w', ev.target.value), setReps: (ev) => this.setLog(i, 'reps', ev.target.value) }));
+    const now = Date.now();
+    const msLeft = s.paidUntil - now;
+    const expired = msLeft <= 0;
+    const daysLeft = Math.max(0, Math.ceil(msLeft / 86400000));
+    const monthsAbbr = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const pd = new Date(s.paidUntil);
+    const paidUntilText = pd.getDate() + ' ' + monthsAbbr[pd.getMonth()] + ' ' + pd.getFullYear();
+    const memColor = expired ? '#FF5A5A' : (daysLeft <= 5 ? '#FFC24A' : '#CDFF4A');
+    const tint = (a) => expired ? 'rgba(255,90,90,' + a + ')' : (daysLeft <= 5 ? 'rgba(255,194,74,' + a + ')' : 'rgba(205,255,74,' + a + ')');
+    const premium = ['groups', 'exerciseList', 'exerciseDetail', 'substitutes', 'routines', 'builder', 'picker', 'workout', 'personalized'];
+    const showLock = expired && premium.includes(s.screen);
+    const ses = s.session;
+    let wk = { isWork: false, isRest: false, isDone: false };
+    if (ses) {
+      const cur = ses.list[ses.i] || ses.list[ses.list.length - 1];
+      const totalSets = ses.list.reduce((a, x) => a + x.sets, 0);
+      let doneSets = 0; for (let k = 0; k < ses.i; k++) doneSets += ses.list[k].sets; doneSets += ses.set;
+      wk = {
+        rName: ses.rName, exName: cur.name, exImgBg: 'url("' + IM('g-' + cur.gid) + '")', exImgRef: bgRef(IM('g-' + cur.gid)),
+        exIndex: ses.i + 1, exTotal: ses.list.length, setNum: ses.set + 1, setTotal: cur.sets, reps: cur.reps,
+        remainingText: this.fmt(ses.remaining), progressW: Math.round((doneSets / totalSets) * 100) + '%',
+        nextName: (ses.set < cur.sets - 1) ? cur.name + ' · serie ' + (ses.set + 2) : ((ses.i < ses.list.length - 1) ? ses.list[ses.i + 1].name : 'Última serie'),
+        doneCount: ses.list.length,
+        isWork: ses.phase === 'work', isRest: ses.phase === 'rest', isDone: ses.phase === 'done',
+      };
+    }
+    const mainTabs = ['home', 'groups', 'routines', 'account'];
+    let tab = '';
+    if (mainTabs.includes(s.screen)) tab = s.screen;
+    else if (s.screen === 'exerciseList' || s.screen === 'exerciseDetail' || s.screen === 'substitutes') tab = 'groups';
+    else if (s.screen === 'builder') tab = 'routines';
+    else if (s.screen === 'personalized') tab = 'account';
+    else if (s.screen === 'picker') tab = 'routines';
+    const active = '#CDFF4A', dim = '#8A8F9C';
+    const locGym = s.location === 'gym';
+    return {
+      isLogin: s.screen === 'login', isHome: s.screen === 'home', isGroups: s.screen === 'groups',
+      isList: s.screen === 'exerciseList', isDetail: s.screen === 'exerciseDetail', isSubs: s.screen === 'substitutes',
+      isRoutines: s.screen === 'routines', isBuilder: s.screen === 'builder', isAccount: s.screen === 'account',
+      isPersonalized: s.screen === 'personalized', isFree: s.screen === 'freeHome', isOnboarding: s.screen === 'onboarding',
+      profileNameVal: s.profileName, setProfileName: (ev) => this.setProfileName(ev), setProfilePhoto: (ev) => this.setProfilePhoto(ev), finishOnboarding: () => this.finishOnboarding(),
+      hasOnboardPhoto: !!s.profilePhoto, noOnboardPhoto: !s.profilePhoto,
+      onboardPhotoRef: bgRef(s.profilePhoto || ''),
+      displayName: s.profileName || 'Socio Space',
+      hasAvatarPhoto: !!s.profilePhoto, noAvatarPhoto: !s.profilePhoto,
+      avatarRef: bgRef(s.profilePhoto || ''),
+      showTabs: s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker',
+      expired, daysLeft, paidUntilText, memColor,
+      memLabel: expired ? 'VENCIDA' : (daysLeft <= 5 ? 'POR VENCER' : 'ACTIVA'),
+      chipBg: tint(0.12), chipBorder: tint(0.32), chipText: expired ? 'Cuota vencida · renová para entrenar' : ('Socio activo · vence en ' + daysLeft + (daysLeft === 1 ? ' día' : ' días')),
+      memCardBg: expired ? 'linear-gradient(135deg,#FF5A5A,#c93b3b)' : (daysLeft <= 5 ? 'linear-gradient(135deg,#FFC24A,#e0a12f)' : 'linear-gradient(135deg,#CDFF4A,#a9e02f)'),
+      memCardFg: expired ? '#ffffff' : '#0C0D11',
+      memBadgeBg: expired ? 'rgba(255,255,255,0.22)' : 'rgba(12,13,17,0.15)',
+      memDateLabel: (expired ? 'Venció el ' : 'Vence el ') + paidUntilText,
+      memDaysText: expired ? 'Cuota vencida' : (daysLeft + ' días restantes'),
+      memProgressW: Math.max(3, Math.min(100, Math.round((daysLeft / 30) * 100))) + '%',
+      memFill: expired ? 'rgba(255,255,255,0.85)' : '#0C0D11',
+      showLock,
+      renew: () => this.openQrScan(),
+      renewDirect: () => this.renew(1),
+      isQrScan: s.qrScanOpen, qrCamError: s.qrCamError, closeQrScan: () => this.closeQrScan(), qrValid: () => this.qrValid(),
+      qrVideoRef: (el) => { this._qrVideo = el; if (el && this._qrStream) { el.srcObject = this._qrStream; const p = el.play(); if (p && p.catch) p.catch(() => {}); } },
+      hasQrShow: !!s.qrShow, openQrShow: () => this.openQrShow(), closeQrShow: () => this.closeQrShow(),
+      qrImgEl: s.qrShow ? React.createElement('img', { src: s.qrShow, style: { width: '200px', height: '200px', borderRadius: '12px', display: 'block', margin: '14px auto 0' } }) : null,
+      staffOpen: s.staffOpen, staffAuthed: s.staffAuthed, staffNotAuthed: !s.staffAuthed, staffPinVal: s.staffPinInput,
+      openStaff: () => this.openStaff(), closeStaff: () => this.closeStaff(), setPin: (ev) => this.setPin(ev), submitPin: () => this.submitPin(), staffMarkPaid: () => this.staffMarkPaid(), expireDemo: () => this.expireDemo(),
+      isWorkout: s.screen === 'workout', wk, restToast: !!s.restToast,
+      startActive: () => { if (expired) { this.nav('account'); return; } const r = s.routines.find(x => x.active) || s.routines[0]; if (r) this.startWorkout(r.id); },
+      wkComplete: () => this.completeSet(), wkSkip: () => this.skipRest(), wkAdd: () => this.addRest(15), wkExit: () => this.exitWorkout(),
+      homeColor: tab === 'home' ? active : dim, groupsColor: tab === 'groups' ? active : dim,
+      routinesColor: tab === 'routines' ? active : dim, accountColor: tab === 'account' ? active : dim,
+      homeBar: tab === 'home' ? active : 'transparent', groupsBar: tab === 'groups' ? active : 'transparent', routinesBar: tab === 'routines' ? active : 'transparent', accountBar: tab === 'account' ? active : 'transparent',
+      gymBg: locGym ? '#CDFF4A' : 'transparent', gymFg: locGym ? '#0C0D11' : dim,
+      homeBg: locGym ? 'transparent' : '#CDFF4A', homeFg: locGym ? dim : '#0C0D11',
+      groups, list, groupName: group ? group.name : '',
+      exName: effName, exEnv: (effEnv === 'home' ? 'CASA' : 'GIMNASIO'),
+      exMuscles: ex ? ex.muscles : [], exSets: ex ? ex.sets : '', exReps: ex ? ex.reps : '', exRest: ex ? ex.rest : '',
+      exTips: ex ? ex.tips : [], exLast,
+      exLogged, openLog: () => this.openLog(), closeLog: () => this.closeLog(), saveLog: () => this.saveLog(),
+      logHistory, hasHistory: logHistory.length > 0,
+      isLogOpen: !!s.logOpen, logSets, logExName: ex ? ex.name : '',
+      routines: routinesView, routineCount: s.routines.length, newRoutine: () => this.newRoutine(),
+      homeRoutineName: (function () { const a = s.routines.find(r => r.active) || s.routines[0]; return a ? a.name : 'Sin rutina activa'; })(),
+      homeRoutineMeta: (function (self) { const a = s.routines.find(r => r.active) || s.routines[0]; if (!a) return 'Creá una en Rutinas'; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; const day = (a.days || []).includes(today) ? today : (a.days || [])[0]; const exs = (a.schedule && day) ? (a.schedule[day] || []) : []; return exs.length + ' ejercicios · ~' + Math.max(10, exs.length * 8) + ' min'; })(this),
+      homeRoutineDay: (function () { const a = s.routines.find(r => r.active) || s.routines[0]; if (!a) return ''; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; return (a.days || []).includes(today) ? 'Hoy · ' + today : 'Próximo · ' + ((a.days || [])[0] || ''); })(),
+      builderTitle: s.editingId ? 'Editar rutina' : 'Nueva rutina', builderNameVal: s.builderName, setBuilderName: (ev) => this.setBuilderName(ev),
+      dayChips, saveRoutine: () => this.saveRoutine(),
+      isEditing: !!s.editingId, deleteRoutine: () => { if (s.editingId) this.deleteRoutine(s.editingId); },
+      swapName, hasSwap: !!swapName, swapOrigName: ex ? ex.name : '', subsGym, subsHome, exImg, exImgBg, exImgRef: bgRef(exImg),
+      exVideo, hasVideo: !!exVideo, noVideo: !exVideo, videoEl,
+      isPicker: s.screen === 'picker', builder, builderCount: bList.length, builderEmpty: bList.length === 0, catalog, openPicker: () => { if (s.builderDay) this.nav('picker'); },
+      dayTabs, hasBuilderDays: selDays.length > 0, noBuilderDays: selDays.length === 0, builderDayName: s.builderDay || '',
+      goLogin: () => this.nav('login'), goHome: () => this.enterApp('home'), goGroups: () => this.nav('groups'),
+      goRoutines: () => this.nav('routines'), goAccount: () => this.nav('account'), goPersonalized: () => this.nav('personalized'),
+      goList: () => this.nav('exerciseList'), goDetail: () => this.nav('exerciseDetail'), goSubs: () => this.nav('substitutes'),
+      goBuilder: () => this.nav('builder'), enterFree: () => this.enterApp('freeHome'),
+      setGym: () => this.setLoc('gym'), setHome: () => this.setLoc('home'), clearSub: () => this.clearSub(),
+    };
+  }
+}
+</script>
+</body>
+</html>

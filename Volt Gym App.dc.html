@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0a0a0c;font-family:'Barlow',sans-serif;-webkit-font-smoothing:antialiased;}
+  .ph{width:390px;height:844px;background:#0C0D11;border-radius:48px;position:relative;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,0.55),0 0 0 11px #16171c,0 0 0 12px #2a2c34;flex:0 0 auto;color:#F4F5F7;}
+  .scr{position:absolute;inset:0;overflow:hidden;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1200px 700px at 20% 0%,#131318 0%,#0a0a0c 60%);padding:56px 60px 90px;">
+
+  <div style="max-width:900px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <img src="assets/space-logo.jpg" alt="Space Fitness" style="width:52px;height:52px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,0.1);">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:4px;color:#CDFF4A;text-transform:uppercase;">Space Fitness · App de gimnasio</div>
+    </div>
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:56px;line-height:0.98;margin-top:14px;color:#F4F5F7;">Flujo completo <span style="color:#5a5f6b;font-weight:600;">/ full flow</span></h1>
+    <p style="color:#8A8F9C;font-size:17px;line-height:1.5;margin-top:14px;max-width:720px;">Recorré el producto de izquierda a derecha: acceso libre vs. socio, ejercicios por grupo muscular con sustitutivos (gym + casa), constructor de rutinas, My Account y plan personalizado.</p>
+  </div>
+
+  <!-- ===================== OPTION 1A — FULL FLOW ===================== -->
+  <div id="1a" style="margin-top:44px;">
+    <div style="display:inline-flex;align-items:center;gap:10px;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:7px 16px;margin-bottom:36px;">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#CDFF4A;letter-spacing:1px;">1A</span>
+      <span style="color:#8A8F9C;font-size:13px;letter-spacing:1px;text-transform:uppercase;">Flujo completo · pantalla por pantalla</span>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:60px 52px;align-items:flex-start;">
+
+      <!-- ============ 01 ACCESO ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">01</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Acceso · Login</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(125deg,#1b1d24 0 13px,#141519 13px 26px);"></div>
+            <div style="position:absolute;top:40%;left:0;right:0;text-align:center;color:#4c515d;font-family:'Courier New',monospace;font-size:12px;">[ foto atleta · full-bleed ]</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,13,17,0.35) 0%,rgba(12,13,17,0.2) 42%,rgba(12,13,17,0.85) 66%,#0C0D11 94%);"></div>
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;position:relative;z-index:15;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+            <div style="position:absolute;top:82px;left:0;right:0;display:flex;flex-direction:column;align-items:center;z-index:15;"><img src="assets/space-logo.jpg" alt="Space Fitness" style="width:90px;height:90px;border-radius:22px;object-fit:cover;box-shadow:0 14px 34px rgba(0,0,0,0.55);"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;letter-spacing:3px;margin-top:12px;">SPACE FITNESS</div></div>
+            <div style="position:absolute;left:28px;right:28px;bottom:40px;z-index:15;">
+              <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:38px;line-height:0.95;letter-spacing:0.5px;">ENTRENÁ CON<br>PROPÓSITO</h2>
+              <p style="color:#9aa0ac;font-size:14px;margin-top:10px;line-height:1.4;">Tu gimnasio, tus rutinas y tu progreso en un solo lugar.</p>
+              <button style="width:100%;height:56px;margin-top:22px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;">Ingresar · Soy socio</button>
+              <button style="width:100%;height:56px;margin-top:12px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:16px;font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;">Explorar gratis</button>
+              <p style="text-align:center;color:#6b7080;font-size:11.5px;margin-top:14px;">Modo gratuito: solo ejercicios básicos · <span style="color:#8A8F9C;">Free preview</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 02 HOME (SOCIO) ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">02</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Inicio · Socio</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+            <div style="padding:14px 24px 100px;height:100%;overflow:hidden;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div><div style="color:#8A8F9C;font-size:13px;">Buenas, </div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;">Martín G.</div></div>
+                <div style="width:46px;height:46px;border-radius:14px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);border:1px solid rgba(255,255,255,0.08);"></div>
+              </div>
+              <div style="margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(205,255,74,0.12);border:1px solid rgba(205,255,74,0.3);border-radius:999px;padding:6px 12px;"><span style="width:7px;height:7px;border-radius:50%;background:#CDFF4A;"></span><span style="font-size:12px;font-weight:600;color:#CDFF4A;">Socio activo · vence en 12 días</span></div>
+
+              <div style="margin-top:18px;border-radius:22px;overflow:hidden;position:relative;background:#15171E;border:1px solid rgba(255,255,255,0.07);">
+                <div style="height:120px;background:repeating-linear-gradient(125deg,#1e2129 0 12px,#171922 12px 24px);position:relative;"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#4c515d;font-family:'Courier New',monospace;font-size:11px;">[ hero rutina de hoy ]</span></div>
+                <div style="padding:16px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;letter-spacing:2px;color:#CDFF4A;text-transform:uppercase;font-weight:700;">Rutina de hoy</span><span style="font-size:12px;color:#8A8F9C;">Día 3/5</span></div>
+                  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:23px;margin-top:4px;">Push · Pecho y Hombros</div>
+                  <div style="color:#8A8F9C;font-size:13px;margin-top:2px;">7 ejercicios · ~55 min</div>
+                  <button style="width:100%;height:48px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;">Comenzar entrenamiento</button>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;margin-top:14px;">
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;color:#CDFF4A;">14</div><div style="color:#8A8F9C;font-size:12px;">días de racha</div></div>
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">4<span style="color:#5a5f6b;font-size:18px;">/5</span></div><div style="color:#8A8F9C;font-size:12px;">esta semana</div></div>
+              </div>
+
+              <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:0.5px;">GRUPOS MUSCULARES</span><span style="color:#CDFF4A;font-size:13px;">Ver todo</span></div>
+              <div style="display:flex;gap:10px;margin-top:12px;overflow:hidden;">
+                <div style="flex:0 0 auto;padding:9px 15px;background:#CDFF4A;color:#0C0D11;border-radius:999px;font-size:13px;font-weight:700;">Pecho</div>
+                <div style="flex:0 0 auto;padding:9px 15px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:13px;font-weight:600;">Espalda</div>
+                <div style="flex:0 0 auto;padding:9px 15px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:13px;font-weight:600;">Piernas</div>
+                <div style="flex:0 0 auto;padding:9px 15px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:13px;font-weight:600;">Core</div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(12,13,17,0.94);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-around;align-items:flex-start;padding-top:14px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#CDFF4A;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11 L12 4 L20 11 V20 H4 Z"/></svg>Inicio</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Grupos</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Cuenta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 03 GRUPOS ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">03</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Grupos musculares</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+            <div style="padding:12px 24px 100px;height:100%;overflow:hidden;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;">Grupos musculares</div>
+              <div style="color:#8A8F9C;font-size:13px;margin-bottom:14px;">Elegí qué vas a entrenar hoy</div>
+              <div style="display:flex;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:4px;margin-bottom:16px;">
+                <div style="flex:1;text-align:center;padding:10px;background:#CDFF4A;color:#0C0D11;border-radius:10px;font-weight:700;font-size:14px;">🏋 En el gimnasio</div>
+                <div style="flex:1;text-align:center;padding:10px;color:#8A8F9C;font-weight:600;font-size:14px;">En casa</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;"><div style="height:78px;background:repeating-linear-gradient(125deg,#20232c 0 10px,#191c24 10px 20px);"></div><div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">Pecho</div><div style="color:#8A8F9C;font-size:11.5px;">12 ejercicios</div></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;"><div style="height:78px;background:repeating-linear-gradient(125deg,#20232c 0 10px,#191c24 10px 20px);"></div><div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">Espalda</div><div style="color:#8A8F9C;font-size:11.5px;">14 ejercicios</div></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;"><div style="height:78px;background:repeating-linear-gradient(125deg,#20232c 0 10px,#191c24 10px 20px);"></div><div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">Piernas</div><div style="color:#8A8F9C;font-size:11.5px;">16 ejercicios</div></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;"><div style="height:78px;background:repeating-linear-gradient(125deg,#20232c 0 10px,#191c24 10px 20px);"></div><div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">Hombros</div><div style="color:#8A8F9C;font-size:11.5px;">10 ejercicios</div></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;"><div style="height:78px;background:repeating-linear-gradient(125deg,#20232c 0 10px,#191c24 10px 20px);"></div><div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">Brazos</div><div style="color:#8A8F9C;font-size:11.5px;">13 ejercicios</div></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;overflow:hidden;"><div style="height:78px;background:repeating-linear-gradient(125deg,#20232c 0 10px,#191c24 10px 20px);"></div><div style="padding:11px 13px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">Core</div><div style="color:#8A8F9C;font-size:11.5px;">9 ejercicios</div></div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:12px 13px;display:flex;align-items:center;gap:8px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;">Glúteos</span></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:12px 13px;display:flex;align-items:center;gap:8px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;">Cardio</span></div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(12,13,17,0.94);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-around;align-items:flex-start;padding-top:14px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11 L12 4 L20 11 V20 H4 Z"/></svg>Inicio</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#CDFF4A;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Grupos</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Cuenta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 04 EJERCICIOS DE PECHO ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">04</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Ejercicios · Pecho</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+            <div style="padding:8px 24px 24px;height:100%;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;"><span style="font-size:24px;color:#8A8F9C;">‹</span><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">Pecho</div></div>
+              <div style="display:flex;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:4px;margin-bottom:16px;">
+                <div style="flex:1;text-align:center;padding:9px;background:#CDFF4A;color:#0C0D11;border-radius:9px;font-weight:700;font-size:13.5px;">En el gimnasio</div>
+                <div style="flex:1;text-align:center;padding:9px;color:#8A8F9C;font-weight:600;font-size:13.5px;">En casa</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:11px;">
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:60px;height:60px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:15.5px;">Press de banca</div><div style="color:#8A8F9C;font-size:12px;margin-top:1px;">Pectoral mayor · Tríceps</div><div style="display:flex;gap:6px;margin-top:6px;"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:2px 8px;border-radius:6px;">4×8-10</span><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:2px 8px;border-radius:6px;">2 sustitutos</span></div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:60px;height:60px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:15.5px;">Press inclinado c/ mancuernas</div><div style="color:#8A8F9C;font-size:12px;margin-top:1px;">Pectoral superior</div><div style="display:flex;gap:6px;margin-top:6px;"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:2px 8px;border-radius:6px;">3×10-12</span><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:2px 8px;border-radius:6px;">2 sustitutos</span></div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:60px;height:60px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:15.5px;">Aperturas en polea</div><div style="color:#8A8F9C;font-size:12px;margin-top:1px;">Pectoral · aislamiento</div><div style="display:flex;gap:6px;margin-top:6px;"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:2px 8px;border-radius:6px;">3×12-15</span><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:2px 8px;border-radius:6px;">2 sustitutos</span></div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:60px;height:60px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:15.5px;">Fondos en paralelas</div><div style="color:#8A8F9C;font-size:12px;margin-top:1px;">Pectoral inferior · Tríceps</div><div style="display:flex;gap:6px;margin-top:6px;"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:2px 8px;border-radius:6px;">3×máx</span><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:2px 8px;border-radius:6px;">2 sustitutos</span></div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+              </div>
+              <button style="width:100%;height:50px;margin-top:16px;background:rgba(255,255,255,0.06);color:#CDFF4A;border:1px dashed rgba(205,255,74,0.4);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;">+ Agregar seleccionados a una rutina</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 05 DETALLE EJERCICIO ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">05</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Detalle · Ejercicio</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="position:relative;height:270px;background:repeating-linear-gradient(125deg,#1e2129 0 12px,#171922 12px 24px);">
+              <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 4px;font-size:14px;font-weight:700;"><span style="width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:400;">‹</span><span></span></div>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(205,255,74,0.9);display:flex;align-items:center;justify-content:center;"><span style="border-left:16px solid #0C0D11;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;"></span></div></div>
+              <div style="position:absolute;bottom:10px;left:24px;color:#4c515d;font-family:'Courier New',monospace;font-size:11px;">[ video demostrativo ]</div>
+            </div>
+            <div style="padding:16px 24px 24px;height:calc(100% - 270px);overflow:hidden;">
+              <div style="display:flex;gap:7px;"><span style="font-size:11px;font-weight:700;color:#0C0D11;background:#CDFF4A;padding:3px 9px;border-radius:6px;">GIMNASIO</span><span style="font-size:11px;font-weight:600;color:#8A8F9C;background:#1D212B;padding:3px 9px;border-radius:6px;">Pecho</span></div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;margin-top:8px;">Press de banca</div>
+              <div style="display:flex;gap:10px;margin-top:12px;">
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:11px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:#CDFF4A;">4</div><div style="color:#8A8F9C;font-size:11px;">series</div></div>
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:11px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">8-10</div><div style="color:#8A8F9C;font-size:11px;">reps</div></div>
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:11px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">90s</div><div style="color:#8A8F9C;font-size:11px;">descanso</div></div>
+              </div>
+              <div style="margin-top:16px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Músculos que trabaja</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;"><span style="font-size:12.5px;background:#1D212B;padding:5px 11px;border-radius:8px;">Pectoral mayor</span><span style="font-size:12.5px;background:#1D212B;padding:5px 11px;border-radius:8px;">Tríceps</span><span style="font-size:12.5px;background:#1D212B;padding:5px 11px;border-radius:8px;">Deltoides ant.</span></div>
+              <div style="margin-top:16px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Registro · última sesión</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:12px 14px;"><span style="color:#8A8F9C;font-size:13px;">Último: <span style="color:#F4F5F7;font-weight:600;">60kg × 10</span></span><button style="background:#CDFF4A;color:#0C0D11;border:none;border-radius:9px;padding:7px 14px;font-weight:700;font-size:13px;">Registrar</button></div>
+              <button style="width:100%;height:52px;margin-top:16px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;">⇄ Ver sustitutivos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 06 SUSTITUTIVOS ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">06</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Sustitutivos · Gym + Casa</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;padding:0 24px 4px;font-size:14px;font-weight:700;"><span style="font-size:20px;font-weight:400;color:#8A8F9C;">‹</span></div>
+            <div style="padding:6px 24px 24px;height:100%;overflow:hidden;">
+              <div style="color:#8A8F9C;font-size:13px;">Sustitutos de</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;">Press de banca</div>
+              <p style="color:#8A8F9C;font-size:12.5px;margin-top:8px;line-height:1.4;">Mismo estímulo, distinto equipamiento. Elegí según dónde entrenes.</p>
+
+              <div style="display:flex;align-items:center;gap:8px;margin-top:18px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(205,255,74,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;">🏋</span><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:0.5px;">EN EL GIMNASIO</span></div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:11px;">
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:10px;"><div style="width:52px;height:52px;border-radius:11px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Press en máquina Smith</div><div style="color:#8A8F9C;font-size:11.5px;">Más control · principiantes</div></div><button style="background:rgba(205,255,74,0.14);color:#CDFF4A;border:1px solid rgba(205,255,74,0.35);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12px;">Sustituir</button></div>
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:10px;"><div style="width:52px;height:52px;border-radius:11px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Press con mancuernas</div><div style="color:#8A8F9C;font-size:11.5px;">Mayor rango de movimiento</div></div><button style="background:rgba(205,255,74,0.14);color:#CDFF4A;border:1px solid rgba(205,255,74,0.35);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12px;">Sustituir</button></div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:8px;margin-top:20px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(255,194,74,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;">🏠</span><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:0.5px;">EN CASA</span><span style="font-size:10.5px;color:#FFC24A;background:rgba(255,194,74,0.12);padding:2px 8px;border-radius:6px;">sin equipo</span></div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:11px;">
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:10px;"><div style="width:52px;height:52px;border-radius:11px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Flexiones lastradas</div><div style="color:#8A8F9C;font-size:11.5px;">Mochila con peso</div></div><button style="background:rgba(255,194,74,0.14);color:#FFC24A;border:1px solid rgba(255,194,74,0.35);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12px;">Sustituir</button></div>
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:10px;"><div style="width:52px;height:52px;border-radius:11px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Flexiones declinadas</div><div style="color:#8A8F9C;font-size:11.5px;">Pies elevados en silla</div></div><button style="background:rgba(255,194,74,0.14);color:#FFC24A;border:1px solid rgba(255,194,74,0.35);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12px;">Sustituir</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 07 MIS RUTINAS ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">07</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Rutinas · Crear</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+            <div style="padding:12px 24px 100px;height:100%;overflow:hidden;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-end;"><div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;line-height:1;">Mis rutinas</div><div style="color:#8A8F9C;font-size:13px;margin-top:2px;">4 rutinas creadas</div></div></div>
+              <button style="width:100%;height:52px;margin-top:16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;">＋ Crear rutina nueva</button>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+                <div style="background:#15171E;border:1px solid rgba(205,255,74,0.25);border-radius:18px;padding:15px;"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">Push · Empuje</div><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:3px 9px;border-radius:6px;">Activa</span></div><div style="color:#8A8F9C;font-size:12.5px;margin-top:3px;">Pecho · Hombros · Tríceps</div><div style="display:flex;gap:14px;margin-top:10px;color:#8A8F9C;font-size:12px;"><span>7 ejercicios</span><span>·</span><span>~55 min</span><span>·</span><span>Lun / Jue</span></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:15px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">Pull · Tracción</div><div style="color:#8A8F9C;font-size:12.5px;margin-top:3px;">Espalda · Bíceps</div><div style="display:flex;gap:14px;margin-top:10px;color:#8A8F9C;font-size:12px;"><span>6 ejercicios</span><span>·</span><span>~50 min</span><span>·</span><span>Mar / Vie</span></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:15px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">Pierna completa</div><div style="color:#8A8F9C;font-size:12.5px;margin-top:3px;">Cuádriceps · Femoral · Glúteo</div><div style="display:flex;gap:14px;margin-top:10px;color:#8A8F9C;font-size:12px;"><span>8 ejercicios</span><span>·</span><span>~60 min</span><span>·</span><span>Sáb</span></div></div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(12,13,17,0.94);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-around;align-items:flex-start;padding-top:14px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11 L12 4 L20 11 V20 H4 Z"/></svg>Inicio</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Grupos</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#CDFF4A;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Cuenta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 08 CONSTRUCTOR DE RUTINA ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">08</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Constructor de rutina</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 4px;font-size:14px;font-weight:700;"><span style="font-size:20px;font-weight:400;color:#8A8F9C;">✕</span><span style="color:#CDFF4A;">Guardar</span></div>
+            <div style="padding:6px 24px 24px;height:100%;overflow:hidden;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">Nueva rutina</div>
+              <div style="margin-top:14px;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:13px 14px;"><span style="color:#F4F5F7;font-weight:600;font-size:15px;">Push · Fuerza</span><span style="color:#5a5f6b;">|</span></div>
+              <div style="display:flex;gap:8px;margin-top:12px;">
+                <div style="flex:0 0 auto;padding:8px 13px;background:#CDFF4A;color:#0C0D11;border-radius:999px;font-size:12.5px;font-weight:700;">Lun</div>
+                <div style="flex:0 0 auto;padding:8px 13px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:12.5px;font-weight:600;">Mar</div>
+                <div style="flex:0 0 auto;padding:8px 13px;background:#CDFF4A;color:#0C0D11;border-radius:999px;font-size:12.5px;font-weight:700;">Jue</div>
+                <div style="flex:0 0 auto;padding:8px 13px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:12.5px;font-weight:600;">Vie</div>
+                <div style="flex:0 0 auto;padding:8px 13px;background:#1D212B;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:12.5px;font-weight:600;">Sáb</div>
+              </div>
+              <div style="margin-top:18px;font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Ejercicios · arrastrá para ordenar</div>
+              <div style="display:flex;flex-direction:column;gap:9px;margin-top:11px;">
+                <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px;"><span style="color:#5a5f6b;font-size:18px;letter-spacing:-2px;">⋮⋮</span><div style="width:44px;height:44px;border-radius:10px;background:repeating-linear-gradient(125deg,#232630 0 7px,#1b1e26 7px 14px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14px;">Press de banca</div><div style="color:#CDFF4A;font-size:11.5px;">4 × 8-10 · 90s</div></div><span style="color:#5a5f6b;font-size:16px;">▾</span></div>
+                <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px;"><span style="color:#5a5f6b;font-size:18px;letter-spacing:-2px;">⋮⋮</span><div style="width:44px;height:44px;border-radius:10px;background:repeating-linear-gradient(125deg,#232630 0 7px,#1b1e26 7px 14px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14px;">Press militar</div><div style="color:#CDFF4A;font-size:11.5px;">4 × 8 · 90s</div></div><span style="color:#5a5f6b;font-size:16px;">▾</span></div>
+                <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px;"><span style="color:#5a5f6b;font-size:18px;letter-spacing:-2px;">⋮⋮</span><div style="width:44px;height:44px;border-radius:10px;background:repeating-linear-gradient(125deg,#232630 0 7px,#1b1e26 7px 14px);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:700;font-size:14px;">Elevaciones laterales</div><div style="color:#CDFF4A;font-size:11.5px;">3 × 15 · 60s</div></div><span style="color:#5a5f6b;font-size:16px;">▾</span></div>
+              </div>
+              <button style="width:100%;height:50px;margin-top:14px;background:rgba(255,255,255,0.06);color:#CDFF4A;border:1px dashed rgba(205,255,74,0.4);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;">＋ Agregar ejercicio</button>
+              <div style="margin-top:12px;text-align:center;color:#6b7080;font-size:11.5px;">Cada ejercicio conserva sus sustitutivos gym + casa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 09 MY ACCOUNT ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#CDFF4A;">09</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">My Account · Cuota</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#CDFF4A;border-radius:1px;"></span></span></div>
+            <div style="padding:10px 24px 100px;height:100%;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:58px;height:58px;border-radius:18px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);border:1px solid rgba(255,255,255,0.08);flex:0 0 auto;"></div>
+                <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">Martín Gómez</div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #A-2481 · Plan Full</div></div>
+              </div>
+              <div style="margin-top:16px;border-radius:20px;padding:17px;background:linear-gradient(135deg,#CDFF4A,#a9e02f);color:#0C0D11;">
+                <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;">MEMBRESÍA</span><span style="font-size:11px;font-weight:700;background:rgba(12,13,17,0.15);padding:3px 9px;border-radius:6px;">ACTIVA</span></div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;margin-top:10px;">Vence el 12 Jul 2026</div>
+                <div style="height:7px;background:rgba(12,13,17,0.18);border-radius:99px;margin-top:12px;overflow:hidden;"><div style="width:62%;height:100%;background:#0C0D11;border-radius:99px;"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-top:7px;font-size:12px;font-weight:600;"><span>12 días restantes</span><span>Renovar</span></div>
+              </div>
+              <div style="display:flex;gap:11px;margin-top:14px;">
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;"><div style="color:#8A8F9C;font-size:11.5px;">Próximo pago</div><div style="font-weight:700;font-size:15px;margin-top:2px;">$18.500</div></div>
+                <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;"><div style="color:#8A8F9C;font-size:11.5px;">Débito</div><div style="font-weight:700;font-size:15px;margin-top:2px;">Visa ••42</div></div>
+              </div>
+              <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;">NOVEDADES DEL GYM</span><span style="color:#CDFF4A;font-size:12px;">Ver todo</span></div>
+              <div style="display:flex;flex-direction:column;gap:9px;margin-top:11px;">
+                <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(205,255,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Feriado: horario reducido</div><div style="color:#8A8F9C;font-size:11.5px;">9 Jul · abrimos 8-14h</div></div></div>
+                <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(255,194,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Nueva sala de funcional</div><div style="color:#8A8F9C;font-size:11.5px;">Ya disponible · piso 2</div></div></div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(12,13,17,0.94);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-around;align-items:flex-start;padding-top:14px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11 L12 4 L20 11 V20 H4 Z"/></svg>Inicio</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Grupos</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#8A8F9C;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;color:#CDFF4A;font-size:11px;font-weight:600;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Cuenta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 10 PLAN PERSONALIZADO ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#FFC24A;">10</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Plan personalizado · Trainer</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#FFC24A;border-radius:1px;"></span></span></div>
+            <div style="padding:10px 24px 24px;height:100%;overflow:hidden;">
+              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,194,74,0.12);border:1px solid rgba(255,194,74,0.3);border-radius:999px;padding:5px 12px;"><span style="color:#FFC24A;font-size:12px;font-weight:700;letter-spacing:1px;">✦ PERSONALIZADO</span></div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:29px;margin-top:10px;line-height:1;">Entrená con tu<br>profe asignado</div>
+              <div style="margin-top:16px;background:#15171E;border:1px solid rgba(255,194,74,0.25);border-radius:20px;padding:15px;display:flex;gap:13px;align-items:center;">
+                <div style="width:56px;height:56px;border-radius:16px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div>
+                <div style="flex:1;"><div style="font-weight:700;font-size:16px;">Lucía Fernández</div><div style="color:#8A8F9C;font-size:12px;">Tu personal trainer</div><div style="color:#FFC24A;font-size:11.5px;margin-top:3px;">● Disponible ahora</div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:11px;margin-top:14px;">
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">🏋</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Rutina a medida</div><div style="color:#8A8F9C;font-size:11.5px;">Según tu objetivo y nivel</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">🥗</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Plan de comidas</div><div style="color:#8A8F9C;font-size:11.5px;">Calorías y macros a tu medida</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">💬</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Chat con tu profe</div><div style="color:#8A8F9C;font-size:11.5px;">Dudas y ajustes cuando quieras</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+                <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">📸</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Seguimiento y fotos</div><div style="color:#8A8F9C;font-size:11.5px;">Progreso semana a semana</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+              </div>
+              <button style="width:100%;height:54px;margin-top:16px;background:#FFC24A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15.5px;">Solicitar plan personalizado</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 11 ACCESO LIBRE ============ -->
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:#8A8F9C;">FREE</span><span style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8F9C;">Acceso libre · 10%</span></div>
+        <div class="ph">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#000;border-radius:18px;z-index:20;"></div>
+          <div class="scr">
+            <div style="height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font-size:14px;font-weight:700;"><span>9:41</span><span style="width:24px;height:12px;border:1.5px solid #F4F5F7;border-radius:3px;position:relative;display:inline-block;"><span style="position:absolute;top:2px;bottom:2px;left:2px;right:7px;background:#8A8F9C;border-radius:1px;"></span></span></div>
+            <div style="padding:12px 24px 24px;height:100%;overflow:hidden;">
+              <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">Modo gratuito</div><span style="font-size:11px;color:#8A8F9C;background:#1D212B;padding:4px 10px;border-radius:7px;">Vista previa</span></div>
+              <p style="color:#8A8F9C;font-size:13px;margin-top:4px;line-height:1.4;">Un ejercicio por grupo. Sin rutinas, sin sustitutivos, sin registro.</p>
+              <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px;">
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:56px;height:56px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="color:#8A8F9C;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Pecho</div><div style="font-weight:700;font-size:15px;">Press de banca</div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:56px;height:56px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="color:#8A8F9C;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Espalda</div><div style="font-weight:700;font-size:15px;">Dominadas</div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+                <div style="display:flex;gap:13px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;"><div style="width:56px;height:56px;border-radius:12px;background:repeating-linear-gradient(125deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div><div style="flex:1;"><div style="color:#8A8F9C;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Piernas</div><div style="font-weight:700;font-size:15px;">Sentadilla</div></div><span style="color:#5a5f6b;font-size:20px;">›</span></div>
+              </div>
+              <div style="position:relative;margin-top:14px;">
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;display:flex;gap:13px;align-items:center;filter:blur(3px);opacity:0.5;"><div style="width:56px;height:56px;border-radius:12px;background:#232630;"></div><div style="flex:1;"><div style="height:10px;width:70px;background:#2a2e38;border-radius:4px;"></div><div style="height:14px;width:130px;background:#2a2e38;border-radius:4px;margin-top:8px;"></div></div></div>
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:11px;display:flex;gap:13px;align-items:center;filter:blur(3px);opacity:0.4;margin-top:11px;"><div style="width:56px;height:56px;border-radius:12px;background:#232630;"></div><div style="flex:1;"><div style="height:10px;width:70px;background:#2a2e38;border-radius:4px;"></div><div style="height:14px;width:110px;background:#2a2e38;border-radius:4px;margin-top:8px;"></div></div></div>
+              </div>
+              <div style="margin-top:16px;background:linear-gradient(135deg,rgba(205,255,74,0.14),rgba(205,255,74,0.05));border:1px solid rgba(205,255,74,0.3);border-radius:18px;padding:16px;text-align:center;">
+                <div style="font-size:22px;">🔒</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;margin-top:6px;">Hacete socio para desbloquear todo</div>
+                <div style="color:#8A8F9C;font-size:12px;margin-top:3px;">Rutinas, sustitutivos, registro y plan del profe</div>
+                <button style="width:100%;height:48px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;">Ver planes del gimnasio</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>
