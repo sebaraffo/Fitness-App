@@ -6,12 +6,12 @@ Prototipo navegable de la app del gimnasio **Space Fitness**: ejercicios por gru
 
 | Archivo | Qué es |
 |---|---|
-| `Space Fitness App.dc.html` | **Fuente principal** de la app (editá este) |
+| `space-fitness-app.dc.html` | **Fuente principal** de la app (editá este) |
 | `support.js` | Runtime que hace funcionar el `.dc.html` (no editar) |
 | `sf-images.js` | Imágenes de grupos musculares embebidas como data-URIs |
 | `assets/` | Logo, póster del login y imágenes generadas |
-| `Space Fitness App (celular).html` | **Versión empaquetada en un solo archivo** — funciona sola, ideal para compartir o abrir en el celular |
-| `Volt Gym App.dc.html` | Storyboard original (referencia de diseño) |
+| `space-fitness-app-celular.html` | **Versión empaquetada en un solo archivo** — funciona sola, ideal para compartir o abrir en el celular |
+| `volt-gym-app.dc.html` | Storyboard original (referencia de diseño) |
 
 ## Cómo correrlo local
 
@@ -25,9 +25,9 @@ python3 -m http.server 8000
 npx serve .
 ```
 
-Después abrí `http://localhost:8000/Space%20Fitness%20App.dc.html` en el navegador.
+Después abrí `http://localhost:8000/space-fitness-app.dc.html` en el navegador.
 
-> La versión `Space Fitness App (celular).html` sí funciona con doble click — es un único archivo autocontenido.
+> La versión `space-fitness-app-celular.html` sí funciona con doble click — es un único archivo autocontenido.
 
 ## Datos útiles del demo
 
@@ -38,7 +38,7 @@ Después abrí `http://localhost:8000/Space%20Fitness%20App.dc.html` en el naveg
 
 ## Cómo editarlo
 
-Todo el código de la app está en `Space Fitness App.dc.html`:
+Todo el código de la app está en `space-fitness-app.dc.html`:
 - El **HTML de las pantallas** está dentro de `<x-dc>…</x-dc>` (estilos inline)
 - La **lógica** (navegación, estado, rutinas, timers, audio, QR) está en la clase `Component` dentro del `<script data-dc-script>`
 - Los **datos de ejercicios** (grupos, sustitutivos, videos) están en `this.data` dentro de esa clase
@@ -57,7 +57,7 @@ git branch -M main
 git push -u origin main
 ```
 
-Para publicarlo gratis con **GitHub Pages**: Settings → Pages → Deploy from branch → `main` / root. La app queda en `https://TU_USUARIO.github.io/space-fitness-app/Space%20Fitness%20App.dc.html`.
+Para publicarlo gratis con **GitHub Pages**: Settings → Pages → Deploy from branch → `main` / root. La app queda en `https://sebaraffo.github.io/Fitness-App/space-fitness-app-celular.html`.
 
 ## Próximos pasos sugeridos (producción real)
 
