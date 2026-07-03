@@ -944,7 +944,7 @@ class Component extends DCLogic {
       displayName: s.profileName || 'Socio Space',
       hasAvatarPhoto: !!s.profilePhoto, noAvatarPhoto: !s.profilePhoto,
       avatarRef: bgRef(s.profilePhoto || ''),
-      showTabs: s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker',
+      showTabs: s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker' && s.screen !== 'onboarding',
       expired, daysLeft, paidUntilText, memColor,
       memLabel: expired ? 'VENCIDA' : (daysLeft <= 5 ? 'POR VENCER' : 'ACTIVA'),
       chipBg: tint(0.12), chipBorder: tint(0.32), chipText: expired ? 'Cuota vencida · renová para entrenar' : ('Socio activo · vence en ' + daysLeft + (daysLeft === 1 ? ' día' : ' días')),
