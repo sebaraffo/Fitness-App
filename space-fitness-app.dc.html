@@ -1012,7 +1012,7 @@ class Component extends DCLogic {
       if (snap.empty) { this.setState({ staffSearchBusy: false, staffSearchError: 'No se encontró ningún socio con ese email.' }); return; }
       const doc = snap.docs[0];
       const d = doc.data();
-      this.setState({ staffSearchBusy: false, staffFoundMember: { uid: doc.id, name: d.name || '(sin nombre)', email: d.email, ci: d.ci || '—', address: d.address || '—', paidUntil: d.paidUntil || 0 } });
+      this.setState({ staffSearchBusy: false, staffSearchError: '', staffFoundMember: { uid: doc.id, name: d.name || '(sin nombre)', email: d.email, ci: d.ci || '—', address: d.address || '—', paidUntil: d.paidUntil || 0 } });
     }).catch(() => this.setState({ staffSearchBusy: false, staffSearchError: 'No se pudo buscar. Probá de nuevo.' }));
   }
   staffMarkFoundPaid() {
