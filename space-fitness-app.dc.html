@@ -462,7 +462,7 @@
               <div style="position:absolute;bottom:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:#CDFF4A;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #0C0D11;">✎</div>
               <input type="file" accept="image/*" onChange="{{ setProfilePhoto }}" style="position:absolute;inset:0;opacity:0;cursor:pointer;">
             </label>
-            <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">{{ displayName }}</div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #{{ memberNumberVal }} · Plan Full</div></div>
+            <div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">{{ displayName }}</div><span onClick="{{ openProfileEdit }}" style="color:#8A8F9C;font-size:12px;cursor:pointer;text-decoration:underline;">Editar</span></div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #{{ memberNumberVal }} · Plan Full</div></div>
           </div>
           <div style="margin-top:16px;border-radius:20px;padding:17px;background:{{ memCardBg }};color:{{ memCardFg }};">
             <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;">MEMBRESÍA</span><span style="font-size:11px;font-weight:700;background:{{ memBadgeBg }};padding:3px 9px;border-radius:6px;">{{ memLabel }}</span></div>
@@ -514,7 +514,7 @@
               <div style="margin-top:16px;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:17px;">
                 <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">{{ foundMemberName }}</div>
                 <div style="color:#8A8F9C;font-size:12.5px;margin-top:2px;">{{ foundMemberEmail }}</div>
-                <div style="color:#8A8F9C;font-size:12px;margin-top:4px;">N° {{ foundMemberNumber }} · CI: {{ foundMemberCI }} · {{ foundMemberAddress }}</div>
+                <div style="color:#8A8F9C;font-size:12px;margin-top:4px;">N° {{ foundMemberNumber }} · CI: {{ foundMemberCI }} <span onClick="{{ openStaffEditCI }}" style="color:#CDFF4A;text-decoration:underline;cursor:pointer;">(editar)</span> · {{ foundMemberAddress }}</div>
                 <div style="font-size:13px;margin-top:7px;font-weight:700;color:{{ foundMemberStatusColor }};">{{ foundMemberStatus }}</div>
                 <button onClick="{{ staffMarkFoundPaid }}" style="width:100%;height:50px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;">✓ Marcar cuota pagada (+30 días)</button>
                 <button onClick="{{ staffGenerateCode }}" style="width:100%;height:46px;margin-top:9px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Generar código de renovación</button>
@@ -746,6 +746,39 @@
         </div>
       </sc-if>
 
+      <!-- ============ EDITAR PERFIL (modal) ============ -->
+      <sc-if value="{{ profileEditOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:55;background:rgba(6,7,10,0.8);display:flex;align-items:center;justify-content:center;padding:26px;">
+          <div style="width:100%;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;">Editar perfil</div><span onClick="{{ closeProfileEdit }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
+            <div style="margin-top:14px;">
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:7px;">Nombre y apellido</div>
+              <input type="text" value="{{ profileEditNameVal }}" onChange="{{ setProfileEditName }}" placeholder="Nombre y apellido" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+            </div>
+            <div style="margin-top:12px;">
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:7px;">Dirección</div>
+              <input type="text" value="{{ profileEditAddressVal }}" onChange="{{ setProfileEditAddress }}" placeholder="Dirección" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+            </div>
+            <sc-if value="{{ hasProfileEditError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12.5px;margin-top:12px;">{{ profileEditErrorMsg }}</div></sc-if>
+            <button onClick="{{ submitProfileEdit }}" style="width:100%;height:50px;margin-top:16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">{{ profileEditSubmitLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ STAFF: EDITAR CÉDULA DEL SOCIO (modal) ============ -->
+      <sc-if value="{{ staffEditCIOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:56;background:rgba(6,7,10,0.8);display:flex;align-items:center;justify-content:center;padding:26px;">
+          <div style="width:100%;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">Corregir cédula</div><span onClick="{{ closeStaffEditCI }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
+            <div style="margin-top:14px;">
+              <input type="text" value="{{ staffEditCIVal }}" onChange="{{ setStaffEditCI }}" placeholder="Ej: 4.123.456-7" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+            </div>
+            <sc-if value="{{ hasStaffEditCIError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12.5px;margin-top:12px;">{{ staffEditCIErrorMsg }}</div></sc-if>
+            <button onClick="{{ submitStaffEditCI }}" style="width:100%;height:48px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;">{{ staffEditCISubmitLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+
       <!-- ============ CAMBIAR CONTRASEÑA (modal) ============ -->
       <sc-if value="{{ pwChangeOpen }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;z-index:55;background:rgba(6,7,10,0.8);display:flex;align-items:center;justify-content:center;padding:26px;">
@@ -824,6 +857,8 @@ class Component extends DCLogic {
     userRole: 'member', staffTab: 'members',
     officialRoutines: [], activeOfficialId: null, viewOfficialId: null, viewOfficialDay: null, officialProgress: {},
     pwChangeOpen: false, pwCurrent: '', pwNew: '', pwConfirm: '', pwError: '', pwBusy: false, pwSuccess: false,
+    profileEditOpen: false, profileEditName: '', profileEditAddress: '', profileEditError: '', profileEditBusy: false,
+    staffEditCIOpen: false, staffEditCIVal: '', staffEditCIError: '', staffEditCIBusy: false,
     exerciseProgress: {}, workoutRoutineId: null, workoutRoutineName: '', workoutList: [],
     builderIsOfficial: false, builderLevel: 'principiante',
     routines: [
@@ -972,6 +1007,35 @@ class Component extends DCLogic {
         const map = { 'auth/wrong-password': 'La contraseña actual es incorrecta.', 'auth/invalid-credential': 'La contraseña actual es incorrecta.', 'auth/weak-password': 'La contraseña nueva es muy débil.', 'auth/too-many-requests': 'Demasiados intentos. Probá de nuevo en unos minutos.' };
         this.setState({ pwBusy: false, pwError: map[err.code] || 'No se pudo cambiar la contraseña. Probá de nuevo.' });
       });
+  }
+  openProfileEdit() { this.setState({ profileEditOpen: true, profileEditName: this.state.profileName, profileEditAddress: this.state.profileAddress, profileEditError: '' }); }
+  closeProfileEdit() { this.setState({ profileEditOpen: false, profileEditError: '' }); }
+  setProfileEditName(ev) { this.setState({ profileEditName: ev.target.value, profileEditError: '' }); }
+  setProfileEditAddress(ev) { this.setState({ profileEditAddress: ev.target.value, profileEditError: '' }); }
+  submitProfileEdit() {
+    const name = this.state.profileEditName.trim();
+    const address = this.state.profileEditAddress.trim();
+    if (!name || !address) { this.setState({ profileEditError: 'Completá nombre y dirección.' }); return; }
+    const user = this.state.authUser;
+    this.setState({ profileEditBusy: true, profileEditError: '' });
+    const proceed = () => this.setState({ profileEditBusy: false, profileEditOpen: false, profileName: name, profileAddress: address }, () => this.persist());
+    if (user) {
+      window.sfDb.collection('users').doc(user.uid).set({ name, address }, { merge: true }).then(proceed).catch(() => this.setState({ profileEditBusy: false, profileEditError: 'No se pudo guardar. Probá de nuevo.' }));
+      return;
+    }
+    proceed();
+  }
+  openStaffEditCI() { const m = this.state.staffFoundMember; this.setState({ staffEditCIOpen: true, staffEditCIVal: m ? m.ci : '', staffEditCIError: '' }); }
+  closeStaffEditCI() { this.setState({ staffEditCIOpen: false, staffEditCIError: '' }); }
+  setStaffEditCI(ev) { this.setState({ staffEditCIVal: ev.target.value, staffEditCIError: '' }); }
+  submitStaffEditCI() {
+    const m = this.state.staffFoundMember; if (!m) return;
+    const ci = this.state.staffEditCIVal.trim();
+    if (!ci) { this.setState({ staffEditCIError: 'Ingresá una cédula válida.' }); return; }
+    this.setState({ staffEditCIBusy: true, staffEditCIError: '' });
+    window.sfDb.collection('users').doc(m.uid).update({ ci }).then(() => {
+      this.setState({ staffEditCIBusy: false, staffEditCIOpen: false, staffFoundMember: { ...m, ci } });
+    }).catch(() => this.setState({ staffEditCIBusy: false, staffEditCIError: 'No se pudo guardar. Probá de nuevo.' }));
   }
   syncPaidUntil() {
     const user = this.state.authUser;
@@ -1535,6 +1599,15 @@ class Component extends DCLogic {
       pwConfirmVal: s.pwConfirm, setPwConfirm: (ev) => this.setPwConfirm(ev),
       hasPwError: !!s.pwError, pwErrorMsg: s.pwError, pwSuccess: s.pwSuccess, submitPwChange: () => this.submitPwChange(),
       pwSubmitLabel: s.pwBusy ? 'Guardando…' : 'Guardar contraseña',
+      profileEditOpen: s.profileEditOpen, openProfileEdit: () => this.openProfileEdit(), closeProfileEdit: () => this.closeProfileEdit(),
+      profileEditNameVal: s.profileEditName, setProfileEditName: (ev) => this.setProfileEditName(ev),
+      profileEditAddressVal: s.profileEditAddress, setProfileEditAddress: (ev) => this.setProfileEditAddress(ev),
+      hasProfileEditError: !!s.profileEditError, profileEditErrorMsg: s.profileEditError,
+      submitProfileEdit: () => this.submitProfileEdit(), profileEditSubmitLabel: s.profileEditBusy ? 'Guardando…' : 'Guardar cambios',
+      staffEditCIOpen: s.staffEditCIOpen, openStaffEditCI: () => this.openStaffEditCI(), closeStaffEditCI: () => this.closeStaffEditCI(),
+      staffEditCIVal: s.staffEditCIVal, setStaffEditCI: (ev) => this.setStaffEditCI(ev),
+      hasStaffEditCIError: !!s.staffEditCIError, staffEditCIErrorMsg: s.staffEditCIError,
+      submitStaffEditCI: () => this.submitStaffEditCI(), staffEditCISubmitLabel: s.staffEditCIBusy ? 'Guardando…' : 'Guardar cédula',
       expired, notExpired: !expired, daysLeft, paidUntilText, memColor,
       memLabel: expired ? 'VENCIDA' : (daysLeft <= 5 ? 'POR VENCER' : 'ACTIVA'),
       chipBg: tint(0.12), chipBorder: tint(0.32), chipText: expired ? 'Cuota vencida · renová para entrenar' : ('Socio activo · vence en ' + daysLeft + (daysLeft === 1 ? ' día' : ' días')),
