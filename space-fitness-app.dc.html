@@ -582,6 +582,26 @@
         </div>
       </sc-if>
 
+      <!-- ============ LISTA DE EJERCICIOS DEL ENTRENAMIENTO ============ -->
+      <sc-if value="{{ isWorkoutList }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:56px 24px 108px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;"><span onClick="{{ goHome }}" style="font-size:26px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">{{ workoutRoutineNameVal }}</div></div>
+          <p style="color:#8A8F9C;font-size:13px;margin-bottom:16px;">Tocá un ejercicio para empezar o retomar donde quedaste.</p>
+          <div style="display:flex;flex-direction:column;gap:11px;">
+            <sc-for list="{{ workoutListView }}" as="e" hint-placeholder-count="4">
+              <div onClick="{{ e.open }}" style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;cursor:pointer;" style-hover="border-color:rgba(205,255,74,0.4);">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+                  <div style="font-weight:700;font-size:15.5px;">{{ e.name }}</div>
+                  <span style="font-size:11px;font-weight:700;color:{{ e.pctColor }};">{{ e.statusLabel }}</span>
+                </div>
+                <div style="color:#8A8F9C;font-size:12px;margin-top:2px;">{{ e.doneCount }}/{{ e.sets }} series · {{ e.reps }} reps</div>
+                <div style="height:6px;background:#1D212B;border-radius:99px;overflow:hidden;margin-top:9px;"><div style="height:100%;width:{{ e.pct }};background:{{ e.barColor }};border-radius:99px;"></div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
       <!-- ============ MODO ENTRENAMIENTO ============ -->
       <sc-if value="{{ isWorkout }}" hint-placeholder-val="{{ false }}">
         <div class="screen" style="padding:0;background:#0C0D11;">
@@ -622,9 +642,9 @@
           <sc-if value="{{ wk.isDone }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
               <div style="width:88px;height:88px;border-radius:50%;background:rgba(205,255,74,0.14);border:2px solid #CDFF4A;display:flex;align-items:center;justify-content:center;font-size:44px;color:#CDFF4A;">✓</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;margin-top:20px;line-height:1;">¡Entrenamiento<br>completado!</div>
-              <div style="color:#8A8F9C;font-size:14px;margin-top:12px;">{{ wk.doneCount }} ejercicios · {{ wk.rName }}</div>
-              <button onClick="{{ wkExit }}" style="width:100%;height:56px;margin-top:34px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Volver al inicio</button>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;margin-top:20px;line-height:1;">¡Ejercicio<br>completado!</div>
+              <div style="color:#8A8F9C;font-size:14px;margin-top:12px;">{{ wk.exName }} · {{ wk.rName }}</div>
+              <button onClick="{{ wkExit }}" style="width:100%;height:56px;margin-top:34px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Volver a ejercicios</button>
             </div>
           </sc-if>
         </div>
@@ -775,6 +795,7 @@ class Component extends DCLogic {
     renewCode: '', renewError: '', renewBusy: false, renewOk: false,
     userRole: 'member', staffTab: 'members',
     officialRoutines: [], activeOfficialId: null, viewOfficialId: null, viewOfficialDay: null, officialProgress: {},
+    exerciseProgress: {}, workoutRoutineId: null, workoutRoutineName: '', workoutList: [],
     builderIsOfficial: false, builderLevel: 'principiante',
     routines: [
       { id: 'r1', name: 'Push · Empuje', days: ['Lun', 'Jue'], active: true, schedule: {
@@ -791,7 +812,7 @@ class Component extends DCLogic {
   componentDidMount() {
     try {
       const raw = localStorage.getItem('sf_state_v1');
-      if (raw) { const d = JSON.parse(raw); const mig = (arr) => (arr || []).map(r => { if (r.schedule) return r; const days = (r.days && r.days.length) ? r.days : ((r.ex && r.ex.length) ? ['Lun'] : []); const schedule = {}; days.forEach(dd => schedule[dd] = (r.ex || []).map(x => ({ ...x }))); return { ...r, days, schedule }; }); this.setState({ routines: (d.routines && d.routines.length) ? mig(d.routines) : this.state.routines, logs: d.logs || {}, swap: d.swap || {}, sessions: d.sessions || [], paidUntil: d.paidUntil || this.state.paidUntil, onboardingDone: !!d.onboardingDone, profileName: d.profileName || '', profilePhoto: d.profilePhoto || '', officialProgress: d.officialProgress || {} }); }
+      if (raw) { const d = JSON.parse(raw); const mig = (arr) => (arr || []).map(r => { if (r.schedule) return r; const days = (r.days && r.days.length) ? r.days : ((r.ex && r.ex.length) ? ['Lun'] : []); const schedule = {}; days.forEach(dd => schedule[dd] = (r.ex || []).map(x => ({ ...x }))); return { ...r, days, schedule }; }); this.setState({ routines: (d.routines && d.routines.length) ? mig(d.routines) : this.state.routines, logs: d.logs || {}, swap: d.swap || {}, sessions: d.sessions || [], paidUntil: d.paidUntil || this.state.paidUntil, onboardingDone: !!d.onboardingDone, profileName: d.profileName || '', profilePhoto: d.profilePhoto || '', officialProgress: d.officialProgress || {}, exerciseProgress: d.exerciseProgress || {} }); }
     } catch (e) {}
     if (window.sfAuth) {
       window.sfAuth.onAuthStateChanged((user) => {
@@ -817,7 +838,7 @@ class Component extends DCLogic {
       });
     }
   }
-  persist() { try { localStorage.setItem('sf_state_v1', JSON.stringify({ routines: this.state.routines, logs: this.state.logs, swap: this.state.swap, sessions: this.state.sessions, paidUntil: this.state.paidUntil, onboardingDone: this.state.onboardingDone, profileName: this.state.profileName, profilePhoto: this.state.profilePhoto, officialProgress: this.state.officialProgress })); } catch (e) {} }
+  persist() { try { localStorage.setItem('sf_state_v1', JSON.stringify({ routines: this.state.routines, logs: this.state.logs, swap: this.state.swap, sessions: this.state.sessions, paidUntil: this.state.paidUntil, onboardingDone: this.state.onboardingDone, profileName: this.state.profileName, profilePhoto: this.state.profilePhoto, officialProgress: this.state.officialProgress, exerciseProgress: this.state.exerciseProgress })); } catch (e) {} }
   recordSession(ses) { const d = new Date(); const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const date = d.getDate() + ' ' + months[d.getMonth()]; const exNames = ses.list.map(x => x.name); this.setState(s => ({ sessions: [{ id: 's' + Date.now(), date, rName: ses.rName, exCount: ses.list.length, exNames }, ...s.sessions] }), () => this.persist()); }
   nav(screen) { this.setState({ screen }); }
   enterApp(target) { if (!this.state.onboardingDone) { this.setState({ screen: 'onboarding', onboardTarget: target }); } else { this.nav(target); } }
@@ -1009,24 +1030,46 @@ class Component extends DCLogic {
       return { officialProgress: { ...s.officialProgress, [rid]: routineMap } };
     }, () => this.persist());
   }
-  startWorkout(routineId) {
-    const r = [...this.state.routines, ...this.state.officialRoutines].find(x => x.id === routineId) || this.state.routines[0];
-    if (!r) return;
+  todayKey() { return new Date().toISOString().slice(0, 10); }
+  getSetsDoneToday(exId) { const day = this.state.exerciseProgress[this.todayKey()] || {}; return day[exId] || 0; }
+  buildTodayList(r) {
     const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
     const today = DOW[new Date().getDay()];
     let exArr = [];
     if (r.schedule) { const day = (r.days || []).includes(today) ? today : (r.days || [])[0]; exArr = (day && r.schedule[day]) ? r.schedule[day] : []; if (!exArr.length) { (r.days || []).forEach(dd => { if (!exArr.length && r.schedule[dd] && r.schedule[dd].length) exArr = r.schedule[dd]; }); } } else { exArr = r.ex || []; }
     const flat = {}; this.data.forEach(g => g.exercises.forEach(e => flat[e.id] = { name: e.name, gid: g.id }));
-    const list = exArr.map(x => { const f = flat[x.id] || { name: x.id, gid: 'pecho' }; const m = String(x.rest || '').match(/\d+/); return { id: x.id, name: f.name, gid: f.gid, sets: (typeof x.sets === 'number' ? x.sets : 1), reps: x.reps, restSec: m ? parseInt(m[0]) : 60 }; });
+    return exArr.map(x => { const f = flat[x.id] || { name: x.id, gid: 'pecho' }; const m = String(x.rest || '').match(/\d+/); return { id: x.id, name: f.name, gid: f.gid, sets: (typeof x.sets === 'number' ? x.sets : 1), reps: x.reps, restSec: m ? parseInt(m[0]) : 60 }; });
+  }
+  openWorkoutList(routineId) {
+    const r = [...this.state.routines, ...this.state.officialRoutines].find(x => x.id === routineId) || this.state.routines[0];
+    if (!r) return;
+    const list = this.buildTodayList(r);
     if (!list.length) return;
-    this.clearTimer(); this.initAudio();
     try { if (window.Notification && Notification.permission === 'default') Notification.requestPermission(); } catch (e) {}
-    this.setState({ screen: 'workout', session: { rName: r.name, list, i: 0, set: 0, phase: 'work', remaining: 0 } });
+    this.setState({ screen: 'workoutList', workoutRoutineId: r.id, workoutRoutineName: r.name, workoutList: list });
+  }
+  enterExercise(exId) {
+    const ex = this.state.workoutList.find(x => x.id === exId);
+    if (!ex) return;
+    const done = this.getSetsDoneToday(exId);
+    const startSet = done >= ex.sets ? 0 : done;
+    this.clearTimer(); this.initAudio();
+    this.setState({ screen: 'workout', session: { rName: this.state.workoutRoutineName, list: [ex], i: 0, set: startSet, phase: 'work', remaining: 0 } });
   }
   completeSet() {
     this.initAudio();
-    this.setState(s => { const ses = s.session; if (!ses) return {}; const cur = ses.list[ses.i]; const isLastSet = ses.set >= cur.sets - 1; const isLastEx = ses.i >= ses.list.length - 1; if (isLastSet && isLastEx) { this.clearTimer(); return { session: { ...ses, phase: 'done' } }; } return { session: { ...ses, phase: 'rest', remaining: cur.restSec } }; },
-      () => { if (this.state.session && this.state.session.phase === 'rest') this.startTimer(); else if (this.state.session && this.state.session.phase === 'done') this.recordSession(this.state.session); });
+    this.setState(s => {
+      const ses = s.session; if (!ses) return {};
+      const cur = ses.list[ses.i];
+      const dateKey = this.todayKey();
+      const dayMap = { ...(s.exerciseProgress[dateKey] || {}) };
+      dayMap[cur.id] = Math.min((dayMap[cur.id] || 0) + 1, cur.sets);
+      const exerciseProgress = { ...s.exerciseProgress, [dateKey]: dayMap };
+      const isLastSet = ses.set >= cur.sets - 1;
+      const isLastEx = ses.i >= ses.list.length - 1;
+      if (isLastSet && isLastEx) { this.clearTimer(); return { session: { ...ses, phase: 'done' }, exerciseProgress }; }
+      return { session: { ...ses, phase: 'rest', remaining: cur.restSec }, exerciseProgress };
+    }, () => { this.persist(); if (this.state.session && this.state.session.phase === 'rest') this.startTimer(); else if (this.state.session && this.state.session.phase === 'done') this.recordSession(this.state.session); });
   }
   tick() {
     this.setState(s => { const ses = s.session; if (!ses || ses.phase !== 'rest') return {}; return { session: { ...ses, remaining: Math.max(0, ses.remaining - 1) } }; },
@@ -1038,7 +1081,7 @@ class Component extends DCLogic {
   }
   skipRest() { this.advance(); }
   addRest(sec) { this.setState(s => { const ses = s.session; if (!ses || ses.phase !== 'rest') return {}; return { session: { ...ses, remaining: ses.remaining + sec } }; }); }
-  exitWorkout() { this.clearTimer(); this.setState({ screen: 'home', session: null }); }
+  exitWorkout() { this.clearTimer(); this.setState({ screen: 'workoutList', session: null }); }
   renew(months) { this.setState(s => ({ paidUntil: Math.max(Date.now(), s.paidUntil) + (months || 1) * 30 * 86400000 }), () => { this.persist(); this.syncPaidUntil(); }); }
   expireDemo() { this.setState({ paidUntil: Date.now() - 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '' }, () => { this.persist(); this.syncPaidUntil(); }); }
   openStaff() { this.setState({ staffOpen: true, staffAuthed: false, staffPinInput: '', staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffGeneratedCode: '' }); }
@@ -1432,7 +1475,7 @@ class Component extends DCLogic {
       displayName: s.profileName || 'Socio Space', memberNumberVal: s.memberNumber || '—',
       hasAvatarPhoto: !!s.profilePhoto, noAvatarPhoto: !s.profilePhoto,
       avatarRef: bgRef(s.profilePhoto || ''),
-      showTabs: !isStaff && s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker' && s.screen !== 'onboarding' && s.screen !== 'staffPanel' && !(s.screen === 'builder' && s.builderIsOfficial),
+      showTabs: !isStaff && s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'workoutList' && s.screen !== 'picker' && s.screen !== 'onboarding' && s.screen !== 'staffPanel' && !(s.screen === 'builder' && s.builderIsOfficial),
       showStaffTabs: isStaff && s.screen !== 'login' && s.screen !== 'builder',
       logoutClick: () => this.signOutUser(),
       expired, notExpired: !expired, daysLeft, paidUntilText, memColor,
@@ -1465,8 +1508,20 @@ class Component extends DCLogic {
       foundMemberStatusColor: s.staffFoundMember ? (s.staffFoundMember.paidUntil > Date.now() ? '#CDFF4A' : '#FF8080') : '#8A8F9C',
       staffMarkFoundPaid: () => this.staffMarkFoundPaid(), staffGenerateCode: () => this.staffGenerateCode(),
       hasGeneratedCode: !!s.staffGeneratedCode, staffGeneratedCodeVal: s.staffGeneratedCode,
+      isWorkoutList: s.screen === 'workoutList', workoutRoutineNameVal: s.workoutRoutineName,
+      workoutListView: s.workoutList.map(ex => {
+        const done = Math.min(this.getSetsDoneToday(ex.id), ex.sets);
+        const pct = ex.sets ? Math.round((done / ex.sets) * 100) : 0;
+        return {
+          id: ex.id, name: ex.name, sets: ex.sets, reps: ex.reps, doneCount: done, pct: pct + '%',
+          pctColor: pct >= 100 ? '#CDFF4A' : (pct > 0 ? '#FFC24A' : '#8A8F9C'),
+          barColor: pct >= 100 ? '#CDFF4A' : '#FFC24A',
+          statusLabel: pct >= 100 ? '✓ Completo' : (pct > 0 ? 'Retomar' : 'Empezar'),
+          open: () => this.enterExercise(ex.id),
+        };
+      }),
       isWorkout: s.screen === 'workout', wk, restToast: !!s.restToast,
-      startActive: () => { if (expired) { this.nav('account'); return; } const r = this.getActiveRoutine(); if (r) this.startWorkout(r.id); },
+      startActive: () => { if (expired) { this.nav('account'); return; } const r = this.getActiveRoutine(); if (r) this.openWorkoutList(r.id); },
       wkComplete: () => this.completeSet(), wkSkip: () => this.skipRest(), wkAdd: () => this.addRest(15), wkExit: () => this.exitWorkout(),
       homeColor: tab === 'home' ? active : dim, groupsColor: tab === 'groups' ? active : dim,
       routinesColor: tab === 'routines' ? active : dim, accountColor: tab === 'account' ? active : dim,
