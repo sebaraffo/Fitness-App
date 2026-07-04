@@ -395,7 +395,11 @@
       <sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
         <div class="screen" style="padding:56px 24px 108px;">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div ref="{{ avatarRef }}" style="width:58px;height:58px;border-radius:18px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);border:1px solid rgba(255,255,255,0.08);flex:0 0 auto;background-size:cover;background-position:center;"></div>
+            <label style="position:relative;cursor:pointer;flex:0 0 auto;">
+              <div ref="{{ avatarRef }}" style="width:58px;height:58px;border-radius:18px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);border:1px solid rgba(255,255,255,0.08);background-size:cover;background-position:center;"></div>
+              <div style="position:absolute;bottom:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:#CDFF4A;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #0C0D11;">✎</div>
+              <input type="file" accept="image/*" onChange="{{ setProfilePhoto }}" style="position:absolute;inset:0;opacity:0;cursor:pointer;">
+            </label>
             <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">{{ displayName }}</div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #A-2481 · Plan Full</div></div>
           </div>
           <div style="margin-top:16px;border-radius:20px;padding:17px;background:{{ memCardBg }};color:{{ memCardFg }};">
@@ -435,11 +439,10 @@
             <div style="width:56px;height:56px;border-radius:16px;background:repeating-linear-gradient(135deg,#232630 0 8px,#1b1e26 8px 16px);flex:0 0 auto;"></div>
             <div style="flex:1;"><div style="font-weight:700;font-size:16px;">Lucía Fernández</div><div style="color:#8A8F9C;font-size:12px;">Tu personal trainer</div><div style="color:#FFC24A;font-size:11.5px;margin-top:3px;">● Disponible ahora</div></div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:11px;margin-top:14px;">
-            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">🏋</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Rutina a medida</div><div style="color:#8A8F9C;font-size:11.5px;">Según tu objetivo y nivel</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
-            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">🥗</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Plan de comidas</div><div style="color:#8A8F9C;font-size:11.5px;">Calorías y macros a tu medida</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
-            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">💬</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Chat con tu profe</div><div style="color:#8A8F9C;font-size:11.5px;">Dudas y ajustes cuando quieras</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
-            <div style="display:flex;gap:12px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:15px;padding:13px;cursor:pointer;" style-hover="border-color:rgba(255,194,74,0.4);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,194,74,0.12);display:flex;align-items:center;justify-content:center;font-size:17px;">📸</span><div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Seguimiento y fotos</div><div style="color:#8A8F9C;font-size:11.5px;">Progreso semana a semana</div></div><span style="color:#5a5f6b;font-size:18px;">›</span></div>
+          <p style="color:#8A8F9C;font-size:13px;margin-top:16px;line-height:1.4;">Escribile directo a tu profe por WhatsApp para coordinar tu rutina, plan de comidas o cualquier duda.</p>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:6px;">
+            <button onClick="{{ contactCoach }}" style="display:flex;gap:12px;align-items:center;background:#25D366;border:none;border-radius:15px;padding:15px;cursor:pointer;font-family:'Barlow',sans-serif;text-align:left;width:100%;" style-hover="filter:brightness(1.06);"><span style="width:38px;height:38px;border-radius:11px;background:rgba(12,13,17,0.15);display:flex;align-items:center;justify-content:center;font-size:19px;">💬</span><div style="flex:1;"><div style="font-weight:700;font-size:15px;color:#0C0D11;">Contactar por WhatsApp</div><div style="color:rgba(12,13,17,0.65);font-size:11.5px;">Te responde tu profe asignado</div></div><span style="color:#0C0D11;font-size:18px;">›</span></button>
+          </div>
           </div>
           <button style="width:100%;height:54px;margin-top:16px;background:#FFC24A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15.5px;cursor:pointer;" style-hover="filter:brightness(1.06);">Solicitar plan personalizado</button>
         </div>
@@ -663,7 +666,13 @@ class Component extends DCLogic {
   setProfilePhoto(ev) {
     const file = ev.target.files && ev.target.files[0]; if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => this.setState({ profilePhoto: reader.result });
+    reader.onload = () => {
+      this.setState({ profilePhoto: reader.result }, () => {
+        this.persist();
+        const user = this.state.authUser;
+        if (user) window.sfDb.collection('users').doc(user.uid).set({ photo: reader.result }, { merge: true }).catch(() => {});
+      });
+    };
     reader.readAsDataURL(file);
   }
   finishOnboarding() {
@@ -712,6 +721,12 @@ class Component extends DCLogic {
   syncPaidUntil() {
     const user = this.state.authUser;
     if (user) window.sfDb.collection('users').doc(user.uid).update({ paidUntil: this.state.paidUntil }).catch(() => {});
+  }
+  contactCoach() {
+    const COACH_WHATSAPP = '5491100000000'; // TODO: reemplazar por el número real del coach/gimnasio
+    const name = this.state.profileName || 'un socio';
+    const msg = encodeURIComponent('Hola! Soy ' + name + ' de Space Fitness y quiero armar mi plan personalizado.');
+    window.open('https://wa.me/' + COACH_WHATSAPP + '?text=' + msg, '_blank');
   }
   openGroup(id) { this.setState({ groupId: id, screen: 'exerciseList' }); }
   openEx(id) { this.setState({ exId: id, screen: 'exerciseDetail' }); }
@@ -1141,6 +1156,7 @@ class Component extends DCLogic {
       setAuthEmail: (ev) => this.setAuthEmail(ev), setAuthPassword: (ev) => this.setAuthPassword(ev),
       submitAuth: () => this.submitAuth(),
       goRoutines: () => this.nav('routines'), goAccount: () => this.nav('account'), goPersonalized: () => this.nav('personalized'),
+      contactCoach: () => this.contactCoach(),
       goList: () => this.nav('exerciseList'), goDetail: () => this.nav('exerciseDetail'), goSubs: () => this.nav('substitutes'),
       goBuilder: () => this.nav('builder'), enterFree: () => this.enterApp('freeHome'),
       setGym: () => this.setLoc('gym'), setHome: () => this.setLoc('home'), clearSub: () => this.clearSub(),
