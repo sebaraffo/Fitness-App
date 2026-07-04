@@ -32,9 +32,9 @@
   .scr{position:absolute;inset:0;overflow:hidden;}
   .screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;}
   .screen::-webkit-scrollbar{display:none;}
-  @keyframes sfFrameA{0%,38%{opacity:1}50%,88%{opacity:0}100%{opacity:1}}
-  @keyframes sfFrameB{0%,38%{opacity:0}50%,88%{opacity:1}100%{opacity:0}}
-  @keyframes sfZoom{0%,38%{transform:scale(1)}50%{transform:scale(1.035)}88%,100%{transform:scale(1)}}
+  @keyframes sfFrameA{0%,34%{opacity:1;filter:blur(0)}44%{filter:blur(2.5px)}54%,84%{opacity:0;filter:blur(0)}100%{opacity:1;filter:blur(0)}}
+  @keyframes sfFrameB{0%,34%{opacity:0;filter:blur(0)}44%{filter:blur(2.5px)}54%,84%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(0)}}
+  @keyframes sfZoom{0%,34%{transform:scale(1)}49%{transform:scale(1.045)}84%,100%{transform:scale(1)}}
 </style>
 <template id="__bundler_thumbnail"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="24" fill="#0C0D11"/><rect x="30" y="43" width="40" height="14" rx="4" fill="#CDFF4A"/><rect x="22" y="36" width="10" height="28" rx="3" fill="#CDFF4A"/><rect x="68" y="36" width="10" height="28" rx="3" fill="#CDFF4A"/></svg></template>
 </helmet>
@@ -177,10 +177,6 @@
           <div style="position:relative;height:270px;overflow:hidden;background:#171922;"><div ref="{{ exImgRef }}" style="position:absolute;inset:0;"></div>
             <sc-if value="{{ hasVideo }}" hint-placeholder-val="{{ false }}">
               {{ videoEl }}
-            </sc-if>
-            <sc-if value="{{ hasAnimSvg }}" hint-placeholder-val="{{ false }}">
-              <div ref="{{ animSvgRef }}" style="position:absolute;inset:0;"></div>
-              <span style="position:absolute;bottom:10px;right:14px;font-size:10px;font-weight:700;letter-spacing:1px;color:#CDFF4A;background:rgba(12,13,17,0.6);padding:4px 9px;border-radius:6px;">ANIMACIÓN PROPIA</span>
             </sc-if>
             <sc-if value="{{ hasPhotoAnim }}" hint-placeholder-val="{{ false }}">
               <div ref="{{ photoAnimRef }}" style="position:absolute;inset:0;"></div>
@@ -569,13 +565,8 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const SF_ANIM_SVG = {
-  'press-banca': '<svg viewBox="0 0 300 200" width="100%" height="100%" style="display:block;background:#171922;"><rect width="300" height="200" fill="#171922"/><line x1="60" y1="152" x2="220" y2="152" stroke="#2a2e38" stroke-width="10" stroke-linecap="round"/><line x1="178" y1="150" x2="196" y2="164" stroke="#3a3f4b" stroke-width="7" stroke-linecap="round"/><line x1="196" y1="164" x2="184" y2="186" stroke="#3a3f4b" stroke-width="7" stroke-linecap="round"/><line x1="108" y1="150" x2="178" y2="150" stroke="#CDFF4A" stroke-width="7" stroke-linecap="round"/><circle cx="98" cy="150" r="13" fill="#CDFF4A"/><line x1="112" y1="150" x2="112" y2="95" stroke="#CDFF4A" stroke-width="6" stroke-linecap="round"><animate attributeName="y2" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></line><line x1="76" y1="95" x2="148" y2="95" stroke="#F4F5F7" stroke-width="8" stroke-linecap="round"><animate attributeName="y1" values="95;128;95" dur="1.6s" repeatCount="indefinite"/><animate attributeName="y2" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></line><circle cx="76" cy="95" r="11" fill="#F4F5F7"><animate attributeName="cy" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="148" cy="95" r="11" fill="#F4F5F7"><animate attributeName="cy" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></circle></svg>',
-  'dominadas': '<svg viewBox="0 0 300 220" width="100%" height="100%" style="display:block;background:#171922;"><rect width="300" height="220" fill="#171922"/><line x1="90" y1="28" x2="210" y2="28" stroke="#2a2e38" stroke-width="9" stroke-linecap="round"/><line x1="128" y1="28" x2="140" y2="88" stroke="#F4F5F7" stroke-width="6" stroke-linecap="round"><animate attributeName="y2" values="88;55;88" dur="1.5s" repeatCount="indefinite"/></line><line x1="172" y1="28" x2="160" y2="88" stroke="#F4F5F7" stroke-width="6" stroke-linecap="round"><animate attributeName="y2" values="88;55;88" dur="1.5s" repeatCount="indefinite"/></line><circle cx="150" cy="100" r="14" fill="#CDFF4A"><animate attributeName="cy" values="100;65;100" dur="1.5s" repeatCount="indefinite"/></circle><line x1="150" y1="114" x2="150" y2="165" stroke="#CDFF4A" stroke-width="7" stroke-linecap="round"><animate attributeName="y1" values="114;79;114" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="165;130;165" dur="1.5s" repeatCount="indefinite"/></line><line x1="150" y1="165" x2="132" y2="200" stroke="#CDFF4A" stroke-width="6" stroke-linecap="round"><animate attributeName="y1" values="165;130;165" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="200;165;200" dur="1.5s" repeatCount="indefinite"/></line><line x1="150" y1="165" x2="168" y2="200" stroke="#CDFF4A" stroke-width="6" stroke-linecap="round"><animate attributeName="y1" values="165;130;165" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="200;165;200" dur="1.5s" repeatCount="indefinite"/></line></svg>',
-};
 const SF_PHOTO_FRAMES = {
   'sentadilla': ['https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/0.jpg', 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/1.jpg'],
-  'curl-barra': ['https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg', 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/1.jpg'],
 };
 class Component extends DCLogic {
   state = {
@@ -883,13 +874,12 @@ class Component extends DCLogic {
     const exImgBg = 'url("' + exImg + '")';
     const exVideo = (ex && ex.video) ? ex.video : '';
     const videoEl = exVideo ? React.createElement('video', { src: exVideo, controls: true, playsInline: true, preload: 'metadata', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', background: '#000', zIndex: 1 } }) : null;
-    const exAnimSvg = (!exVideo && ex && SF_ANIM_SVG[ex.id]) ? SF_ANIM_SVG[ex.id] : '';
-    const animSvgRef = (el) => { if (el && exAnimSvg) el.innerHTML = exAnimSvg; };
-    const exPhotoFrames = (!exVideo && !exAnimSvg && ex && SF_PHOTO_FRAMES[ex.id]) ? SF_PHOTO_FRAMES[ex.id] : null;
+    const exPhotoFrames = (!exVideo && ex && SF_PHOTO_FRAMES[ex.id]) ? SF_PHOTO_FRAMES[ex.id] : null;
     const photoAnimRef = (el) => {
       if (!el || !exPhotoFrames) return;
-      el.innerHTML = '<img src="' + exPhotoFrames[0] + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:sfFrameA 2.6s ease-in-out infinite, sfZoom 2.6s ease-in-out infinite;">'
-        + '<img src="' + exPhotoFrames[1] + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:sfFrameB 2.6s ease-in-out infinite, sfZoom 2.6s ease-in-out infinite;">';
+      const ease = 'cubic-bezier(0.45,0,0.55,1)';
+      el.innerHTML = '<img src="' + exPhotoFrames[0] + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:sfFrameA 3.4s ' + ease + ' infinite, sfZoom 3.4s ' + ease + ' infinite;">'
+        + '<img src="' + exPhotoFrames[1] + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:sfFrameB 3.4s ' + ease + ' infinite, sfZoom 3.4s ' + ease + ' infinite;">';
     };
     const swapName = ex ? (s.swap[ex.id] || '') : '';
     let effName = ex ? ex.name : '', effEnv = ex ? ex.env : 'gym';
@@ -1028,9 +1018,8 @@ class Component extends DCLogic {
       isEditing: !!s.editingId, deleteRoutine: () => { if (s.editingId) this.deleteRoutine(s.editingId); },
       swapName, hasSwap: !!swapName, swapOrigName: ex ? ex.name : '', subsGym, subsHome, exImg, exImgBg, exImgRef: bgRef(exImg),
       exVideo, hasVideo: !!exVideo, videoEl,
-      hasAnimSvg: !!exAnimSvg, animSvgRef,
       hasPhotoAnim: !!exPhotoFrames, photoAnimRef,
-      noVideo: !exVideo && !exAnimSvg && !exPhotoFrames,
+      noVideo: !exVideo && !exPhotoFrames,
       isPicker: s.screen === 'picker', builder, builderCount: bList.length, builderEmpty: bList.length === 0, catalog, openPicker: () => { if (s.builderDay) this.nav('picker'); },
       dayTabs, hasBuilderDays: selDays.length > 0, noBuilderDays: selDays.length === 0, builderDayName: s.builderDay || '',
       goLogin: () => this.nav('login'), goHome: () => this.enterApp('home'), goGroups: () => this.nav('groups'),
