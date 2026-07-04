@@ -12,12 +12,36 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'staff';
     }
+    function unchangedField(field) {
+      return !(field in request.resource.data) || request.resource.data[field] == resource.data[field];
+    }
+    function ownerCanSet(field) {
+      return !(field in resource.data) || unchangedField(field);
+    }
 
     match /users/{uid} {
       allow read: if isOwner(uid) || isStaff();
-      allow create: if isOwner(uid);
-      allow update: if isOwner(uid) || isStaff();
+      allow create: if isOwner(uid) && (!('role' in request.resource.data) || request.resource.data.role == 'member');
+      allow update: if isStaff() || (isOwner(uid) && ownerCanSet('role') && ownerCanSet('paidUntil'));
       allow delete: if false;
+    }
+
+    match /renewals/{code} {
+      allow create: if isStaff();
+      allow get: if isSignedIn();
+      allow list: if false;
+      allow update: if isSignedIn()
+        && request.auth.uid == resource.data.uid
+        && resource.data.used == false
+        && request.time.toMillis() < resource.data.expiresAt
+        && request.resource.data.used == true
+        && request.resource.data.uid == resource.data.uid;
+      allow delete: if false;
+    }
+
+    match /officialRoutines/{id} {
+      allow read: if isSignedIn();
+      allow write: if isStaff();
     }
   }
 }

@@ -299,7 +299,7 @@
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
             <sc-for list="{{ routines }}" as="r" hint-placeholder-count="3">
               <div onClick="{{ r.open }}" style="background:#15171E;border:{{ r.border }};border-radius:18px;padding:15px;cursor:pointer;" style-hover="border-color:rgba(205,255,74,0.4);">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">{{ r.name }}</div><sc-if value="{{ r.active }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:3px 9px;border-radius:6px;flex:0 0 auto;">★ Activa</span></sc-if><sc-if value="{{ r.notActive }}" hint-placeholder-val="{{ false }}"><span onClick="{{ r.activate }}" style="font-size:11px;font-weight:700;color:#8A8F9C;background:#1D212B;border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:7px;flex:0 0 auto;cursor:pointer;" style-hover="color:#CDFF4A;border-color:rgba(205,255,74,0.4);">Activar</span></sc-if></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="display:flex;align-items:center;gap:7px;min-width:0;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">{{ r.name }}</div><sc-if value="{{ r.isOfficial }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px;font-weight:700;color:#FFC24A;background:rgba(255,194,74,0.12);padding:2px 7px;border-radius:5px;flex:0 0 auto;">🔒 OFICIAL</span></sc-if></div><sc-if value="{{ r.active }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:3px 9px;border-radius:6px;flex:0 0 auto;">★ Activa</span></sc-if><sc-if value="{{ r.notActive }}" hint-placeholder-val="{{ false }}"><span onClick="{{ r.activate }}" style="font-size:11px;font-weight:700;color:#8A8F9C;background:#1D212B;border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:7px;flex:0 0 auto;cursor:pointer;" style-hover="color:#CDFF4A;border-color:rgba(205,255,74,0.4);">Activar</span></sc-if></div>
                 <div style="color:#8A8F9C;font-size:12.5px;margin-top:3px;">{{ r.muscleText }}</div>
                 <div style="display:flex;gap:14px;margin-top:10px;color:#8A8F9C;font-size:12px;flex-wrap:wrap;"><span>{{ r.exText }}</span><span>·</span><span>{{ r.durText }}</span><span>·</span><span>{{ r.daysText }}</span></div>
               </div>
@@ -311,9 +311,16 @@
       <!-- ============ CONSTRUCTOR ============ -->
       <sc-if value="{{ isBuilder }}" hint-placeholder-val="{{ false }}">
         <div class="screen" style="padding:54px 24px 108px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span onClick="{{ goRoutines }}" style="font-size:22px;color:#8A8F9C;cursor:pointer;">✕</span><span onClick="{{ saveRoutine }}" style="color:#CDFF4A;font-weight:700;font-size:15px;cursor:pointer;">Guardar</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span onClick="{{ closeBuilder }}" style="font-size:22px;color:#8A8F9C;cursor:pointer;">✕</span><span onClick="{{ saveRoutine }}" style="color:#CDFF4A;font-weight:700;font-size:15px;cursor:pointer;">Guardar</span></div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">{{ builderTitle }}</div>
           <input type="text" value="{{ builderNameVal }}" onChange="{{ setBuilderName }}" placeholder="Nombre de la rutina" style="width:100%;margin-top:14px;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:13px 14px;color:#F4F5F7;font-weight:600;font-size:15px;font-family:'Barlow',sans-serif;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+          <sc-if value="{{ builderIsOfficial }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:8px;margin-top:12px;">
+              <div onClick="{{ setBuilderLevelPrincipiante }}" style="flex:1;text-align:center;padding:9px 0;border-radius:10px;font-size:12.5px;font-weight:700;cursor:pointer;background:{{ builderLevelPrincipianteBg }};color:{{ builderLevelPrincipianteFg }};">Principiante</div>
+              <div onClick="{{ setBuilderLevelIntermedio }}" style="flex:1;text-align:center;padding:9px 0;border-radius:10px;font-size:12.5px;font-weight:700;cursor:pointer;background:{{ builderLevelIntermedioBg }};color:{{ builderLevelIntermedioFg }};">Intermedio</div>
+              <div onClick="{{ setBuilderLevelAvanzado }}" style="flex:1;text-align:center;padding:9px 0;border-radius:10px;font-size:12.5px;font-weight:700;cursor:pointer;background:{{ builderLevelAvanzadoBg }};color:{{ builderLevelAvanzadoFg }};">Avanzado</div>
+            </div>
+          </sc-if>
           <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
             <sc-for list="{{ dayChips }}" as="d" hint-placeholder-count="7">
               <div onClick="{{ d.toggle }}" style="padding:8px 13px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;background:{{ d.bg }};color:{{ d.fg }};border:1px solid {{ d.bd }};">{{ d.d }}</div>
@@ -429,6 +436,59 @@
         </div>
       </sc-if>
 
+      <!-- ============ PANEL STAFF (pantalla completa) ============ -->
+      <sc-if value="{{ isStaffPanel }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:56px 24px 108px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">Panel de staff</div>
+            <span onClick="{{ logoutClick }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Salir</span>
+          </div>
+          <div style="display:flex;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:4px;margin-top:16px;margin-bottom:18px;">
+            <div onClick="{{ setStaffMembersTab }}" style="flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;background:{{ staffMembersTabBg }};color:{{ staffMembersTabFg }};">Socios</div>
+            <div onClick="{{ setStaffRoutinesTab }}" style="flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;background:{{ staffRoutinesTabBg }};color:{{ staffRoutinesTabFg }};">Rutinas oficiales</div>
+          </div>
+
+          <sc-if value="{{ isStaffMembersTab }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Buscar socio por email</div>
+            <div style="display:flex;gap:8px;">
+              <input type="email" value="{{ staffSearchEmailVal }}" onChange="{{ setStaffSearchEmail }}" placeholder="email@socio.com" style="flex:1;height:50px;background:#15171E;border:1px solid rgba(255,255,255,0.09);border-radius:13px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+              <button onClick="{{ staffSearchMember }}" style="flex:0 0 auto;height:50px;padding:0 18px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">Buscar</button>
+            </div>
+            <sc-if value="{{ hasStaffSearchError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12.5px;margin-top:9px;">{{ staffSearchErrorMsg }}</div></sc-if>
+            <sc-if value="{{ hasFoundMember }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:17px;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">{{ foundMemberName }}</div>
+                <div style="color:#8A8F9C;font-size:12.5px;margin-top:2px;">{{ foundMemberEmail }}</div>
+                <div style="font-size:13px;margin-top:7px;font-weight:700;color:{{ foundMemberStatusColor }};">{{ foundMemberStatus }}</div>
+                <button onClick="{{ staffMarkFoundPaid }}" style="width:100%;height:50px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;">✓ Marcar cuota pagada (+30 días)</button>
+                <button onClick="{{ staffGenerateCode }}" style="width:100%;height:46px;margin-top:9px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Generar código de renovación</button>
+                <sc-if value="{{ hasGeneratedCode }}" hint-placeholder-val="{{ false }}">
+                  <div style="text-align:center;margin-top:12px;">
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;letter-spacing:5px;color:#CDFF4A;">{{ staffGeneratedCodeVal }}</div>
+                    <div style="color:#8A8F9C;font-size:11.5px;margin-top:2px;">Vale por 15 minutos · un solo uso</div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </sc-if>
+
+          <sc-if value="{{ isStaffRoutinesTab }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ newOfficialRoutine }}" style="width:100%;height:50px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;margin-bottom:14px;">＋ Nueva rutina oficial</button>
+            <sc-if value="{{ hasOfficialRoutines }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:11px;">
+                <sc-for list="{{ officialRoutinesView }}" as="r" hint-placeholder-count="3">
+                  <div onClick="{{ r.edit }}" style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:15px;cursor:pointer;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;">{{ r.name }}</div><span style="font-size:10.5px;font-weight:700;color:#CDFF4A;background:rgba(205,255,74,0.12);padding:3px 9px;border-radius:6px;">{{ r.levelLabel }}</span></div>
+                    <div style="color:#8A8F9C;font-size:12px;margin-top:4px;">{{ r.daysText }}</div>
+                    <span onClick="{{ r.remove }}" style="display:inline-block;margin-top:8px;color:#FF8080;font-size:12px;cursor:pointer;">Eliminar</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-if>
+
       <!-- ============ PERSONALIZADO ============ -->
       <sc-if value="{{ isPersonalized }}" hint-placeholder-val="{{ false }}">
         <div class="screen" style="padding:54px 24px 108px;">
@@ -533,20 +593,37 @@
       <!-- ============ PANEL DE STAFF (modal) ============ -->
       <sc-if value="{{ staffOpen }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;z-index:48;background:rgba(6,7,10,0.8);display:flex;align-items:center;justify-content:center;padding:26px;">
-          <div style="width:100%;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
+          <div style="width:100%;max-height:82vh;overflow-y:auto;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
             <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;">Panel de staff</div><span onClick="{{ closeStaff }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
             <sc-if value="{{ staffAuthed }}" hint-placeholder-val="{{ false }}">
-              <div style="color:#8A8F9C;font-size:13px;margin-top:6px;">Socio: <span style="color:#F4F5F7;font-weight:600;">Seba R. · #A-2481</span></div>
-              <button onClick="{{ staffMarkPaid }}" style="width:100%;height:52px;margin-top:16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">✓ Marcar cuota como pagada (+30 días)</button>
-              <button onClick="{{ expireDemo }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,90,90,0.1);color:#FF8080;border:1px solid rgba(255,90,90,0.3);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;" style-hover="background:rgba(255,90,90,0.18);">Simular cuota vencida (demo)</button>
-              <button onClick="{{ openQrShow }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Generar QR de pago</button>
-              <sc-if value="{{ hasQrShow }}" hint-placeholder-val="{{ false }}">
-                {{ qrImgEl }}
-                <div style="text-align:center;color:#8A8F9C;font-size:11.5px;margin-top:8px;">El socio lo escanea desde “Renovar cuota” para activarla</div>
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-top:16px;">Buscar socio por email</div>
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <input type="email" value="{{ staffSearchEmailVal }}" onChange="{{ setStaffSearchEmail }}" placeholder="email@socio.com" style="flex:1;height:46px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:13.5px;padding:0 12px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+                <button onClick="{{ staffSearchMember }}" style="flex:0 0 auto;height:46px;padding:0 16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Buscar</button>
+              </div>
+              <sc-if value="{{ hasStaffSearchError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12px;margin-top:8px;">{{ staffSearchErrorMsg }}</div></sc-if>
+              <sc-if value="{{ hasFoundMember }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:12px;background:#0F1116;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:13px;">
+                  <div style="font-weight:700;font-size:15px;">{{ foundMemberName }}</div>
+                  <div style="color:#8A8F9C;font-size:12px;margin-top:2px;">{{ foundMemberEmail }}</div>
+                  <div style="font-size:12px;margin-top:5px;font-weight:600;color:{{ foundMemberStatusColor }};">{{ foundMemberStatus }}</div>
+                  <button onClick="{{ staffMarkFoundPaid }}" style="width:100%;height:46px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">✓ Marcar cuota pagada (+30 días)</button>
+                  <button onClick="{{ staffGenerateCode }}" style="width:100%;height:44px;margin-top:8px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Generar código de renovación</button>
+                  <sc-if value="{{ hasGeneratedCode }}" hint-placeholder-val="{{ false }}">
+                    <div style="text-align:center;margin-top:10px;">
+                      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;letter-spacing:4px;color:#CDFF4A;">{{ staffGeneratedCodeVal }}</div>
+                      <div style="color:#8A8F9C;font-size:11px;margin-top:2px;">Vale por 15 minutos · un solo uso · pasáselo al socio</div>
+                    </div>
+                  </sc-if>
+                </div>
               </sc-if>
+              <div style="height:1px;background:rgba(255,255,255,0.08);margin:18px 0;"></div>
+              <div style="color:#5a5f6b;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Demo (tu propia cuenta)</div>
+              <button onClick="{{ staffMarkPaid }}" style="width:100%;height:44px;margin-top:10px;background:rgba(255,255,255,0.06);color:#8A8F9C;border:1px solid rgba(255,255,255,0.1);border-radius:12px;font-family:'Barlow',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Marcar mi cuota como pagada</button>
+              <button onClick="{{ expireDemo }}" style="width:100%;height:40px;margin-top:8px;background:rgba(255,90,90,0.08);color:#FF8080;border:1px solid rgba(255,90,90,0.25);border-radius:11px;font-family:'Barlow',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;">Simular mi cuota vencida</button>
             </sc-if>
             <sc-if value="{{ staffNotAuthed }}" hint-placeholder-val="{{ true }}">
-              <div style="color:#8A8F9C;font-size:13px;margin-top:6px;">Ingresá el PIN del staff para gestionar la cuota.</div>
+              <div style="color:#8A8F9C;font-size:13px;margin-top:6px;">Ingresá el PIN del staff para gestionar socios.</div>
               <input type="tel" inputmode="numeric" value="{{ staffPinVal }}" onChange="{{ setPin }}" placeholder="PIN" style="width:100%;height:52px;margin-top:14px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:13px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-weight:700;font-size:22px;text-align:center;letter-spacing:8px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
               <button onClick="{{ submitPin }}" style="width:100%;height:50px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Ingresar</button>
               <div style="text-align:center;color:#6b7080;font-size:11.5px;margin-top:10px;">Demo: PIN 2468</div>
@@ -555,18 +632,16 @@
         </div>
       </sc-if>
 
-      <!-- ============ ESCANER QR (renovar cuota) ============ -->
+      <!-- ============ CÓDIGO DE RENOVACIÓN ============ -->
       <sc-if value="{{ isQrScan }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;inset:0;z-index:49;background:#000;display:flex;flex-direction:column;">
-          <div style="flex:1;position:relative;overflow:hidden;background:#0a0a0c;">
-            <video ref="{{ qrVideoRef }}" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:200px;height:200px;border:3px solid rgba(205,255,74,0.9);border-radius:22px;box-shadow:0 0 0 2000px rgba(0,0,0,0.45);"></div></div>
-            <div style="position:absolute;top:56px;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;z-index:2;"><span onClick="{{ closeQrScan }}" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;cursor:pointer;">✕</span><span style="color:#fff;font-size:13px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,0.7);">Escaneá el QR del gimnasio</span></div>
-            <sc-if value="{{ qrCamError }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:22px;right:22px;bottom:18px;text-align:center;color:#FFC24A;font-size:12.5px;background:rgba(0,0,0,0.55);border-radius:10px;padding:9px;z-index:2;">No pudimos acceder a la cámara — usá el botón de demo.</div></sc-if>
-          </div>
-          <div style="padding:16px 22px 24px;background:#0C0D11;">
-            <div style="color:#8A8F9C;font-size:12.5px;text-align:center;line-height:1.4;">Pedile al staff el QR de pago. Al escanearlo se valida tu cuota al instante.</div>
-            <button onClick="{{ qrValid }}" style="width:100%;height:52px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">✓ Simular escaneo válido (demo)</button>
+        <div style="position:absolute;inset:0;z-index:49;background:rgba(6,7,10,0.9);display:flex;align-items:center;justify-content:center;padding:26px;">
+          <div style="width:100%;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;">Renovar cuota</div><span onClick="{{ closeQrScan }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
+            <p style="color:#8A8F9C;font-size:13px;margin-top:10px;line-height:1.4;">Pedile al staff el código de renovación y escribilo acá. Vale una sola vez y vence a los 15 minutos.</p>
+            <input type="text" value="{{ renewCodeVal }}" onChange="{{ setRenewCode }}" placeholder="CÓDIGO" style="width:100%;height:56px;margin-top:16px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:14px;color:#CDFF4A;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;text-align:center;letter-spacing:6px;outline:none;text-transform:uppercase;" style-focus="border-color:rgba(205,255,74,0.5);">
+            <sc-if value="{{ hasRenewError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12.5px;margin-top:10px;text-align:center;">{{ renewErrorMsg }}</div></sc-if>
+            <sc-if value="{{ renewOk }}" hint-placeholder-val="{{ false }}"><div style="color:#CDFF4A;font-size:12.5px;margin-top:10px;text-align:center;">✓ Cuota renovada con éxito</div></sc-if>
+            <button onClick="{{ redeemRenewCode }}" style="width:100%;height:52px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:15px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">{{ renewSubmitLabel }}</button>
             <button onClick="{{ closeQrScan }}" style="width:100%;height:46px;margin-top:10px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:14px;font-family:'Barlow',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Cancelar</button>
           </div>
         </div>
@@ -582,6 +657,15 @@
           <div onClick="{{ goGroups }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ groupsColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ groupsBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Grupos</div>
           <div onClick="{{ goRoutines }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ routinesColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ routinesBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas</div>
           <div onClick="{{ goAccount }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ accountColor }};position:relative;"><span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:2px;background:{{ accountBar }};"></span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Cuenta</div>
+        </div>
+      </sc-if>
+
+      <!-- ============ NAV STAFF ============ -->
+      <sc-if value="{{ showStaffTabs }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(12,13,17,0.94);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-around;align-items:flex-start;padding-top:14px;z-index:35;">
+          <div onClick="{{ setStaffMembersTab }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ staffMembersNavColor }};"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20 c0 -4 3.5 -6 7 -6 s7 2 7 6"/></svg>Socios</div>
+          <div onClick="{{ setStaffRoutinesTab }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:{{ staffRoutinesNavColor }};"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="3" rx="1.5"/><rect x="4" y="10.5" width="16" height="3" rx="1.5"/><rect x="4" y="16" width="11" height="3" rx="1.5"/></svg>Rutinas oficiales</div>
+          <div onClick="{{ logoutClick }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:600;cursor:pointer;color:#8A8F9C;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 17l5-5-5-5M20 12H9M12 19H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg>Salir</div>
         </div>
       </sc-if>
 
@@ -623,9 +707,14 @@ class Component extends DCLogic {
     screen: 'login', location: 'gym', groupId: null, exId: null, swap: {},
     editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null,
     logs: {}, logOpen: null, logDraft: [], sessions: [],
-    paidUntil: Date.now() + 12 * 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '', qrScanOpen: false, qrCamError: false, qrShow: '',
+    paidUntil: Date.now() + 12 * 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '', qrScanOpen: false,
     onboardingDone: false, onboardTarget: 'home', profileName: '', profilePhoto: '',
     authUser: null, authFormOpen: false, authMode: 'login', authEmail: '', authPassword: '', authError: '', authBusy: false,
+    staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffSearchBusy: false, staffGeneratedCode: '',
+    renewCode: '', renewError: '', renewBusy: false, renewOk: false,
+    userRole: 'member', staffTab: 'members',
+    officialRoutines: [], activeOfficialId: null,
+    builderIsOfficial: false, builderLevel: 'principiante',
     routines: [
       { id: 'r1', name: 'Push · Empuje', days: ['Lun', 'Jue'], active: true, schedule: {
         'Lun': [{ id: 'press-banca', sets: 4, reps: '8-10', rest: '90s' }, { id: 'press-inclinado', sets: 3, reps: '10-12', rest: '75s' }],
@@ -651,14 +740,19 @@ class Component extends DCLogic {
           if (!doc.exists || !data.email) {
             window.sfDb.collection('users').doc(user.uid).set({ email: user.email }, { merge: true }).catch(() => {});
           }
+          const role = data.role === 'staff' ? 'staff' : 'member';
           this.setState({
             authUser: user, authFormOpen: false, authEmail: '', authPassword: '', authError: '', authBusy: false,
+            userRole: role,
             profileName: data.name || '', profilePhoto: data.photo || '',
             paidUntil: data.paidUntil || (Date.now() + 12 * 86400000),
             logs: data.logs || {},
-            onboardingDone: !!data.name, screen: data.name ? 'home' : 'onboarding', onboardTarget: 'home',
+            onboardingDone: role === 'staff' ? true : !!data.name,
+            screen: role === 'staff' ? 'staffPanel' : (data.name ? 'home' : 'onboarding'),
+            onboardTarget: 'home', staffTab: 'members',
           });
         }).catch(() => {});
+        this.loadOfficialRoutines();
       });
     }
   }
@@ -682,13 +776,16 @@ class Component extends DCLogic {
   finishOnboarding() {
     if (!this.state.profileName.trim()) return;
     const user = this.state.authUser;
+    const proceed = () => this.setState(s => ({ onboardingDone: true, screen: s.onboardTarget || 'home' }), () => this.persist());
     if (user) {
+      this.setState({ authBusy: true });
       window.sfDb.collection('users').doc(user.uid).set({
         name: this.state.profileName.trim(), photo: this.state.profilePhoto || '', role: 'member',
         paidUntil: this.state.paidUntil, createdAt: Date.now(),
-      }, { merge: true }).catch(() => {});
+      }, { merge: true }).then(() => { this.setState({ authBusy: false }); proceed(); }).catch(() => { this.setState({ authBusy: false }); proceed(); });
+      return;
     }
-    this.setState(s => ({ onboardingDone: true, screen: s.onboardTarget || 'home' }), () => this.persist());
+    proceed();
   }
   openAuthForm() { this.setState({ authFormOpen: true, authError: '', authMode: 'login' }); }
   closeAuthForm() { this.setState({ authFormOpen: false, authError: '', authEmail: '', authPassword: '' }); }
@@ -743,20 +840,48 @@ class Component extends DCLogic {
   setB(i, key, val) { this.setState(s => { const d = s.builderDay; if (!d) return {}; const b = (s.builderSched[d] || []).map((x, k) => k === i ? { ...x, [key]: val } : x); return { builderSched: { ...s.builderSched, [d]: b } }; }); }
   repsLive(v) { v = String(v).replace(/[^0-9-]/g, ''); const p = v.split('-'); if (p.length > 2) v = p[0] + '-' + p.slice(1).join(''); return v.slice(0, 7); }
   repsNormalize(v) { v = this.repsLive(v); if (v.endsWith('-')) v = v.slice(0, -1); if (v.startsWith('-')) v = v.slice(1); const m = v.match(/^(\d+)-(\d+)$/); if (m) { let a = parseInt(m[1]), b = parseInt(m[2]); if (b < a) { const t = a; a = b; b = t; } v = a + '-' + b; } return v || ''; }
-  newRoutine() { this.setState({ editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null, screen: 'builder' }); }
-  editRoutine(id) { this.setState(s => { const r = s.routines.find(x => x.id === id); if (!r) return {}; const days = [...(r.days || [])]; const sched = {}; days.forEach(dd => { sched[dd] = ((r.schedule && r.schedule[dd]) || r.ex || []).map(x => ({ ...x })); }); return { editingId: id, builderName: r.name, builderDays: days, builderSched: sched, builderDay: days[0] || null, screen: 'builder' }; }); }
-  saveRoutine() { this.setState(s => { const name = (s.builderName || '').trim() || 'Rutina sin nombre'; const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']; const days = DAYS.filter(d => s.builderDays.includes(d)); const schedule = {}; days.forEach(d => schedule[d] = (s.builderSched[d] || []).map(x => ({ ...x }))); let routines = [...s.routines]; if (s.editingId) { routines = routines.map(r => r.id === s.editingId ? { ...r, name, days, schedule } : r); } else { routines.push({ id: 'r' + Date.now(), name, days, schedule, active: false }); } return { routines, screen: 'routines', editingId: null }; }, () => this.persist()); }
+  newRoutine() { this.setState({ editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null, builderIsOfficial: false, screen: 'builder' }); }
+  newOfficialRoutine() { this.setState({ editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null, builderIsOfficial: true, builderLevel: 'principiante', screen: 'builder' }); }
+  editRoutine(id) { this.setState(s => { const r = s.routines.find(x => x.id === id); if (!r) return {}; const days = [...(r.days || [])]; const sched = {}; days.forEach(dd => { sched[dd] = ((r.schedule && r.schedule[dd]) || r.ex || []).map(x => ({ ...x })); }); return { editingId: id, builderName: r.name, builderDays: days, builderSched: sched, builderDay: days[0] || null, builderIsOfficial: false, screen: 'builder' }; }); }
+  editOfficialRoutine(id) { this.setState(s => { const r = s.officialRoutines.find(x => x.id === id); if (!r) return {}; const days = [...(r.days || [])]; const sched = {}; days.forEach(dd => { sched[dd] = ((r.schedule && r.schedule[dd]) || []).map(x => ({ ...x })); }); return { editingId: id, builderName: r.name, builderDays: days, builderSched: sched, builderDay: days[0] || null, builderIsOfficial: true, builderLevel: r.level || 'principiante', screen: 'builder' }; }); }
+  setBuilderLevel(level) { this.setState({ builderLevel: level }); }
+  saveRoutine() {
+    if (this.state.builderIsOfficial) { this.saveOfficialRoutine(); return; }
+    this.setState(s => { const name = (s.builderName || '').trim() || 'Rutina sin nombre'; const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']; const days = DAYS.filter(d => s.builderDays.includes(d)); const schedule = {}; days.forEach(d => schedule[d] = (s.builderSched[d] || []).map(x => ({ ...x }))); let routines = [...s.routines]; if (s.editingId) { routines = routines.map(r => r.id === s.editingId ? { ...r, name, days, schedule } : r); } else { routines.push({ id: 'r' + Date.now(), name, days, schedule, active: false }); } return { routines, screen: 'routines', editingId: null }; }, () => this.persist());
+  }
+  saveOfficialRoutine() {
+    const s = this.state;
+    const name = (s.builderName || '').trim() || 'Rutina sin nombre';
+    const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+    const days = DAYS.filter(d => s.builderDays.includes(d));
+    const schedule = {}; days.forEach(d => schedule[d] = (s.builderSched[d] || []).map(x => ({ ...x })));
+    const id = s.editingId || ('official-' + Date.now());
+    window.sfDb.collection('officialRoutines').doc(id).set({ name, days, schedule, level: s.builderLevel }).then(() => {
+      this.loadOfficialRoutines();
+      this.setState({ screen: 'staffPanel', staffTab: 'routines', editingId: null });
+    }).catch(() => {});
+  }
   deleteRoutine(id) { this.setState(s => ({ routines: s.routines.filter(r => r.id !== id), screen: 'routines', editingId: null }), () => this.persist()); }
   setBuilderName(ev) { const v = ev.target.value; this.setState({ builderName: v }); }
   toggleDay(d) { this.setState(s => { const has = s.builderDays.includes(d); let days; const sched = { ...s.builderSched }; let day = s.builderDay; if (has) { days = s.builderDays.filter(x => x !== d); delete sched[d]; if (day === d) day = days[0] || null; } else { days = [...s.builderDays, d]; sched[d] = sched[d] || []; day = d; } return { builderDays: days, builderSched: sched, builderDay: day }; }); }
   setBuilderDay(d) { this.setState({ builderDay: d }); }
-  setActive(id) { this.setState(s => ({ routines: s.routines.map(r => ({ ...r, active: r.id === id })) }), () => this.persist()); }
+  setActive(id) { this.setState(s => ({ routines: s.routines.map(r => ({ ...r, active: r.id === id })), activeOfficialId: null }), () => this.persist()); }
   openLog() { this.setState(s => { const g = this.data.find(x => x.id === s.groupId); const ex = g && g.exercises.find(e => e.id === s.exId); if (!ex) return {}; const raw = s.logs[s.exId]; const prev = Array.isArray(raw) ? raw[0] : raw; const n = typeof ex.sets === 'number' ? ex.sets : 1; const draft = []; for (let i = 0; i < n; i++) { const p = prev && prev.sets[i]; draft.push({ w: p ? p.w : '', reps: p ? p.reps : '' }); } return { logOpen: s.exId, logDraft: draft }; }); }
   setLog(i, key, val) { this.setState(s => ({ logDraft: s.logDraft.map((x, k) => k === i ? { ...x, [key]: val } : x) })); }
   saveLog() { this.setState(s => { const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const d = new Date(); const dateKey = d.getDate() + ' ' + months[d.getMonth()]; const entry = { date: dateKey, sets: s.logDraft.map(x => ({ w: x.w, reps: x.reps })) }; let arr = s.logs[s.logOpen]; arr = Array.isArray(arr) ? [...arr] : (arr && arr.sets ? [{ date: arr.date || 'antes', sets: arr.sets }] : []); if (arr[0] && arr[0].date === dateKey) arr[0] = entry; else arr.unshift(entry); arr = arr.slice(0, 20); return { logs: { ...s.logs, [s.logOpen]: arr }, logOpen: null }; }, () => { this.persist(); this.syncLogs(); }); }
   syncLogs() {
     const user = this.state.authUser;
     if (user) window.sfDb.collection('users').doc(user.uid).set({ logs: this.state.logs }, { merge: true }).catch(() => {});
+  }
+  loadOfficialRoutines() {
+    window.sfDb.collection('officialRoutines').get().then((snap) => {
+      const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      this.setState({ officialRoutines: list });
+    }).catch(() => {});
+  }
+  setStaffTab(tab) { this.setState({ staffTab: tab }); }
+  staffDeleteOfficialRoutine(id) {
+    window.sfDb.collection('officialRoutines').doc(id).delete().then(() => this.loadOfficialRoutines()).catch(() => {});
   }
   closeLog() { this.setState({ logOpen: null }); }
   fmt(sec) { const m = Math.floor(sec / 60); const ss = sec % 60; return m + ':' + (ss < 10 ? '0' : '') + ss; }
@@ -783,8 +908,13 @@ class Component extends DCLogic {
   }
   startTimer() { this.clearTimer(); this._t = setInterval(() => this.tick(), 1000); }
   componentWillUnmount() { this.clearTimer(); }
+  getActiveRoutine() {
+    const s = this.state;
+    return s.routines.find(r => r.active) || s.officialRoutines.find(r => r.id === s.activeOfficialId) || s.routines[0];
+  }
+  activateOfficial(id) { this.setState(s => ({ activeOfficialId: id, routines: s.routines.map(r => ({ ...r, active: false })) }), () => this.persist()); }
   startWorkout(routineId) {
-    const r = this.state.routines.find(x => x.id === routineId) || this.state.routines[0];
+    const r = [...this.state.routines, ...this.state.officialRoutines].find(x => x.id === routineId) || this.state.routines[0];
     if (!r) return;
     const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
     const today = DOW[new Date().getDay()];
@@ -815,28 +945,59 @@ class Component extends DCLogic {
   exitWorkout() { this.clearTimer(); this.setState({ screen: 'home', session: null }); }
   renew(months) { this.setState(s => ({ paidUntil: Math.max(Date.now(), s.paidUntil) + (months || 1) * 30 * 86400000 }), () => { this.persist(); this.syncPaidUntil(); }); }
   expireDemo() { this.setState({ paidUntil: Date.now() - 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '' }, () => { this.persist(); this.syncPaidUntil(); }); }
-  openStaff() { this.setState({ staffOpen: true, staffAuthed: false, staffPinInput: '' }); }
-  closeStaff() { this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '' }); }
+  openStaff() { this.setState({ staffOpen: true, staffAuthed: false, staffPinInput: '', staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffGeneratedCode: '' }); }
+  closeStaff() { this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '', staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffGeneratedCode: '' }); }
   setPin(ev) { this.setState({ staffPinInput: String(ev.target.value).replace(/[^0-9]/g, '').slice(0, 4) }); }
   submitPin() { this.setState(s => ({ staffAuthed: s.staffPinInput === '2468' })); }
   staffMarkPaid() { this.renew(1); this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '' }); }
-  openQrScan() {
-    this.setState({ qrScanOpen: true, qrCamError: false });
-    try { navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(st => { this._qrStream = st; if (this._qrVideo) { this._qrVideo.srcObject = st; const p = this._qrVideo.play(); if (p && p.catch) p.catch(() => {}); } }).catch(() => this.setState({ qrCamError: true })); } catch (e) { this.setState({ qrCamError: true }); }
+  setStaffSearchEmail(ev) { this.setState({ staffSearchEmail: ev.target.value, staffSearchError: '', staffFoundMember: null, staffGeneratedCode: '' }); }
+  staffSearchMember() {
+    const email = this.state.staffSearchEmail.trim();
+    if (!email) return;
+    this.setState({ staffSearchBusy: true, staffSearchError: '', staffFoundMember: null, staffGeneratedCode: '' });
+    window.sfDb.collection('users').where('email', '==', email).limit(1).get().then((snap) => {
+      if (snap.empty) { this.setState({ staffSearchBusy: false, staffSearchError: 'No se encontró ningún socio con ese email.' }); return; }
+      const doc = snap.docs[0];
+      const d = doc.data();
+      this.setState({ staffSearchBusy: false, staffFoundMember: { uid: doc.id, name: d.name || '(sin nombre)', email: d.email, paidUntil: d.paidUntil || 0 } });
+    }).catch(() => this.setState({ staffSearchBusy: false, staffSearchError: 'No se pudo buscar. Probá de nuevo.' }));
   }
-  closeQrScan() { try { if (this._qrStream) { this._qrStream.getTracks().forEach(t => t.stop()); this._qrStream = null; } } catch (e) {} this.setState({ qrScanOpen: false }); }
-  qrValid() { this.closeQrScan(); this.renew(1); this.playBeep(); }
-  makeQr() {
-    const c = document.createElement('canvas'); c.width = 220; c.height = 220; const x = c.getContext('2d');
-    x.fillStyle = '#fff'; x.fillRect(0, 0, 220, 220);
-    let seed = 137; const rnd = () => { seed = (seed * 73 + 41) % 997; return seed / 997; };
-    const n = 21, cs = 180 / n, off = 20; x.fillStyle = '#0C0D11';
-    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { if (rnd() > 0.55) x.fillRect(off + i * cs, off + j * cs, cs - 1, cs - 1); }
-    [[0, 0], [n - 7, 0], [0, n - 7]].forEach(ab => { const a = ab[0], b = ab[1]; x.fillStyle = '#0C0D11'; x.fillRect(off + a * cs, off + b * cs, 7 * cs, 7 * cs); x.fillStyle = '#fff'; x.fillRect(off + (a + 1) * cs, off + (b + 1) * cs, 5 * cs, 5 * cs); x.fillStyle = '#0C0D11'; x.fillRect(off + (a + 2) * cs, off + (b + 2) * cs, 3 * cs, 3 * cs); });
-    return c.toDataURL();
+  staffMarkFoundPaid() {
+    const m = this.state.staffFoundMember; if (!m) return;
+    const newPaidUntil = Math.max(Date.now(), m.paidUntil) + 30 * 86400000;
+    window.sfDb.collection('users').doc(m.uid).update({ paidUntil: newPaidUntil }).then(() => {
+      this.setState({ staffFoundMember: { ...m, paidUntil: newPaidUntil } });
+    }).catch(() => this.setState({ staffSearchError: 'No se pudo actualizar la cuota.' }));
   }
-  openQrShow() { this.setState({ qrShow: this.makeQr() }); }
-  closeQrShow() { this.setState({ qrShow: '' }); }
+  staffGenerateCode() {
+    const m = this.state.staffFoundMember; if (!m) return;
+    const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+    window.sfDb.collection('renewals').doc(code).set({
+      uid: m.uid, months: 1, used: false, createdAt: Date.now(), expiresAt: Date.now() + 15 * 60000,
+    }).then(() => this.setState({ staffGeneratedCode: code })).catch(() => this.setState({ staffSearchError: 'No se pudo generar el código.' }));
+  }
+  setRenewCode(ev) { this.setState({ renewCode: ev.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6), renewError: '' }); }
+  redeemRenewCode() {
+    const code = this.state.renewCode.trim();
+    const user = this.state.authUser;
+    if (!code || !user) { this.setState({ renewError: 'Ingresá el código que te dio el staff.' }); return; }
+    this.setState({ renewBusy: true, renewError: '' });
+    const ref = window.sfDb.collection('renewals').doc(code);
+    ref.get().then((doc) => {
+      if (!doc.exists) { this.setState({ renewBusy: false, renewError: 'Código inválido.' }); return; }
+      const d = doc.data();
+      if (d.uid !== user.uid) { this.setState({ renewBusy: false, renewError: 'Este código no es para tu cuenta.' }); return; }
+      if (d.used) { this.setState({ renewBusy: false, renewError: 'Este código ya fue usado.' }); return; }
+      if (Date.now() > d.expiresAt) { this.setState({ renewBusy: false, renewError: 'Este código venció. Pedí uno nuevo.' }); return; }
+      ref.update({ used: true }).then(() => {
+        this.renew(d.months || 1);
+        this.playBeep();
+        this.setState({ renewBusy: false, renewOk: true, renewCode: '' });
+      }).catch(() => this.setState({ renewBusy: false, renewError: 'No se pudo validar el código. Probá de nuevo.' }));
+    }).catch(() => this.setState({ renewBusy: false, renewError: 'No se pudo validar el código. Probá de nuevo.' }));
+  }
+  openQrScan() { this.setState({ qrScanOpen: true, renewCode: '', renewError: '', renewOk: false }); }
+  closeQrScan() { this.setState({ qrScanOpen: false }); }
 
   data = [
     { id: 'pecho', name: 'Pecho', exercises: [
@@ -1042,7 +1203,7 @@ class Component extends DCLogic {
       const uniq = [...new Set(allEx.map(x => x.id))];
       const muscles = [...new Set(allEx.map(x => grpOf[x.id]).filter(Boolean))];
       const avg = (r.days && r.days.length) ? allEx.length / r.days.length : allEx.length;
-      return { id: r.id, name: r.name, active: r.active,
+      return { id: r.id, name: r.name, active: r.active, isOfficial: false,
         muscleText: muscles.slice(0, 3).join(' · ') || 'Sin ejercicios',
         daysText: (r.days && r.days.length) ? r.days.join(' / ') : 'Sin días',
         exText: uniq.length + (uniq.length === 1 ? ' ejercicio' : ' ejercicios'),
@@ -1051,6 +1212,22 @@ class Component extends DCLogic {
         notActive: !r.active, activate: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.setActive(r.id); },
         open: () => this.editRoutine(r.id) };
     });
+    const officialLevelLabel = { principiante: 'Principiante', intermedio: 'Intermedio', avanzado: 'Avanzado' };
+    const officialAsRoutines = s.officialRoutines.map(r => {
+      const allEx = [].concat.apply([], (r.days || []).map(dd => (r.schedule && r.schedule[dd]) || []));
+      const uniq = [...new Set(allEx.map(x => x.id))];
+      const avg = (r.days && r.days.length) ? allEx.length / r.days.length : allEx.length;
+      const active = s.activeOfficialId === r.id;
+      return { id: r.id, name: r.name, active, isOfficial: true,
+        muscleText: officialLevelLabel[r.level] || 'Oficial',
+        daysText: (r.days && r.days.length) ? r.days.join(' / ') : 'Sin días',
+        exText: uniq.length + (uniq.length === 1 ? ' ejercicio' : ' ejercicios'),
+        durText: '~' + Math.max(10, Math.round(avg * 8)) + ' min/día',
+        border: active ? '1px solid rgba(205,255,74,0.25)' : '1px solid rgba(255,194,74,0.25)',
+        notActive: !active, activate: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.activateOfficial(r.id); },
+        open: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.activateOfficial(r.id); } };
+    });
+    const allRoutinesView = [...officialAsRoutines, ...routinesView];
     const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     const dayChips = DAYS.map(d => { const on = s.builderDays.includes(d); return { d, bg: on ? '#CDFF4A' : '#1D212B', fg: on ? '#0C0D11' : '#F4F5F7', bd: on ? 'transparent' : 'rgba(255,255,255,0.08)', toggle: () => this.toggleDay(d) }; });
     const selDays = DAYS.filter(d => s.builderDays.includes(d));    const dayTabs = selDays.map(d => { const on = d === s.builderDay; return { d, count: (s.builderSched[d] || []).length, bg: on ? 'rgba(205,255,74,0.15)' : '#15171E', fg: on ? '#CDFF4A' : '#8A8F9C', bd: on ? 'rgba(205,255,74,0.45)' : 'rgba(255,255,255,0.08)', pick: () => this.setBuilderDay(d) }; });
@@ -1089,23 +1266,43 @@ class Component extends DCLogic {
     let tab = '';
     if (mainTabs.includes(s.screen)) tab = s.screen;
     else if (s.screen === 'exerciseList' || s.screen === 'exerciseDetail' || s.screen === 'substitutes') tab = 'groups';
-    else if (s.screen === 'builder') tab = 'routines';
+    else if (s.screen === 'builder' && !s.builderIsOfficial) tab = 'routines';
     else if (s.screen === 'personalized') tab = 'account';
     else if (s.screen === 'picker') tab = 'routines';
     const active = '#CDFF4A', dim = '#8A8F9C';
     const locGym = s.location === 'gym';
+    const isStaff = s.userRole === 'staff';
+    const officialRoutinesView = s.officialRoutines.map((r) => ({
+      id: r.id, name: r.name, level: r.level,
+      levelLabel: r.level === 'avanzado' ? 'Avanzado' : (r.level === 'intermedio' ? 'Intermedio' : 'Principiante'),
+      daysText: (r.days && r.days.length) ? r.days.join(' / ') : 'Sin días',
+      edit: () => this.editOfficialRoutine(r.id), remove: () => this.staffDeleteOfficialRoutine(r.id),
+    }));
     return {
       isLogin: s.screen === 'login', isHome: s.screen === 'home', isGroups: s.screen === 'groups',
       isList: s.screen === 'exerciseList', isDetail: s.screen === 'exerciseDetail', isSubs: s.screen === 'substitutes',
       isRoutines: s.screen === 'routines', isBuilder: s.screen === 'builder', isAccount: s.screen === 'account',
       isPersonalized: s.screen === 'personalized', isFree: s.screen === 'freeHome', isOnboarding: s.screen === 'onboarding',
+      isStaffPanel: s.screen === 'staffPanel', isStaffMembersTab: s.staffTab === 'members', isStaffRoutinesTab: s.staffTab === 'routines',
+      setStaffMembersTab: () => this.setStaffTab('members'), setStaffRoutinesTab: () => this.setStaffTab('routines'),
+      staffMembersNavColor: s.staffTab === 'members' ? '#CDFF4A' : '#8A8F9C', staffRoutinesNavColor: s.staffTab === 'routines' ? '#CDFF4A' : '#8A8F9C',
+      staffMembersTabBg: s.staffTab === 'members' ? '#CDFF4A' : 'transparent', staffMembersTabFg: s.staffTab === 'members' ? '#0C0D11' : '#8A8F9C',
+      staffRoutinesTabBg: s.staffTab === 'routines' ? '#CDFF4A' : 'transparent', staffRoutinesTabFg: s.staffTab === 'routines' ? '#0C0D11' : '#8A8F9C',
+      officialRoutinesView, hasOfficialRoutines: officialRoutinesView.length > 0, newOfficialRoutine: () => this.newOfficialRoutine(),
+      builderIsOfficial: s.builderIsOfficial,
+      builderLevelPrincipianteBg: s.builderLevel === 'principiante' ? '#CDFF4A' : '#1D212B', builderLevelPrincipianteFg: s.builderLevel === 'principiante' ? '#0C0D11' : '#F4F5F7',
+      builderLevelIntermedioBg: s.builderLevel === 'intermedio' ? '#CDFF4A' : '#1D212B', builderLevelIntermedioFg: s.builderLevel === 'intermedio' ? '#0C0D11' : '#F4F5F7',
+      builderLevelAvanzadoBg: s.builderLevel === 'avanzado' ? '#CDFF4A' : '#1D212B', builderLevelAvanzadoFg: s.builderLevel === 'avanzado' ? '#0C0D11' : '#F4F5F7',
+      setBuilderLevelPrincipiante: () => this.setBuilderLevel('principiante'), setBuilderLevelIntermedio: () => this.setBuilderLevel('intermedio'), setBuilderLevelAvanzado: () => this.setBuilderLevel('avanzado'),
       profileNameVal: s.profileName, setProfileName: (ev) => this.setProfileName(ev), setProfilePhoto: (ev) => this.setProfilePhoto(ev), finishOnboarding: () => this.finishOnboarding(),
       hasOnboardPhoto: !!s.profilePhoto, noOnboardPhoto: !s.profilePhoto,
       onboardPhotoRef: bgRef(s.profilePhoto || ''),
       displayName: s.profileName || 'Socio Space',
       hasAvatarPhoto: !!s.profilePhoto, noAvatarPhoto: !s.profilePhoto,
       avatarRef: bgRef(s.profilePhoto || ''),
-      showTabs: s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker' && s.screen !== 'onboarding',
+      showTabs: !isStaff && s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker' && s.screen !== 'onboarding' && s.screen !== 'staffPanel' && !(s.screen === 'builder' && s.builderIsOfficial),
+      showStaffTabs: isStaff && s.screen !== 'login' && s.screen !== 'builder',
+      logoutClick: () => this.signOutUser(),
       expired, notExpired: !expired, daysLeft, paidUntilText, memColor,
       memLabel: expired ? 'VENCIDA' : (daysLeft <= 5 ? 'POR VENCER' : 'ACTIVA'),
       chipBg: tint(0.12), chipBorder: tint(0.32), chipText: expired ? 'Cuota vencida · renová para entrenar' : ('Socio activo · vence en ' + daysLeft + (daysLeft === 1 ? ' día' : ' días')),
@@ -1119,14 +1316,22 @@ class Component extends DCLogic {
       showLock,
       renew: () => this.openQrScan(),
       renewDirect: () => this.renew(1),
-      isQrScan: s.qrScanOpen, qrCamError: s.qrCamError, closeQrScan: () => this.closeQrScan(), qrValid: () => this.qrValid(),
-      qrVideoRef: (el) => { this._qrVideo = el; if (el && this._qrStream) { el.srcObject = this._qrStream; const p = el.play(); if (p && p.catch) p.catch(() => {}); } },
-      hasQrShow: !!s.qrShow, openQrShow: () => this.openQrShow(), closeQrShow: () => this.closeQrShow(),
-      qrImgEl: s.qrShow ? React.createElement('img', { src: s.qrShow, style: { width: '200px', height: '200px', borderRadius: '12px', display: 'block', margin: '14px auto 0' } }) : null,
+      isQrScan: s.qrScanOpen, closeQrScan: () => this.closeQrScan(),
+      renewCodeVal: s.renewCode, setRenewCode: (ev) => this.setRenewCode(ev), redeemRenewCode: () => this.redeemRenewCode(),
+      hasRenewError: !!s.renewError, renewErrorMsg: s.renewError, renewBusy: s.renewBusy, renewOk: s.renewOk,
+      renewSubmitLabel: s.renewBusy ? 'Validando…' : 'Validar código',
       staffOpen: s.staffOpen, staffAuthed: s.staffAuthed, staffNotAuthed: !s.staffAuthed, staffPinVal: s.staffPinInput,
       openStaff: () => this.openStaff(), closeStaff: () => this.closeStaff(), setPin: (ev) => this.setPin(ev), submitPin: () => this.submitPin(), staffMarkPaid: () => this.staffMarkPaid(), expireDemo: () => this.expireDemo(),
+      staffSearchEmailVal: s.staffSearchEmail, setStaffSearchEmail: (ev) => this.setStaffSearchEmail(ev), staffSearchMember: () => this.staffSearchMember(),
+      staffSearchBusy: s.staffSearchBusy, hasStaffSearchError: !!s.staffSearchError, staffSearchErrorMsg: s.staffSearchError,
+      hasFoundMember: !!s.staffFoundMember,
+      foundMemberName: s.staffFoundMember ? s.staffFoundMember.name : '', foundMemberEmail: s.staffFoundMember ? s.staffFoundMember.email : '',
+      foundMemberStatus: s.staffFoundMember ? (s.staffFoundMember.paidUntil > Date.now() ? ('Activa · vence ' + new Date(s.staffFoundMember.paidUntil).toLocaleDateString('es-AR')) : 'Vencida') : '',
+      foundMemberStatusColor: s.staffFoundMember ? (s.staffFoundMember.paidUntil > Date.now() ? '#CDFF4A' : '#FF8080') : '#8A8F9C',
+      staffMarkFoundPaid: () => this.staffMarkFoundPaid(), staffGenerateCode: () => this.staffGenerateCode(),
+      hasGeneratedCode: !!s.staffGeneratedCode, staffGeneratedCodeVal: s.staffGeneratedCode,
       isWorkout: s.screen === 'workout', wk, restToast: !!s.restToast,
-      startActive: () => { if (expired) { this.nav('account'); return; } const r = s.routines.find(x => x.active) || s.routines[0]; if (r) this.startWorkout(r.id); },
+      startActive: () => { if (expired) { this.nav('account'); return; } const r = this.getActiveRoutine(); if (r) this.startWorkout(r.id); },
       wkComplete: () => this.completeSet(), wkSkip: () => this.skipRest(), wkAdd: () => this.addRest(15), wkExit: () => this.exitWorkout(),
       homeColor: tab === 'home' ? active : dim, groupsColor: tab === 'groups' ? active : dim,
       routinesColor: tab === 'routines' ? active : dim, accountColor: tab === 'account' ? active : dim,
@@ -1140,10 +1345,10 @@ class Component extends DCLogic {
       exLogged, openLog: () => this.openLog(), closeLog: () => this.closeLog(), saveLog: () => this.saveLog(),
       logHistory, hasHistory: logHistory.length > 0,
       isLogOpen: !!s.logOpen, logSets, logExName: ex ? ex.name : '',
-      routines: routinesView, routineCount: s.routines.length, newRoutine: () => this.newRoutine(),
-      homeRoutineName: (function () { const a = s.routines.find(r => r.active) || s.routines[0]; return a ? a.name : 'Sin rutina activa'; })(),
-      homeRoutineMeta: (function (self) { const a = s.routines.find(r => r.active) || s.routines[0]; if (!a) return 'Creá una en Rutinas'; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; const day = (a.days || []).includes(today) ? today : (a.days || [])[0]; const exs = (a.schedule && day) ? (a.schedule[day] || []) : []; return exs.length + ' ejercicios · ~' + Math.max(10, exs.length * 8) + ' min'; })(this),
-      homeRoutineDay: (function () { const a = s.routines.find(r => r.active) || s.routines[0]; if (!a) return ''; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; return (a.days || []).includes(today) ? 'Hoy · ' + today : 'Próximo · ' + ((a.days || [])[0] || ''); })(),
+      routines: allRoutinesView, routineCount: s.routines.length, newRoutine: () => this.newRoutine(),
+      homeRoutineName: (function (self) { const a = self.getActiveRoutine(); return a ? a.name : 'Sin rutina activa'; })(this),
+      homeRoutineMeta: (function (self) { const a = self.getActiveRoutine(); if (!a) return 'Creá una en Rutinas'; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; const day = (a.days || []).includes(today) ? today : (a.days || [])[0]; const exs = (a.schedule && day) ? (a.schedule[day] || []) : []; return exs.length + ' ejercicios · ~' + Math.max(10, exs.length * 8) + ' min'; })(this),
+      homeRoutineDay: (function (self) { const a = self.getActiveRoutine(); if (!a) return ''; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; return (a.days || []).includes(today) ? 'Hoy · ' + today : 'Próximo · ' + ((a.days || [])[0] || ''); })(this),
       builderTitle: s.editingId ? 'Editar rutina' : 'Nueva rutina', builderNameVal: s.builderName, setBuilderName: (ev) => this.setBuilderName(ev),
       dayChips, saveRoutine: () => this.saveRoutine(),
       isEditing: !!s.editingId, deleteRoutine: () => { if (s.editingId) this.deleteRoutine(s.editingId); },
@@ -1164,6 +1369,7 @@ class Component extends DCLogic {
       setAuthEmail: (ev) => this.setAuthEmail(ev), setAuthPassword: (ev) => this.setAuthPassword(ev),
       submitAuth: () => this.submitAuth(),
       goRoutines: () => this.nav('routines'), goAccount: () => this.nav('account'), goPersonalized: () => this.nav('personalized'),
+      closeBuilder: () => s.builderIsOfficial ? this.setState({ screen: 'staffPanel', staffTab: 'routines' }) : this.nav('routines'),
       contactCoach: () => this.contactCoach(),
       goList: () => this.nav('exerciseList'), goDetail: () => this.nav('exerciseDetail'), goSubs: () => this.nav('substitutes'),
       goBuilder: () => this.nav('builder'), enterFree: () => this.enterApp('freeHome'),
