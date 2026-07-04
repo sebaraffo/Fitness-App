@@ -168,7 +168,11 @@
               <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;letter-spacing:2px;color:#CDFF4A;text-transform:uppercase;font-weight:700;">Rutina activa</span><span style="font-size:12px;color:#8A8F9C;">{{ homeRoutineDay }}</span></div>
               <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:23px;margin-top:4px;">{{ homeRoutineName }}</div>
               <div style="color:#8A8F9C;font-size:13px;margin-top:2px;">{{ homeRoutineMeta }}</div>
-              <button onClick="{{ startActive }}" style="width:100%;height:48px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">Comenzar entrenamiento</button>
+              <sc-if value="{{ hasHomeProgress }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;"><span style="color:#8A8F9C;font-size:11.5px;">Progreso de hoy</span><span style="color:#CDFF4A;font-size:11.5px;font-weight:700;">{{ homeProgressPct }}</span></div>
+                <div style="height:6px;background:#1D212B;border-radius:99px;overflow:hidden;margin-top:5px;"><div style="height:100%;width:{{ homeProgressPct }};background:#CDFF4A;border-radius:99px;"></div></div>
+              </sc-if>
+              <button onClick="{{ startActive }}" style="width:100%;height:48px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">{{ startActiveLabel }}</button>
             </div>
           </div>
           <div style="display:flex;gap:12px;margin-top:14px;">
@@ -594,7 +598,7 @@
                   <div style="font-weight:700;font-size:15.5px;">{{ e.name }}</div>
                   <span style="font-size:11px;font-weight:700;color:{{ e.pctColor }};">{{ e.statusLabel }}</span>
                 </div>
-                <div style="color:#8A8F9C;font-size:12px;margin-top:2px;">{{ e.doneCount }}/{{ e.sets }} series · {{ e.reps }} reps</div>
+                <div style="color:#8A8F9C;font-size:12px;margin-top:2px;">{{ e.doneCount }}/{{ e.sets }} series ({{ e.pct }}) · {{ e.reps }} reps</div>
                 <div style="height:6px;background:#1D212B;border-radius:99px;overflow:hidden;margin-top:9px;"><div style="height:100%;width:{{ e.pct }};background:{{ e.barColor }};border-radius:99px;"></div></div>
               </div>
             </sc-for>
@@ -1592,6 +1596,9 @@ class Component extends DCLogic {
       homeRoutineName: (function (self) { const a = self.getActiveRoutine(); return a ? a.name : 'Sin rutina activa'; })(this),
       homeRoutineMeta: (function (self) { const a = self.getActiveRoutine(); if (!a) return 'Creá una en Rutinas'; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; const day = (a.days || []).includes(today) ? today : (a.days || [])[0]; const exs = (a.schedule && day) ? (a.schedule[day] || []) : []; return exs.length + ' ejercicios · ~' + Math.max(10, exs.length * 8) + ' min'; })(this),
       homeRoutineDay: (function (self) { const a = self.getActiveRoutine(); if (!a) return ''; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; return (a.days || []).includes(today) ? 'Hoy · ' + today : 'Próximo · ' + ((a.days || [])[0] || ''); })(this),
+      hasHomeProgress: (function (self) { const a = self.getActiveRoutine(); if (!a) return false; return self.buildTodayList(a).length > 0; })(this),
+      homeProgressPct: (function (self) { const a = self.getActiveRoutine(); if (!a) return '0%'; const list = self.buildTodayList(a); if (!list.length) return '0%'; let done = 0, total = 0; list.forEach((ex) => { done += Math.min(self.getSetsDoneToday(ex.id), ex.sets); total += ex.sets; }); return (total ? Math.round((done / total) * 100) : 0) + '%'; })(this),
+      startActiveLabel: (function (self) { const a = self.getActiveRoutine(); if (!a) return 'Comenzar entrenamiento'; const list = self.buildTodayList(a); const any = list.some((ex) => self.getSetsDoneToday(ex.id) > 0); return any ? 'Continuar entrenamiento' : 'Comenzar entrenamiento'; })(this),
       builderTitle: s.editingId ? 'Editar rutina' : 'Nueva rutina', builderNameVal: s.builderName, setBuilderName: (ev) => this.setBuilderName(ev),
       dayChips, saveRoutine: () => this.saveRoutine(),
       isEditing: !!s.editingId, deleteRoutine: () => { if (s.editingId) this.deleteRoutine(s.editingId); },
