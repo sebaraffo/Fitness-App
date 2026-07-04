@@ -11,6 +11,22 @@
 <meta name="apple-mobile-web-app-title" content="Space Fitness">
 <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
 <link rel="icon" href="./assets/icons/icon-192.png">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCDM14VWK7QRX-Xlr1JKERycuuyxeZhDoY",
+    authDomain: "space-fitness-2ee64.firebaseapp.com",
+    projectId: "space-fitness-2ee64",
+    storageBucket: "space-fitness-2ee64.firebasestorage.app",
+    messagingSenderId: "1020447880315",
+    appId: "1:1020447880315:web:2977a5e2de8b2b00075ede"
+  };
+  firebase.initializeApp(firebaseConfig);
+  window.sfAuth = firebase.auth();
+  window.sfDb = firebase.firestore();
+</script>
 <script src="./support.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -62,9 +78,26 @@
           <div style="position:absolute;left:28px;right:28px;bottom:44px;z-index:15;">
             <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:38px;line-height:0.95;">ENTRENÁ CON<br>PROPÓSITO</h2>
             <p style="color:#9aa0ac;font-size:14px;margin-top:10px;line-height:1.4;">Tu gimnasio, tus rutinas y tu progreso en un solo lugar.</p>
-            <button onClick="{{ goHome }}" style="width:100%;height:56px;margin-top:22px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Ingresar · Soy socio</button>
-            <button onClick="{{ enterFree }}" style="width:100%;height:56px;margin-top:12px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:16px;font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Explorar gratis</button>
-            <p style="text-align:center;color:#6b7080;font-size:11.5px;margin-top:14px;">Modo gratuito: solo ejercicios básicos</p>
+            <sc-if value="{{ authFormClosed }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ openAuthForm }}" style="width:100%;height:56px;margin-top:22px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:16px;font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;cursor:pointer;" style-hover="filter:brightness(1.08);">Ingresar · Soy socio</button>
+              <button onClick="{{ enterFree }}" style="width:100%;height:56px;margin-top:12px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:16px;font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.11);">Explorar gratis</button>
+              <p style="text-align:center;color:#6b7080;font-size:11.5px;margin-top:14px;">Modo gratuito: solo ejercicios básicos</p>
+            </sc-if>
+            <sc-if value="{{ authFormOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="background:rgba(21,23,30,0.94);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;margin-top:20px;">
+                <div style="display:flex;background:#0F1116;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:4px;margin-bottom:14px;">
+                  <div onClick="{{ setAuthLoginMode }}" style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;background:{{ authLoginTabBg }};color:{{ authLoginTabFg }};">Ingresar</div>
+                  <div onClick="{{ setAuthSignupMode }}" style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;background:{{ authSignupTabBg }};color:{{ authSignupTabFg }};">Crear cuenta</div>
+                </div>
+                <input type="email" value="{{ authEmailVal }}" onChange="{{ setAuthEmail }}" placeholder="Email" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;margin-bottom:9px;" style-focus="border-color:rgba(205,255,74,0.5);">
+                <input type="password" value="{{ authPasswordVal }}" onChange="{{ setAuthPassword }}" placeholder="Contraseña" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+                <sc-if value="{{ hasAuthError }}" hint-placeholder-val="{{ false }}">
+                  <div style="color:#FF8080;font-size:12px;margin-top:9px;">{{ authErrorMsg }}</div>
+                </sc-if>
+                <button onClick="{{ submitAuth }}" style="width:100%;height:50px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">{{ authSubmitLabel }}</button>
+                <div onClick="{{ closeAuthForm }}" style="text-align:center;color:#8A8F9C;font-size:12.5px;margin-top:12px;cursor:pointer;">‹ Volver</div>
+              </div>
+            </sc-if>
           </div>
         </div>
       </sc-if>
@@ -589,6 +622,7 @@ class Component extends DCLogic {
     logs: {}, logOpen: null, logDraft: [], sessions: [],
     paidUntil: Date.now() + 12 * 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '', qrScanOpen: false, qrCamError: false, qrShow: '',
     onboardingDone: false, onboardTarget: 'home', profileName: '', profilePhoto: '',
+    authUser: null, authFormOpen: false, authMode: 'login', authEmail: '', authPassword: '', authError: '', authBusy: false,
     routines: [
       { id: 'r1', name: 'Push · Empuje', days: ['Lun', 'Jue'], active: true, schedule: {
         'Lun': [{ id: 'press-banca', sets: 4, reps: '8-10', rest: '90s' }, { id: 'press-inclinado', sets: 3, reps: '10-12', rest: '75s' }],
@@ -606,6 +640,20 @@ class Component extends DCLogic {
       const raw = localStorage.getItem('sf_state_v1');
       if (raw) { const d = JSON.parse(raw); const mig = (arr) => (arr || []).map(r => { if (r.schedule) return r; const days = (r.days && r.days.length) ? r.days : ((r.ex && r.ex.length) ? ['Lun'] : []); const schedule = {}; days.forEach(dd => schedule[dd] = (r.ex || []).map(x => ({ ...x }))); return { ...r, days, schedule }; }); this.setState({ routines: (d.routines && d.routines.length) ? mig(d.routines) : this.state.routines, logs: d.logs || {}, swap: d.swap || {}, sessions: d.sessions || [], paidUntil: d.paidUntil || this.state.paidUntil, onboardingDone: !!d.onboardingDone, profileName: d.profileName || '', profilePhoto: d.profilePhoto || '' }); }
     } catch (e) {}
+    if (window.sfAuth) {
+      window.sfAuth.onAuthStateChanged((user) => {
+        if (!user) { this.setState({ authUser: null }); return; }
+        window.sfDb.collection('users').doc(user.uid).get().then((doc) => {
+          const data = doc.exists ? doc.data() : {};
+          this.setState({
+            authUser: user, authFormOpen: false, authEmail: '', authPassword: '', authError: '', authBusy: false,
+            profileName: data.name || '', profilePhoto: data.photo || '',
+            paidUntil: data.paidUntil || (Date.now() + 12 * 86400000),
+            onboardingDone: !!data.name, screen: data.name ? 'home' : 'onboarding', onboardTarget: 'home',
+          });
+        }).catch(() => {});
+      });
+    }
   }
   persist() { try { localStorage.setItem('sf_state_v1', JSON.stringify({ routines: this.state.routines, logs: this.state.logs, swap: this.state.swap, sessions: this.state.sessions, paidUntil: this.state.paidUntil, onboardingDone: this.state.onboardingDone, profileName: this.state.profileName, profilePhoto: this.state.profilePhoto })); } catch (e) {} }
   recordSession(ses) { const d = new Date(); const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const date = d.getDate() + ' ' + months[d.getMonth()]; const exNames = ses.list.map(x => x.name); this.setState(s => ({ sessions: [{ id: 's' + Date.now(), date, rName: ses.rName, exCount: ses.list.length, exNames }, ...s.sessions] }), () => this.persist()); }
@@ -618,7 +666,53 @@ class Component extends DCLogic {
     reader.onload = () => this.setState({ profilePhoto: reader.result });
     reader.readAsDataURL(file);
   }
-  finishOnboarding() { if (!this.state.profileName.trim()) return; this.setState(s => ({ onboardingDone: true, screen: s.onboardTarget || 'home' }), () => this.persist()); }
+  finishOnboarding() {
+    if (!this.state.profileName.trim()) return;
+    const user = this.state.authUser;
+    if (user) {
+      window.sfDb.collection('users').doc(user.uid).set({
+        name: this.state.profileName.trim(), photo: this.state.profilePhoto || '', role: 'member',
+        paidUntil: this.state.paidUntil, createdAt: Date.now(),
+      }, { merge: true }).catch(() => {});
+    }
+    this.setState(s => ({ onboardingDone: true, screen: s.onboardTarget || 'home' }), () => this.persist());
+  }
+  openAuthForm() { this.setState({ authFormOpen: true, authError: '', authMode: 'login' }); }
+  closeAuthForm() { this.setState({ authFormOpen: false, authError: '', authEmail: '', authPassword: '' }); }
+  setAuthMode(mode) { this.setState({ authMode: mode, authError: '' }); }
+  setAuthEmail(ev) { this.setState({ authEmail: ev.target.value }); }
+  setAuthPassword(ev) { this.setState({ authPassword: ev.target.value }); }
+  authErrorMessage(code) {
+    const map = {
+      'auth/invalid-email': 'El email no es válido.',
+      'auth/user-not-found': 'No existe una cuenta con ese email.',
+      'auth/wrong-password': 'Contraseña incorrecta.',
+      'auth/invalid-credential': 'Email o contraseña incorrectos.',
+      'auth/email-already-in-use': 'Ya existe una cuenta con ese email.',
+      'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
+    };
+    return map[code] || 'Algo salió mal. Probá de nuevo.';
+  }
+  submitAuth() {
+    const { authMode, authEmail, authPassword } = this.state;
+    if (!authEmail.trim() || !authPassword) { this.setState({ authError: 'Completá email y contraseña.' }); return; }
+    this.setState({ authBusy: true, authError: '' });
+    const fn = authMode === 'signup'
+      ? window.sfAuth.createUserWithEmailAndPassword(authEmail.trim(), authPassword)
+      : window.sfAuth.signInWithEmailAndPassword(authEmail.trim(), authPassword);
+    fn.catch((err) => { this.setState({ authBusy: false, authError: this.authErrorMessage(err.code) }); });
+  }
+  signOutUser() {
+    window.sfAuth.signOut();
+    this.setState({
+      screen: 'login', authFormOpen: false, authMode: 'login', authEmail: '', authPassword: '', authError: '',
+      profileName: '', profilePhoto: '', onboardingDone: false, paidUntil: Date.now() + 12 * 86400000,
+    });
+  }
+  syncPaidUntil() {
+    const user = this.state.authUser;
+    if (user) window.sfDb.collection('users').doc(user.uid).update({ paidUntil: this.state.paidUntil }).catch(() => {});
+  }
   openGroup(id) { this.setState({ groupId: id, screen: 'exerciseList' }); }
   openEx(id) { this.setState({ exId: id, screen: 'exerciseDetail' }); }
   setLoc(l) { this.setState({ location: l }); }
@@ -696,8 +790,8 @@ class Component extends DCLogic {
   skipRest() { this.advance(); }
   addRest(sec) { this.setState(s => { const ses = s.session; if (!ses || ses.phase !== 'rest') return {}; return { session: { ...ses, remaining: ses.remaining + sec } }; }); }
   exitWorkout() { this.clearTimer(); this.setState({ screen: 'home', session: null }); }
-  renew(months) { this.setState(s => ({ paidUntil: Math.max(Date.now(), s.paidUntil) + (months || 1) * 30 * 86400000 }), () => this.persist()); }
-  expireDemo() { this.setState({ paidUntil: Date.now() - 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '' }, () => this.persist()); }
+  renew(months) { this.setState(s => ({ paidUntil: Math.max(Date.now(), s.paidUntil) + (months || 1) * 30 * 86400000 }), () => { this.persist(); this.syncPaidUntil(); }); }
+  expireDemo() { this.setState({ paidUntil: Date.now() - 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '' }, () => { this.persist(); this.syncPaidUntil(); }); }
   openStaff() { this.setState({ staffOpen: true, staffAuthed: false, staffPinInput: '' }); }
   closeStaff() { this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '' }); }
   setPin(ev) { this.setState({ staffPinInput: String(ev.target.value).replace(/[^0-9]/g, '').slice(0, 4) }); }
@@ -1036,7 +1130,16 @@ class Component extends DCLogic {
       noVideo: !exVideo && !exPhotoFrames,
       isPicker: s.screen === 'picker', builder, builderCount: bList.length, builderEmpty: bList.length === 0, catalog, openPicker: () => { if (s.builderDay) this.nav('picker'); },
       dayTabs, hasBuilderDays: selDays.length > 0, noBuilderDays: selDays.length === 0, builderDayName: s.builderDay || '',
-      goLogin: () => this.nav('login'), goHome: () => this.enterApp('home'), goGroups: () => this.nav('groups'),
+      goLogin: () => this.signOutUser(), goHome: () => this.enterApp('home'), goGroups: () => this.nav('groups'),
+      authFormOpen: s.authFormOpen, authFormClosed: !s.authFormOpen, authIsLogin: s.authMode !== 'signup', authIsSignup: s.authMode === 'signup',
+      authLoginTabBg: s.authMode !== 'signup' ? '#CDFF4A' : 'transparent', authLoginTabFg: s.authMode !== 'signup' ? '#0C0D11' : '#8A8F9C',
+      authSignupTabBg: s.authMode === 'signup' ? '#CDFF4A' : 'transparent', authSignupTabFg: s.authMode === 'signup' ? '#0C0D11' : '#8A8F9C',
+      authEmailVal: s.authEmail, authPasswordVal: s.authPassword, hasAuthError: !!s.authError, authErrorMsg: s.authError,
+      authBusy: s.authBusy, authSubmitLabel: s.authBusy ? 'Un momento…' : (s.authMode === 'signup' ? 'Crear cuenta' : 'Ingresar'),
+      openAuthForm: () => this.openAuthForm(), closeAuthForm: () => this.closeAuthForm(),
+      setAuthLoginMode: () => this.setAuthMode('login'), setAuthSignupMode: () => this.setAuthMode('signup'),
+      setAuthEmail: (ev) => this.setAuthEmail(ev), setAuthPassword: (ev) => this.setAuthPassword(ev),
+      submitAuth: () => this.submitAuth(),
       goRoutines: () => this.nav('routines'), goAccount: () => this.nav('account'), goPersonalized: () => this.nav('personalized'),
       goList: () => this.nav('exerciseList'), goDetail: () => this.nav('exerciseDetail'), goSubs: () => this.nav('substitutes'),
       goBuilder: () => this.nav('builder'), enterFree: () => this.enterApp('freeHome'),
