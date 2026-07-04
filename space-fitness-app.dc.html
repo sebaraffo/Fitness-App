@@ -723,7 +723,7 @@ class Component extends DCLogic {
     if (user) window.sfDb.collection('users').doc(user.uid).update({ paidUntil: this.state.paidUntil }).catch(() => {});
   }
   contactCoach() {
-    const COACH_WHATSAPP = '5491100000000'; // TODO: reemplazar por el número real del coach/gimnasio
+    const COACH_WHATSAPP = '59896694526';
     const name = this.state.profileName || 'un socio';
     const msg = encodeURIComponent('Hola! Soy ' + name + ' de Space Fitness y quiero armar mi plan personalizado.');
     window.open('https://wa.me/' + COACH_WHATSAPP + '?text=' + msg, '_blank');
