@@ -648,10 +648,14 @@ class Component extends DCLogic {
         if (!user) { this.setState({ authUser: null }); return; }
         window.sfDb.collection('users').doc(user.uid).get().then((doc) => {
           const data = doc.exists ? doc.data() : {};
+          if (!doc.exists || !data.email) {
+            window.sfDb.collection('users').doc(user.uid).set({ email: user.email }, { merge: true }).catch(() => {});
+          }
           this.setState({
             authUser: user, authFormOpen: false, authEmail: '', authPassword: '', authError: '', authBusy: false,
             profileName: data.name || '', profilePhoto: data.photo || '',
             paidUntil: data.paidUntil || (Date.now() + 12 * 86400000),
+            logs: data.logs || {},
             onboardingDone: !!data.name, screen: data.name ? 'home' : 'onboarding', onboardTarget: 'home',
           });
         }).catch(() => {});
@@ -749,7 +753,11 @@ class Component extends DCLogic {
   setActive(id) { this.setState(s => ({ routines: s.routines.map(r => ({ ...r, active: r.id === id })) }), () => this.persist()); }
   openLog() { this.setState(s => { const g = this.data.find(x => x.id === s.groupId); const ex = g && g.exercises.find(e => e.id === s.exId); if (!ex) return {}; const raw = s.logs[s.exId]; const prev = Array.isArray(raw) ? raw[0] : raw; const n = typeof ex.sets === 'number' ? ex.sets : 1; const draft = []; for (let i = 0; i < n; i++) { const p = prev && prev.sets[i]; draft.push({ w: p ? p.w : '', reps: p ? p.reps : '' }); } return { logOpen: s.exId, logDraft: draft }; }); }
   setLog(i, key, val) { this.setState(s => ({ logDraft: s.logDraft.map((x, k) => k === i ? { ...x, [key]: val } : x) })); }
-  saveLog() { this.setState(s => { const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const d = new Date(); const dateKey = d.getDate() + ' ' + months[d.getMonth()]; const entry = { date: dateKey, sets: s.logDraft.map(x => ({ w: x.w, reps: x.reps })) }; let arr = s.logs[s.logOpen]; arr = Array.isArray(arr) ? [...arr] : (arr && arr.sets ? [{ date: arr.date || 'antes', sets: arr.sets }] : []); if (arr[0] && arr[0].date === dateKey) arr[0] = entry; else arr.unshift(entry); arr = arr.slice(0, 20); return { logs: { ...s.logs, [s.logOpen]: arr }, logOpen: null }; }, () => this.persist()); }
+  saveLog() { this.setState(s => { const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const d = new Date(); const dateKey = d.getDate() + ' ' + months[d.getMonth()]; const entry = { date: dateKey, sets: s.logDraft.map(x => ({ w: x.w, reps: x.reps })) }; let arr = s.logs[s.logOpen]; arr = Array.isArray(arr) ? [...arr] : (arr && arr.sets ? [{ date: arr.date || 'antes', sets: arr.sets }] : []); if (arr[0] && arr[0].date === dateKey) arr[0] = entry; else arr.unshift(entry); arr = arr.slice(0, 20); return { logs: { ...s.logs, [s.logOpen]: arr }, logOpen: null }; }, () => { this.persist(); this.syncLogs(); }); }
+  syncLogs() {
+    const user = this.state.authUser;
+    if (user) window.sfDb.collection('users').doc(user.uid).set({ logs: this.state.logs }, { merge: true }).catch(() => {});
+  }
   closeLog() { this.setState({ logOpen: null }); }
   fmt(sec) { const m = Math.floor(sec / 60); const ss = sec % 60; return m + ':' + (ss < 10 ? '0' : '') + ss; }
   clearTimer() { if (this._t) { clearInterval(this._t); this._t = null; } }
