@@ -32,6 +32,8 @@
   .scr{position:absolute;inset:0;overflow:hidden;}
   .screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;}
   .screen::-webkit-scrollbar{display:none;}
+  @keyframes sfFrameA{0%,45%{opacity:1}50%,100%{opacity:0}}
+  @keyframes sfFrameB{0%,45%{opacity:0}50%,100%{opacity:1}}
 </style>
 <template id="__bundler_thumbnail"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="24" fill="#0C0D11"/><rect x="30" y="43" width="40" height="14" rx="4" fill="#CDFF4A"/><rect x="22" y="36" width="10" height="28" rx="3" fill="#CDFF4A"/><rect x="68" y="36" width="10" height="28" rx="3" fill="#CDFF4A"/></svg></template>
 </helmet>
@@ -174,6 +176,14 @@
           <div style="position:relative;height:270px;overflow:hidden;background:#171922;"><div ref="{{ exImgRef }}" style="position:absolute;inset:0;"></div>
             <sc-if value="{{ hasVideo }}" hint-placeholder-val="{{ false }}">
               {{ videoEl }}
+            </sc-if>
+            <sc-if value="{{ hasAnimSvg }}" hint-placeholder-val="{{ false }}">
+              <div ref="{{ animSvgRef }}" style="position:absolute;inset:0;"></div>
+              <span style="position:absolute;bottom:10px;right:14px;font-size:10px;font-weight:700;letter-spacing:1px;color:#CDFF4A;background:rgba(12,13,17,0.6);padding:4px 9px;border-radius:6px;">ANIMACIÓN PROPIA</span>
+            </sc-if>
+            <sc-if value="{{ hasPhotoAnim }}" hint-placeholder-val="{{ false }}">
+              <div ref="{{ photoAnimRef }}" style="position:absolute;inset:0;"></div>
+              <span style="position:absolute;bottom:10px;right:14px;font-size:10px;font-weight:700;letter-spacing:1px;color:#FFC24A;background:rgba(12,13,17,0.6);padding:4px 9px;border-radius:6px;">FOTOS · BANCO LIBRE</span>
             </sc-if>
             <sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}">
               <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(205,255,74,0.92);display:flex;align-items:center;justify-content:center;"><span style="border-left:16px solid #0C0D11;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;"></span></div><div style="color:#F4F5F7;font-size:11.5px;font-weight:600;margin-top:10px;text-shadow:0 1px 6px rgba(0,0,0,0.6);">Demostración próximamente</div></div>
@@ -558,6 +568,14 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+const SF_ANIM_SVG = {
+  'press-banca': '<svg viewBox="0 0 300 200" width="100%" height="100%" style="display:block;background:#171922;"><rect width="300" height="200" fill="#171922"/><line x1="60" y1="152" x2="220" y2="152" stroke="#2a2e38" stroke-width="10" stroke-linecap="round"/><line x1="178" y1="150" x2="196" y2="164" stroke="#3a3f4b" stroke-width="7" stroke-linecap="round"/><line x1="196" y1="164" x2="184" y2="186" stroke="#3a3f4b" stroke-width="7" stroke-linecap="round"/><line x1="108" y1="150" x2="178" y2="150" stroke="#CDFF4A" stroke-width="7" stroke-linecap="round"/><circle cx="98" cy="150" r="13" fill="#CDFF4A"/><line x1="112" y1="150" x2="112" y2="95" stroke="#CDFF4A" stroke-width="6" stroke-linecap="round"><animate attributeName="y2" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></line><line x1="76" y1="95" x2="148" y2="95" stroke="#F4F5F7" stroke-width="8" stroke-linecap="round"><animate attributeName="y1" values="95;128;95" dur="1.6s" repeatCount="indefinite"/><animate attributeName="y2" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></line><circle cx="76" cy="95" r="11" fill="#F4F5F7"><animate attributeName="cy" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="148" cy="95" r="11" fill="#F4F5F7"><animate attributeName="cy" values="95;128;95" dur="1.6s" repeatCount="indefinite"/></circle></svg>',
+  'dominadas': '<svg viewBox="0 0 300 220" width="100%" height="100%" style="display:block;background:#171922;"><rect width="300" height="220" fill="#171922"/><line x1="90" y1="28" x2="210" y2="28" stroke="#2a2e38" stroke-width="9" stroke-linecap="round"/><line x1="128" y1="28" x2="140" y2="88" stroke="#F4F5F7" stroke-width="6" stroke-linecap="round"><animate attributeName="y2" values="88;55;88" dur="1.5s" repeatCount="indefinite"/></line><line x1="172" y1="28" x2="160" y2="88" stroke="#F4F5F7" stroke-width="6" stroke-linecap="round"><animate attributeName="y2" values="88;55;88" dur="1.5s" repeatCount="indefinite"/></line><circle cx="150" cy="100" r="14" fill="#CDFF4A"><animate attributeName="cy" values="100;65;100" dur="1.5s" repeatCount="indefinite"/></circle><line x1="150" y1="114" x2="150" y2="165" stroke="#CDFF4A" stroke-width="7" stroke-linecap="round"><animate attributeName="y1" values="114;79;114" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="165;130;165" dur="1.5s" repeatCount="indefinite"/></line><line x1="150" y1="165" x2="132" y2="200" stroke="#CDFF4A" stroke-width="6" stroke-linecap="round"><animate attributeName="y1" values="165;130;165" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="200;165;200" dur="1.5s" repeatCount="indefinite"/></line><line x1="150" y1="165" x2="168" y2="200" stroke="#CDFF4A" stroke-width="6" stroke-linecap="round"><animate attributeName="y1" values="165;130;165" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="200;165;200" dur="1.5s" repeatCount="indefinite"/></line></svg>',
+};
+const SF_PHOTO_FRAMES = {
+  'sentadilla': ['https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/0.jpg', 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/1.jpg'],
+  'curl-barra': ['https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg', 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/1.jpg'],
+};
 class Component extends DCLogic {
   state = {
     screen: 'login', location: 'gym', groupId: null, exId: null, swap: {},
@@ -699,7 +717,7 @@ class Component extends DCLogic {
 
   data = [
     { id: 'pecho', name: 'Pecho', exercises: [
-      { id: 'press-banca', name: 'Press de banca', env: 'gym', muscles: ['Pectoral mayor', 'Tríceps', 'Deltoides ant.'], sets: 4, reps: '8-10', rest: '90s', video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', tips: ['Escápulas retraídas, pies firmes en el piso', 'Bajá la barra al esternón con codos a ~45°'], last: '60kg × 10',
+      { id: 'press-banca', name: 'Press de banca', env: 'gym', muscles: ['Pectoral mayor', 'Tríceps', 'Deltoides ant.'], sets: 4, reps: '8-10', rest: '90s', tips: ['Escápulas retraídas, pies firmes en el piso', 'Bajá la barra al esternón con codos a ~45°'], last: '60kg × 10',
         subsGym: [{ name: 'Press en máquina Smith', note: 'Más control · principiantes' }, { name: 'Press con mancuernas', note: 'Mayor rango de movimiento' }],
         subsHome: [{ name: 'Flexiones lastradas', note: 'Mochila con peso' }, { name: 'Flexiones declinadas', note: 'Pies elevados en silla' }] },
       { id: 'press-inclinado', name: 'Press inclinado c/ mancuernas', env: 'gym', muscles: ['Pectoral superior', 'Deltoides ant.'], sets: 3, reps: '10-12', rest: '75s', tips: ['Banco entre 30° y 45°', 'Controlá la fase excéntrica'], last: '22kg × 10',
@@ -864,6 +882,14 @@ class Component extends DCLogic {
     const exImgBg = 'url("' + exImg + '")';
     const exVideo = (ex && ex.video) ? ex.video : '';
     const videoEl = exVideo ? React.createElement('video', { src: exVideo, controls: true, playsInline: true, preload: 'metadata', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', background: '#000', zIndex: 1 } }) : null;
+    const exAnimSvg = (!exVideo && ex && SF_ANIM_SVG[ex.id]) ? SF_ANIM_SVG[ex.id] : '';
+    const animSvgRef = (el) => { if (el && exAnimSvg) el.innerHTML = exAnimSvg; };
+    const exPhotoFrames = (!exVideo && !exAnimSvg && ex && SF_PHOTO_FRAMES[ex.id]) ? SF_PHOTO_FRAMES[ex.id] : null;
+    const photoAnimRef = (el) => {
+      if (!el || !exPhotoFrames) return;
+      el.innerHTML = '<img src="' + exPhotoFrames[0] + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:sfFrameA 1.6s steps(1) infinite;">'
+        + '<img src="' + exPhotoFrames[1] + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:sfFrameB 1.6s steps(1) infinite;">';
+    };
     const swapName = ex ? (s.swap[ex.id] || '') : '';
     let effName = ex ? ex.name : '', effEnv = ex ? ex.env : 'gym';
     if (ex && swapName) { let cat = null; ex.subsGym.forEach(x => { if (x.name === swapName) cat = 'gym'; }); ex.subsHome.forEach(x => { if (x.name === swapName) cat = 'home'; }); if (cat) { effName = swapName; effEnv = cat; } }
@@ -1000,7 +1026,10 @@ class Component extends DCLogic {
       dayChips, saveRoutine: () => this.saveRoutine(),
       isEditing: !!s.editingId, deleteRoutine: () => { if (s.editingId) this.deleteRoutine(s.editingId); },
       swapName, hasSwap: !!swapName, swapOrigName: ex ? ex.name : '', subsGym, subsHome, exImg, exImgBg, exImgRef: bgRef(exImg),
-      exVideo, hasVideo: !!exVideo, noVideo: !exVideo, videoEl,
+      exVideo, hasVideo: !!exVideo, videoEl,
+      hasAnimSvg: !!exAnimSvg, animSvgRef,
+      hasPhotoAnim: !!exPhotoFrames, photoAnimRef,
+      noVideo: !exVideo && !exAnimSvg && !exPhotoFrames,
       isPicker: s.screen === 'picker', builder, builderCount: bList.length, builderEmpty: bList.length === 0, catalog, openPicker: () => { if (s.builderDay) this.nav('picker'); },
       dayTabs, hasBuilderDays: selDays.length > 0, noBuilderDays: selDays.length === 0, builderDayName: s.builderDay || '',
       goLogin: () => this.nav('login'), goHome: () => this.enterApp('home'), goGroups: () => this.nav('groups'),
