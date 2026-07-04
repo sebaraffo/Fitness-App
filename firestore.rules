@@ -43,5 +43,9 @@ service cloud.firestore {
       allow read: if isSignedIn();
       allow write: if isStaff();
     }
+
+    match /meta/counters {
+      allow read, write: if isSignedIn();
+    }
   }
 }

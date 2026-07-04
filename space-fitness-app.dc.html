@@ -449,7 +449,7 @@
               <div style="position:absolute;bottom:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:#CDFF4A;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #0C0D11;">✎</div>
               <input type="file" accept="image/*" onChange="{{ setProfilePhoto }}" style="position:absolute;inset:0;opacity:0;cursor:pointer;">
             </label>
-            <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">{{ displayName }}</div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #A-2481 · Plan Full</div></div>
+            <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;line-height:1;">{{ displayName }}</div><div style="color:#8A8F9C;font-size:13px;margin-top:3px;">Socio #{{ memberNumberVal }} · Plan Full</div></div>
           </div>
           <div style="margin-top:16px;border-radius:20px;padding:17px;background:{{ memCardBg }};color:{{ memCardFg }};">
             <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;">MEMBRESÍA</span><span style="font-size:11px;font-weight:700;background:{{ memBadgeBg }};padding:3px 9px;border-radius:6px;">{{ memLabel }}</span></div>
@@ -491,17 +491,17 @@
           </div>
 
           <sc-if value="{{ isStaffMembersTab }}" hint-placeholder-val="{{ true }}">
-            <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Buscar socio por email</div>
+            <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Buscar socio por email, cédula o N° de socio</div>
             <div style="display:flex;gap:8px;">
-              <input type="email" value="{{ staffSearchEmailVal }}" onChange="{{ setStaffSearchEmail }}" placeholder="email@socio.com" style="flex:1;height:50px;background:#15171E;border:1px solid rgba(255,255,255,0.09);border-radius:13px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
-              <button onClick="{{ staffSearchMember }}" style="flex:0 0 auto;height:50px;padding:0 18px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">Buscar</button>
+              <input type="text" value="{{ staffSearchEmailVal }}" onChange="{{ setStaffSearchEmail }}" placeholder="Email, cédula o N° de socio" style="flex:1;height:50px;background:#15171E;border:1px solid rgba(255,255,255,0.09);border-radius:13px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+              <button onClick="{{ staffSearchMember }}" style="flex:0 0 auto;height:50px;padding:0 18px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">{{ staffSearchBtnLabel }}</button>
             </div>
             <sc-if value="{{ hasStaffSearchError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12.5px;margin-top:9px;">{{ staffSearchErrorMsg }}</div></sc-if>
             <sc-if value="{{ hasFoundMember }}" hint-placeholder-val="{{ false }}">
               <div style="margin-top:16px;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:17px;">
                 <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;">{{ foundMemberName }}</div>
                 <div style="color:#8A8F9C;font-size:12.5px;margin-top:2px;">{{ foundMemberEmail }}</div>
-                <div style="color:#8A8F9C;font-size:12px;margin-top:4px;">CI: {{ foundMemberCI }} · {{ foundMemberAddress }}</div>
+                <div style="color:#8A8F9C;font-size:12px;margin-top:4px;">N° {{ foundMemberNumber }} · CI: {{ foundMemberCI }} · {{ foundMemberAddress }}</div>
                 <div style="font-size:13px;margin-top:7px;font-weight:700;color:{{ foundMemberStatusColor }};">{{ foundMemberStatus }}</div>
                 <button onClick="{{ staffMarkFoundPaid }}" style="width:100%;height:50px;margin-top:14px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;cursor:pointer;">✓ Marcar cuota pagada (+30 días)</button>
                 <button onClick="{{ staffGenerateCode }}" style="width:100%;height:46px;margin-top:9px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Generar código de renovación</button>
@@ -639,17 +639,17 @@
           <div style="width:100%;max-height:82vh;overflow-y:auto;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
             <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;">Panel de staff</div><span onClick="{{ closeStaff }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
             <sc-if value="{{ staffAuthed }}" hint-placeholder-val="{{ false }}">
-              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-top:16px;">Buscar socio por email</div>
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-top:16px;">Buscar socio por email, cédula o N° de socio</div>
               <div style="display:flex;gap:8px;margin-top:8px;">
-                <input type="email" value="{{ staffSearchEmailVal }}" onChange="{{ setStaffSearchEmail }}" placeholder="email@socio.com" style="flex:1;height:46px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:13.5px;padding:0 12px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
-                <button onClick="{{ staffSearchMember }}" style="flex:0 0 auto;height:46px;padding:0 16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Buscar</button>
+                <input type="text" value="{{ staffSearchEmailVal }}" onChange="{{ setStaffSearchEmail }}" placeholder="Email, cédula o N° de socio" style="flex:1;height:46px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:13.5px;padding:0 12px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+                <button onClick="{{ staffSearchMember }}" style="flex:0 0 auto;height:46px;padding:0 16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">{{ staffSearchBtnLabel }}</button>
               </div>
               <sc-if value="{{ hasStaffSearchError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12px;margin-top:8px;">{{ staffSearchErrorMsg }}</div></sc-if>
               <sc-if value="{{ hasFoundMember }}" hint-placeholder-val="{{ false }}">
                 <div style="margin-top:12px;background:#0F1116;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:13px;">
                   <div style="font-weight:700;font-size:15px;">{{ foundMemberName }}</div>
                   <div style="color:#8A8F9C;font-size:12px;margin-top:2px;">{{ foundMemberEmail }}</div>
-                  <div style="color:#8A8F9C;font-size:11.5px;margin-top:4px;">CI: {{ foundMemberCI }} · {{ foundMemberAddress }}</div>
+                  <div style="color:#8A8F9C;font-size:11.5px;margin-top:4px;">N° {{ foundMemberNumber }} · CI: {{ foundMemberCI }} · {{ foundMemberAddress }}</div>
                   <div style="font-size:12px;margin-top:5px;font-weight:600;color:{{ foundMemberStatusColor }};">{{ foundMemberStatus }}</div>
                   <button onClick="{{ staffMarkFoundPaid }}" style="width:100%;height:46px;margin-top:12px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">✓ Marcar cuota pagada (+30 días)</button>
                   <button onClick="{{ staffGenerateCode }}" style="width:100%;height:44px;margin-top:8px;background:rgba(255,255,255,0.06);color:#F4F5F7;border:1px solid rgba(255,255,255,0.14);border-radius:12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;">Generar código de renovación</button>
@@ -752,7 +752,7 @@ class Component extends DCLogic {
     editingId: null, builderName: '', builderDays: [], builderSched: {}, builderDay: null,
     logs: {}, logOpen: null, logDraft: [], sessions: [],
     paidUntil: Date.now() + 12 * 86400000, staffOpen: false, staffAuthed: false, staffPinInput: '', qrScanOpen: false,
-    onboardingDone: false, onboardTarget: 'home', profileName: '', profilePhoto: '', profileCI: '', profileAddress: '', onboardError: '',
+    onboardingDone: false, onboardTarget: 'home', profileName: '', profilePhoto: '', profileCI: '', profileAddress: '', memberNumber: '', onboardError: '',
     authUser: null, authFormOpen: false, authMode: 'login', authEmail: '', authPassword: '', authError: '', authBusy: false,
     staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffSearchBusy: false, staffGeneratedCode: '',
     renewCode: '', renewError: '', renewBusy: false, renewOk: false,
@@ -788,7 +788,7 @@ class Component extends DCLogic {
           this.setState({
             authUser: user, authFormOpen: false, authEmail: '', authPassword: '', authError: '', authBusy: false,
             userRole: role,
-            profileName: data.name || '', profilePhoto: data.photo || '', profileCI: data.ci || '', profileAddress: data.address || '',
+            profileName: data.name || '', profilePhoto: data.photo || '', profileCI: data.ci || '', profileAddress: data.address || '', memberNumber: data.memberNumber || '',
             paidUntil: data.paidUntil || (Date.now() + 12 * 86400000),
             logs: data.logs || {},
             onboardingDone: role === 'staff' ? true : !!data.name,
@@ -819,6 +819,14 @@ class Component extends DCLogic {
     };
     reader.readAsDataURL(file);
   }
+  allocateMemberNumber() {
+    const counterRef = window.sfDb.collection('meta').doc('counters');
+    return window.sfDb.runTransaction((tx) => tx.get(counterRef).then((doc) => {
+      const next = ((doc.exists && doc.data().memberSeq) || 1000) + 1;
+      tx.set(counterRef, { memberSeq: next }, { merge: true });
+      return next;
+    }));
+  }
   finishOnboarding() {
     const name = this.state.profileName.trim();
     const ci = this.state.profileCI.trim();
@@ -829,10 +837,17 @@ class Component extends DCLogic {
     const proceed = () => this.setState(s => ({ onboardingDone: true, screen: s.onboardTarget || 'home' }), () => this.persist());
     if (user) {
       this.setState({ authBusy: true });
-      window.sfDb.collection('users').doc(user.uid).set({
+      const save = (memberNumber) => window.sfDb.collection('users').doc(user.uid).set({
         name, ci, address, photo: this.state.profilePhoto || '', role: 'member',
         paidUntil: this.state.paidUntil, createdAt: Date.now(),
-      }, { merge: true }).then(() => { this.setState({ authBusy: false }); proceed(); }).catch(() => { this.setState({ authBusy: false }); proceed(); });
+        ...(memberNumber ? { memberNumber } : {}),
+      }, { merge: true });
+      const existingNumber = this.state.memberNumber;
+      const withNumber = existingNumber ? Promise.resolve(existingNumber) : this.allocateMemberNumber().catch(() => null);
+      withNumber.then((memberNumber) => {
+        if (memberNumber) this.setState({ memberNumber });
+        return save(memberNumber);
+      }).then(() => { this.setState({ authBusy: false }); proceed(); }).catch(() => { this.setState({ authBusy: false }); proceed(); });
       return;
     }
     proceed();
@@ -1005,14 +1020,24 @@ class Component extends DCLogic {
   staffMarkPaid() { this.renew(1); this.setState({ staffOpen: false, staffAuthed: false, staffPinInput: '' }); }
   setStaffSearchEmail(ev) { this.setState({ staffSearchEmail: ev.target.value, staffSearchError: '', staffFoundMember: null, staffGeneratedCode: '' }); }
   staffSearchMember() {
-    const email = this.state.staffSearchEmail.trim();
-    if (!email) return;
+    const term = this.state.staffSearchEmail.trim();
+    if (!term) return;
     this.setState({ staffSearchBusy: true, staffSearchError: '', staffFoundMember: null, staffGeneratedCode: '' });
-    window.sfDb.collection('users').where('email', '==', email).limit(1).get().then((snap) => {
-      if (snap.empty) { this.setState({ staffSearchBusy: false, staffSearchError: 'No se encontró ningún socio con ese email.' }); return; }
+    const users = window.sfDb.collection('users');
+    let queries;
+    if (term.includes('@')) {
+      queries = [users.where('email', '==', term).limit(1).get()];
+    } else {
+      const digitsOnly = term.replace(/\D/g, '');
+      queries = [users.where('ci', '==', term).limit(1).get()];
+      if (digitsOnly) queries.push(users.where('memberNumber', '==', parseInt(digitsOnly, 10)).limit(1).get());
+    }
+    Promise.all(queries.map((q) => q.catch(() => ({ empty: true, docs: [] })))).then((snaps) => {
+      const snap = snaps.find((s) => !s.empty);
+      if (!snap) { this.setState({ staffSearchBusy: false, staffSearchError: 'No se encontró ningún socio con ese dato.' }); return; }
       const doc = snap.docs[0];
       const d = doc.data();
-      this.setState({ staffSearchBusy: false, staffSearchError: '', staffFoundMember: { uid: doc.id, name: d.name || '(sin nombre)', email: d.email, ci: d.ci || '—', address: d.address || '—', paidUntil: d.paidUntil || 0 } });
+      this.setState({ staffSearchBusy: false, staffSearchError: '', staffFoundMember: { uid: doc.id, name: d.name || '(sin nombre)', email: d.email, ci: d.ci || '—', address: d.address || '—', memberNumber: d.memberNumber || '—', paidUntil: d.paidUntil || 0 } });
     }).catch(() => this.setState({ staffSearchBusy: false, staffSearchError: 'No se pudo buscar. Probá de nuevo.' }));
   }
   staffMarkFoundPaid() {
@@ -1361,7 +1386,7 @@ class Component extends DCLogic {
       hasOnboardError: !!s.onboardError, onboardErrorMsg: s.onboardError,
       hasOnboardPhoto: !!s.profilePhoto, noOnboardPhoto: !s.profilePhoto,
       onboardPhotoRef: bgRef(s.profilePhoto || ''),
-      displayName: s.profileName || 'Socio Space',
+      displayName: s.profileName || 'Socio Space', memberNumberVal: s.memberNumber || '—',
       hasAvatarPhoto: !!s.profilePhoto, noAvatarPhoto: !s.profilePhoto,
       avatarRef: bgRef(s.profilePhoto || ''),
       showTabs: !isStaff && s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'picker' && s.screen !== 'onboarding' && s.screen !== 'staffPanel' && !(s.screen === 'builder' && s.builderIsOfficial),
@@ -1388,9 +1413,11 @@ class Component extends DCLogic {
       openStaff: () => this.openStaff(), closeStaff: () => this.closeStaff(), setPin: (ev) => this.setPin(ev), submitPin: () => this.submitPin(), staffMarkPaid: () => this.staffMarkPaid(), expireDemo: () => this.expireDemo(),
       staffSearchEmailVal: s.staffSearchEmail, setStaffSearchEmail: (ev) => this.setStaffSearchEmail(ev), staffSearchMember: () => this.staffSearchMember(),
       staffSearchBusy: s.staffSearchBusy, hasStaffSearchError: !!s.staffSearchError, staffSearchErrorMsg: s.staffSearchError,
+      staffSearchBtnLabel: s.staffSearchBusy ? '⏳ Buscando…' : 'Buscar',
       hasFoundMember: !!s.staffFoundMember,
       foundMemberName: s.staffFoundMember ? s.staffFoundMember.name : '', foundMemberEmail: s.staffFoundMember ? s.staffFoundMember.email : '',
       foundMemberCI: s.staffFoundMember ? s.staffFoundMember.ci : '', foundMemberAddress: s.staffFoundMember ? s.staffFoundMember.address : '',
+      foundMemberNumber: s.staffFoundMember ? s.staffFoundMember.memberNumber : '',
       foundMemberStatus: s.staffFoundMember ? (s.staffFoundMember.paidUntil > Date.now() ? ('Activa · vence ' + new Date(s.staffFoundMember.paidUntil).toLocaleDateString('es-AR')) : 'Vencida') : '',
       foundMemberStatusColor: s.staffFoundMember ? (s.staffFoundMember.paidUntil > Date.now() ? '#CDFF4A' : '#FF8080') : '#8A8F9C',
       staffMarkFoundPaid: () => this.staffMarkFoundPaid(), staffGenerateCode: () => this.staffGenerateCode(),
