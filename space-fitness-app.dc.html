@@ -176,8 +176,8 @@
             </div>
           </div>
           <div style="display:flex;gap:12px;margin-top:14px;">
-            <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;color:#CDFF4A;">14</div><div style="color:#8A8F9C;font-size:12px;">días de racha</div></div>
-            <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">4<span style="color:#5a5f6b;font-size:18px;">/5</span></div><div style="color:#8A8F9C;font-size:12px;">esta semana</div></div>
+            <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;color:#CDFF4A;">{{ streakCount }}</div><div style="color:#8A8F9C;font-size:12px;">días de racha</div></div>
+            <div style="flex:1;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">{{ weekCount }}<span style="color:#5a5f6b;font-size:18px;">/5</span></div><div style="color:#8A8F9C;font-size:12px;">esta semana</div></div>
           </div>
           <div onClick="{{ goPersonalized }}" style="margin-top:14px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(255,194,74,0.14),rgba(255,194,74,0.05));border:1px solid rgba(255,194,74,0.3);border-radius:18px;padding:14px;cursor:pointer;">
             <span style="width:40px;height:40px;border-radius:12px;background:rgba(255,194,74,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;">✦</span>
@@ -487,7 +487,7 @@
             <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(205,255,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Feriado: horario reducido</div><div style="color:#8A8F9C;font-size:11.5px;">9 Jul · abrimos 8-14h</div></div></div>
             <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(255,194,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Nueva sala de funcional</div><div style="color:#8A8F9C;font-size:11.5px;">Ya disponible · piso 2</div></div></div>
           </div>
-          <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;"><span onClick="{{ openPwChange }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Cambiar contraseña</span><span style="color:#2a2e38;">|</span><span onClick="{{ openStaff }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Panel de staff</span><span style="color:#2a2e38;">|</span><span onClick="{{ goLogin }}" style="color:#6b7080;font-size:13px;cursor:pointer;">Cerrar sesión</span></div>
+          <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;"><span onClick="{{ openPwChange }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Cambiar contraseña</span><span style="color:#2a2e38;">|</span><span onClick="{{ goLogin }}" style="color:#6b7080;font-size:13px;cursor:pointer;">Cerrar sesión</span></div>
         </div>
       </sc-if>
 
@@ -1146,6 +1146,20 @@ class Component extends DCLogic {
     }, () => this.persist());
   }
   todayKey() { return new Date().toISOString().slice(0, 10); }
+  dateKeyFor(d) { return d.toISOString().slice(0, 10); }
+  hasActivityOn(dateKey) { const day = this.state.exerciseProgress[dateKey]; if (!day) return false; return Object.values(day).some((v) => v > 0); }
+  computeStreak() {
+    let count = 0;
+    const d = new Date();
+    if (!this.hasActivityOn(this.dateKeyFor(d))) d.setDate(d.getDate() - 1);
+    while (this.hasActivityOn(this.dateKeyFor(d))) { count++; d.setDate(d.getDate() - 1); }
+    return count;
+  }
+  computeWeekCount() {
+    let count = 0;
+    for (let i = 0; i < 7; i++) { const d = new Date(); d.setDate(d.getDate() - i); if (this.hasActivityOn(this.dateKeyFor(d))) count++; }
+    return count;
+  }
   getSetsDoneToday(exId) { const day = this.state.exerciseProgress[this.todayKey()] || {}; return day[exId] || 0; }
   buildTodayList(r) {
     const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
@@ -1669,6 +1683,7 @@ class Component extends DCLogic {
       homeRoutineName: (function (self) { const a = self.getActiveRoutine(); return a ? a.name : 'Sin rutina activa'; })(this),
       homeRoutineMeta: (function (self) { const a = self.getActiveRoutine(); if (!a) return 'Creá una en Rutinas'; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; const day = (a.days || []).includes(today) ? today : (a.days || [])[0]; const exs = (a.schedule && day) ? (a.schedule[day] || []) : []; return exs.length + ' ejercicios · ~' + Math.max(10, exs.length * 8) + ' min'; })(this),
       homeRoutineDay: (function (self) { const a = self.getActiveRoutine(); if (!a) return ''; const DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']; const today = DOW[new Date().getDay()]; return (a.days || []).includes(today) ? 'Hoy · ' + today : 'Próximo · ' + ((a.days || [])[0] || ''); })(this),
+      streakCount: this.computeStreak(), weekCount: this.computeWeekCount(),
       hasHomeProgress: (function (self) { const a = self.getActiveRoutine(); if (!a) return false; return self.buildTodayList(a).length > 0; })(this),
       homeProgressPct: (function (self) { const a = self.getActiveRoutine(); if (!a) return '0%'; const list = self.buildTodayList(a); if (!list.length) return '0%'; let done = 0, total = 0; list.forEach((ex) => { done += Math.min(self.getSetsDoneToday(ex.id), ex.sets); total += ex.sets; }); return (total ? Math.round((done / total) * 100) : 0) + '%'; })(this),
       startActiveLabel: (function (self) { const a = self.getActiveRoutine(); if (!a) return 'Comenzar entrenamiento'; const list = self.buildTodayList(a); const any = list.some((ex) => self.getSetsDoneToday(ex.id) > 0); return any ? 'Continuar entrenamiento' : 'Comenzar entrenamiento'; })(this),
