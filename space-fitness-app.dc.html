@@ -400,16 +400,23 @@
                 <div onClick="{{ t.pick }}" style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bd }};">{{ t.d }}</div>
               </sc-for>
             </div>
-            <div style="font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Ejercicios del {{ viewDayName }}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <div style="font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;">Ejercicios del {{ viewDayName }}</div>
+              <div style="font-size:12px;font-weight:700;color:#CDFF4A;">{{ viewDoneCount }}/{{ viewExTotal }} · {{ viewProgressPct }}</div>
+            </div>
+            <div style="height:7px;background:#1D212B;border-radius:99px;overflow:hidden;margin-bottom:14px;"><div style="height:100%;width:{{ viewProgressPct }};background:#CDFF4A;border-radius:99px;"></div></div>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <sc-for list="{{ viewExercises }}" as="e" hint-placeholder-count="3">
-                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:13px;">
+                <div onClick="{{ e.toggle }}" style="display:flex;gap:11px;align-items:flex-start;background:#15171E;border:{{ e.cardBorder }};border-radius:14px;padding:13px;cursor:pointer;">
+                  <div style="width:24px;height:24px;border-radius:7px;background:{{ e.checkBg }};border:1px solid {{ e.checkBorder }};display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px;color:{{ e.checkFg }};font-size:14px;font-weight:700;">{{ e.checkMark }}</div>
+                  <div style="flex:1;min-width:0;">
                   <div style="font-weight:700;font-size:14.5px;">{{ e.name }}</div>
                   <div style="color:#6b7080;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">{{ e.groupName }}</div>
                   <div style="display:flex;gap:8px;margin-top:9px;">
                     <span style="font-size:11.5px;font-weight:700;color:#CDFF4A;background:rgba(205,255,74,0.1);padding:4px 10px;border-radius:7px;">{{ e.sets }} series</span>
                     <span style="font-size:11.5px;font-weight:700;color:#F4F5F7;background:#1D212B;padding:4px 10px;border-radius:7px;">{{ e.reps }} reps</span>
                     <span style="font-size:11.5px;font-weight:700;color:#8A8F9C;background:#1D212B;padding:4px 10px;border-radius:7px;">{{ e.rest }} desc.</span>
+                  </div>
                   </div>
                 </div>
               </sc-for>
@@ -757,7 +764,7 @@ class Component extends DCLogic {
     staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffSearchBusy: false, staffGeneratedCode: '',
     renewCode: '', renewError: '', renewBusy: false, renewOk: false,
     userRole: 'member', staffTab: 'members',
-    officialRoutines: [], activeOfficialId: null, viewOfficialId: null, viewOfficialDay: null,
+    officialRoutines: [], activeOfficialId: null, viewOfficialId: null, viewOfficialDay: null, officialProgress: {},
     builderIsOfficial: false, builderLevel: 'principiante',
     routines: [
       { id: 'r1', name: 'Push · Empuje', days: ['Lun', 'Jue'], active: true, schedule: {
@@ -774,7 +781,7 @@ class Component extends DCLogic {
   componentDidMount() {
     try {
       const raw = localStorage.getItem('sf_state_v1');
-      if (raw) { const d = JSON.parse(raw); const mig = (arr) => (arr || []).map(r => { if (r.schedule) return r; const days = (r.days && r.days.length) ? r.days : ((r.ex && r.ex.length) ? ['Lun'] : []); const schedule = {}; days.forEach(dd => schedule[dd] = (r.ex || []).map(x => ({ ...x }))); return { ...r, days, schedule }; }); this.setState({ routines: (d.routines && d.routines.length) ? mig(d.routines) : this.state.routines, logs: d.logs || {}, swap: d.swap || {}, sessions: d.sessions || [], paidUntil: d.paidUntil || this.state.paidUntil, onboardingDone: !!d.onboardingDone, profileName: d.profileName || '', profilePhoto: d.profilePhoto || '' }); }
+      if (raw) { const d = JSON.parse(raw); const mig = (arr) => (arr || []).map(r => { if (r.schedule) return r; const days = (r.days && r.days.length) ? r.days : ((r.ex && r.ex.length) ? ['Lun'] : []); const schedule = {}; days.forEach(dd => schedule[dd] = (r.ex || []).map(x => ({ ...x }))); return { ...r, days, schedule }; }); this.setState({ routines: (d.routines && d.routines.length) ? mig(d.routines) : this.state.routines, logs: d.logs || {}, swap: d.swap || {}, sessions: d.sessions || [], paidUntil: d.paidUntil || this.state.paidUntil, onboardingDone: !!d.onboardingDone, profileName: d.profileName || '', profilePhoto: d.profilePhoto || '', officialProgress: d.officialProgress || {} }); }
     } catch (e) {}
     if (window.sfAuth) {
       window.sfAuth.onAuthStateChanged((user) => {
@@ -800,7 +807,7 @@ class Component extends DCLogic {
       });
     }
   }
-  persist() { try { localStorage.setItem('sf_state_v1', JSON.stringify({ routines: this.state.routines, logs: this.state.logs, swap: this.state.swap, sessions: this.state.sessions, paidUntil: this.state.paidUntil, onboardingDone: this.state.onboardingDone, profileName: this.state.profileName, profilePhoto: this.state.profilePhoto })); } catch (e) {} }
+  persist() { try { localStorage.setItem('sf_state_v1', JSON.stringify({ routines: this.state.routines, logs: this.state.logs, swap: this.state.swap, sessions: this.state.sessions, paidUntil: this.state.paidUntil, onboardingDone: this.state.onboardingDone, profileName: this.state.profileName, profilePhoto: this.state.profilePhoto, officialProgress: this.state.officialProgress })); } catch (e) {} }
   recordSession(ses) { const d = new Date(); const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']; const date = d.getDate() + ' ' + months[d.getMonth()]; const exNames = ses.list.map(x => x.name); this.setState(s => ({ sessions: [{ id: 's' + Date.now(), date, rName: ses.rName, exCount: ses.list.length, exNames }, ...s.sessions] }), () => this.persist()); }
   nav(screen) { this.setState({ screen }); }
   enterApp(target) { if (!this.state.onboardingDone) { this.setState({ screen: 'onboarding', onboardTarget: target }); } else { this.nav(target); } }
@@ -981,6 +988,17 @@ class Component extends DCLogic {
   openOfficialView(id) { const r = this.state.officialRoutines.find(x => x.id === id); if (!r) return; this.setState({ viewOfficialId: id, viewOfficialDay: (r.days || [])[0] || null, screen: 'officialView' }); }
   setViewOfficialDay(day) { this.setState({ viewOfficialDay: day }); }
   closeOfficialView() { this.setState({ viewOfficialId: null, viewOfficialDay: null, screen: 'routines' }); }
+  toggleExerciseDone(exId) {
+    this.setState(s => {
+      const rid = s.viewOfficialId, day = s.viewOfficialDay;
+      if (!rid || !day) return {};
+      const routineMap = { ...(s.officialProgress[rid] || {}) };
+      const dayMap = { ...(routineMap[day] || {}) };
+      dayMap[exId] = !dayMap[exId];
+      routineMap[day] = dayMap;
+      return { officialProgress: { ...s.officialProgress, [rid]: routineMap } };
+    }, () => this.persist());
+  }
   startWorkout(routineId) {
     const r = [...this.state.routines, ...this.state.officialRoutines].find(x => x.id === routineId) || this.state.routines[0];
     if (!r) return;
@@ -1029,7 +1047,10 @@ class Component extends DCLogic {
       queries = [users.where('email', '==', term).limit(1).get()];
     } else {
       const digitsOnly = term.replace(/\D/g, '');
-      queries = [users.where('ci', '==', term).limit(1).get()];
+      queries = [
+        users.where('ci', '==', term).limit(1).get(),
+        users.where('name', '>=', term).where('name', '<=', term + '').limit(1).get(),
+      ];
       if (digitsOnly) queries.push(users.where('memberNumber', '==', parseInt(digitsOnly, 10)).limit(1).get());
     }
     Promise.all(queries.map((q) => q.catch(() => ({ empty: true, docs: [] })))).then((snaps) => {
@@ -1309,7 +1330,18 @@ class Component extends DCLogic {
     const viewRoutine = s.officialRoutines.find(r => r.id === s.viewOfficialId) || null;
     const viewDayTabs = viewRoutine ? (viewRoutine.days || []).map(d => { const on = d === s.viewOfficialDay; return { d, bg: on ? 'rgba(255,194,74,0.15)' : '#15171E', fg: on ? '#FFC24A' : '#8A8F9C', bd: on ? 'rgba(255,194,74,0.45)' : 'rgba(255,255,255,0.08)', pick: () => this.setViewOfficialDay(d) }; }) : [];
     const viewDayExArr = (viewRoutine && s.viewOfficialDay && viewRoutine.schedule) ? (viewRoutine.schedule[s.viewOfficialDay] || []) : [];
-    const viewExercises = viewDayExArr.map(it => { const e = flat[it.id] || { name: it.id, groupName: '' }; return { id: it.id, name: e.name, groupName: e.groupName, sets: it.sets, reps: it.reps, rest: it.rest }; });
+    const viewDayDoneMap = (s.viewOfficialId && s.viewOfficialDay && s.officialProgress[s.viewOfficialId] && s.officialProgress[s.viewOfficialId][s.viewOfficialDay]) || {};
+    const viewExercises = viewDayExArr.map(it => {
+      const e = flat[it.id] || { name: it.id, groupName: '' };
+      const done = !!viewDayDoneMap[it.id];
+      return { id: it.id, name: e.name, groupName: e.groupName, sets: it.sets, reps: it.reps, rest: it.rest,
+        done, notDone: !done, cardBorder: done ? '1px solid rgba(205,255,74,0.35)' : '1px solid rgba(255,255,255,0.07)',
+        checkBg: done ? '#CDFF4A' : 'transparent', checkBorder: done ? '#CDFF4A' : 'rgba(255,255,255,0.2)',
+        checkFg: done ? '#0C0D11' : 'transparent', checkMark: done ? '✓' : '',
+        toggle: () => this.toggleExerciseDone(it.id) };
+    });
+    const viewDoneCount = viewExercises.filter(e => e.done).length;
+    const viewProgressPct = viewExercises.length ? Math.round((viewDoneCount / viewExercises.length) * 100) : 0;
     const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     const dayChips = DAYS.map(d => { const on = s.builderDays.includes(d); return { d, bg: on ? '#CDFF4A' : '#1D212B', fg: on ? '#0C0D11' : '#F4F5F7', bd: on ? 'transparent' : 'rgba(255,255,255,0.08)', toggle: () => this.toggleDay(d) }; });
     const selDays = DAYS.filter(d => s.builderDays.includes(d));    const dayTabs = selDays.map(d => { const on = d === s.builderDay; return { d, count: (s.builderSched[d] || []).length, bg: on ? 'rgba(205,255,74,0.15)' : '#15171E', fg: on ? '#CDFF4A' : '#8A8F9C', bd: on ? 'rgba(205,255,74,0.45)' : 'rgba(255,255,255,0.08)', pick: () => this.setBuilderDay(d) }; });
@@ -1375,6 +1407,7 @@ class Component extends DCLogic {
       viewRoutineName: viewRoutine ? viewRoutine.name : '', viewRoutineLevel: viewRoutine ? (officialLevelLabel[viewRoutine.level] || 'Oficial') : '',
       viewDayTabs, hasViewDayTabs: viewDayTabs.length > 0, viewDayName: s.viewOfficialDay || '',
       viewExercises, hasViewExercises: viewExercises.length > 0,
+      viewProgressPct: viewProgressPct + '%', viewDoneCount, viewExTotal: viewExercises.length,
       builderIsOfficial: s.builderIsOfficial,
       builderLevelPrincipianteBg: s.builderLevel === 'principiante' ? '#CDFF4A' : '#1D212B', builderLevelPrincipianteFg: s.builderLevel === 'principiante' ? '#0C0D11' : '#F4F5F7',
       builderLevelIntermedioBg: s.builderLevel === 'intermedio' ? '#CDFF4A' : '#1D212B', builderLevelIntermedioFg: s.builderLevel === 'intermedio' ? '#0C0D11' : '#F4F5F7',
