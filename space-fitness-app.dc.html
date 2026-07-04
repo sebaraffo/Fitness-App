@@ -388,6 +388,37 @@
         </div>
       </sc-if>
 
+      <!-- ============ VER RUTINA OFICIAL (solo lectura) ============ -->
+      <sc-if value="{{ isOfficialView }}" hint-placeholder-val="{{ false }}">
+        <div class="screen" style="padding:54px 24px 108px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;"><span onClick="{{ closeOfficialView }}" style="font-size:26px;color:#8A8F9C;cursor:pointer;line-height:1;">‹</span><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;">{{ viewRoutineName }}</div></div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,194,74,0.12);border:1px solid rgba(255,194,74,0.3);border-radius:999px;padding:5px 12px;margin-bottom:14px;"><span style="font-size:11px;font-weight:700;color:#FFC24A;">🔒 OFICIAL · {{ viewRoutineLevel }}</span></div>
+          <sc-if value="{{ hasViewDayTabs }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Días de entrenamiento</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+              <sc-for list="{{ viewDayTabs }}" as="t" hint-placeholder-count="3">
+                <div onClick="{{ t.pick }}" style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bd }};">{{ t.d }}</div>
+              </sc-for>
+            </div>
+            <div style="font-size:11px;letter-spacing:2px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Ejercicios del {{ viewDayName }}</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <sc-for list="{{ viewExercises }}" as="e" hint-placeholder-count="3">
+                <div style="background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:13px;">
+                  <div style="font-weight:700;font-size:14.5px;">{{ e.name }}</div>
+                  <div style="color:#6b7080;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">{{ e.groupName }}</div>
+                  <div style="display:flex;gap:8px;margin-top:9px;">
+                    <span style="font-size:11.5px;font-weight:700;color:#CDFF4A;background:rgba(205,255,74,0.1);padding:4px 10px;border-radius:7px;">{{ e.sets }} series</span>
+                    <span style="font-size:11.5px;font-weight:700;color:#F4F5F7;background:#1D212B;padding:4px 10px;border-radius:7px;">{{ e.reps }} reps</span>
+                    <span style="font-size:11.5px;font-weight:700;color:#8A8F9C;background:#1D212B;padding:4px 10px;border-radius:7px;">{{ e.rest }} desc.</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <p style="text-align:center;color:#5a5f6b;font-size:11.5px;margin-top:20px;">Esta rutina la armó tu gimnasio · no se puede modificar</p>
+        </div>
+      </sc-if>
+
       <!-- ============ PICKER (agregar ejercicio) ============ -->
       <sc-if value="{{ isPicker }}" hint-placeholder-val="{{ false }}">
         <div class="screen" style="padding:54px 24px 100px;">
@@ -726,7 +757,7 @@ class Component extends DCLogic {
     staffSearchEmail: '', staffFoundMember: null, staffSearchError: '', staffSearchBusy: false, staffGeneratedCode: '',
     renewCode: '', renewError: '', renewBusy: false, renewOk: false,
     userRole: 'member', staffTab: 'members',
-    officialRoutines: [], activeOfficialId: null,
+    officialRoutines: [], activeOfficialId: null, viewOfficialId: null, viewOfficialDay: null,
     builderIsOfficial: false, builderLevel: 'principiante',
     routines: [
       { id: 'r1', name: 'Push · Empuje', days: ['Lun', 'Jue'], active: true, schedule: {
@@ -932,6 +963,9 @@ class Component extends DCLogic {
     return s.routines.find(r => r.active) || s.officialRoutines.find(r => r.id === s.activeOfficialId) || s.routines[0];
   }
   activateOfficial(id) { this.setState(s => ({ activeOfficialId: id, routines: s.routines.map(r => ({ ...r, active: false })) }), () => this.persist()); }
+  openOfficialView(id) { const r = this.state.officialRoutines.find(x => x.id === id); if (!r) return; this.setState({ viewOfficialId: id, viewOfficialDay: (r.days || [])[0] || null, screen: 'officialView' }); }
+  setViewOfficialDay(day) { this.setState({ viewOfficialDay: day }); }
+  closeOfficialView() { this.setState({ viewOfficialId: null, viewOfficialDay: null, screen: 'routines' }); }
   startWorkout(routineId) {
     const r = [...this.state.routines, ...this.state.officialRoutines].find(x => x.id === routineId) || this.state.routines[0];
     if (!r) return;
@@ -1244,9 +1278,13 @@ class Component extends DCLogic {
         durText: '~' + Math.max(10, Math.round(avg * 8)) + ' min/día',
         border: active ? '1px solid rgba(205,255,74,0.25)' : '1px solid rgba(255,194,74,0.25)',
         notActive: !active, activate: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.activateOfficial(r.id); },
-        open: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.activateOfficial(r.id); } };
+        open: () => this.openOfficialView(r.id) };
     });
     const allRoutinesView = [...officialAsRoutines, ...routinesView];
+    const viewRoutine = s.officialRoutines.find(r => r.id === s.viewOfficialId) || null;
+    const viewDayTabs = viewRoutine ? (viewRoutine.days || []).map(d => { const on = d === s.viewOfficialDay; return { d, bg: on ? 'rgba(255,194,74,0.15)' : '#15171E', fg: on ? '#FFC24A' : '#8A8F9C', bd: on ? 'rgba(255,194,74,0.45)' : 'rgba(255,255,255,0.08)', pick: () => this.setViewOfficialDay(d) }; }) : [];
+    const viewDayExArr = (viewRoutine && s.viewOfficialDay && viewRoutine.schedule) ? (viewRoutine.schedule[s.viewOfficialDay] || []) : [];
+    const viewExercises = viewDayExArr.map(it => { const e = flat[it.id] || { name: it.id, groupName: '' }; return { id: it.id, name: e.name, groupName: e.groupName, sets: it.sets, reps: it.reps, rest: it.rest }; });
     const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     const dayChips = DAYS.map(d => { const on = s.builderDays.includes(d); return { d, bg: on ? '#CDFF4A' : '#1D212B', fg: on ? '#0C0D11' : '#F4F5F7', bd: on ? 'transparent' : 'rgba(255,255,255,0.08)', toggle: () => this.toggleDay(d) }; });
     const selDays = DAYS.filter(d => s.builderDays.includes(d));    const dayTabs = selDays.map(d => { const on = d === s.builderDay; return { d, count: (s.builderSched[d] || []).length, bg: on ? 'rgba(205,255,74,0.15)' : '#15171E', fg: on ? '#CDFF4A' : '#8A8F9C', bd: on ? 'rgba(205,255,74,0.45)' : 'rgba(255,255,255,0.08)', pick: () => this.setBuilderDay(d) }; });
@@ -1287,7 +1325,7 @@ class Component extends DCLogic {
     else if (s.screen === 'exerciseList' || s.screen === 'exerciseDetail' || s.screen === 'substitutes') tab = 'groups';
     else if (s.screen === 'builder' && !s.builderIsOfficial) tab = 'routines';
     else if (s.screen === 'personalized') tab = 'account';
-    else if (s.screen === 'picker') tab = 'routines';
+    else if (s.screen === 'picker' || s.screen === 'officialView') tab = 'routines';
     const active = '#CDFF4A', dim = '#8A8F9C';
     const locGym = s.location === 'gym';
     const isStaff = s.userRole === 'staff';
@@ -1308,6 +1346,10 @@ class Component extends DCLogic {
       staffMembersTabBg: s.staffTab === 'members' ? '#CDFF4A' : 'transparent', staffMembersTabFg: s.staffTab === 'members' ? '#0C0D11' : '#8A8F9C',
       staffRoutinesTabBg: s.staffTab === 'routines' ? '#CDFF4A' : 'transparent', staffRoutinesTabFg: s.staffTab === 'routines' ? '#0C0D11' : '#8A8F9C',
       officialRoutinesView, hasOfficialRoutines: officialRoutinesView.length > 0, newOfficialRoutine: () => this.newOfficialRoutine(),
+      isOfficialView: s.screen === 'officialView', closeOfficialView: () => this.closeOfficialView(),
+      viewRoutineName: viewRoutine ? viewRoutine.name : '', viewRoutineLevel: viewRoutine ? (officialLevelLabel[viewRoutine.level] || 'Oficial') : '',
+      viewDayTabs, hasViewDayTabs: viewDayTabs.length > 0, viewDayName: s.viewOfficialDay || '',
+      viewExercises, hasViewExercises: viewExercises.length > 0,
       builderIsOfficial: s.builderIsOfficial,
       builderLevelPrincipianteBg: s.builderLevel === 'principiante' ? '#CDFF4A' : '#1D212B', builderLevelPrincipianteFg: s.builderLevel === 'principiante' ? '#0C0D11' : '#F4F5F7',
       builderLevelIntermedioBg: s.builderLevel === 'intermedio' ? '#CDFF4A' : '#1D212B', builderLevelIntermedioFg: s.builderLevel === 'intermedio' ? '#0C0D11' : '#F4F5F7',
