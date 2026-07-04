@@ -1,0 +1,15 @@
+{
+  "name": "Space Fitness",
+  "short_name": "Space Fitness",
+  "description": "Ejercicios por grupo muscular, rutinas, modo entrenamiento y membresía del gimnasio Space Fitness.",
+  "start_url": "./space-fitness-app.dc.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0C0D11",
+  "theme_color": "#0C0D11",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
