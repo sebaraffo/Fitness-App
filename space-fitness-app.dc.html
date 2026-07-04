@@ -483,7 +483,7 @@
             <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(205,255,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Feriado: horario reducido</div><div style="color:#8A8F9C;font-size:11.5px;">9 Jul · abrimos 8-14h</div></div></div>
             <div style="display:flex;gap:11px;align-items:center;background:#15171E;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:11px 13px;"><div style="width:40px;height:40px;border-radius:10px;background:rgba(255,194,74,0.12);flex:0 0 auto;"></div><div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">Nueva sala de funcional</div><div style="color:#8A8F9C;font-size:11.5px;">Ya disponible · piso 2</div></div></div>
           </div>
-          <div style="margin-top:16px;display:flex;gap:14px;justify-content:center;align-items:center;"><span onClick="{{ openStaff }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Panel de staff</span><span style="color:#2a2e38;">|</span><span onClick="{{ goLogin }}" style="color:#6b7080;font-size:13px;cursor:pointer;">Cerrar sesión</span></div>
+          <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;"><span onClick="{{ openPwChange }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Cambiar contraseña</span><span style="color:#2a2e38;">|</span><span onClick="{{ openStaff }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Panel de staff</span><span style="color:#2a2e38;">|</span><span onClick="{{ goLogin }}" style="color:#6b7080;font-size:13px;cursor:pointer;">Cerrar sesión</span></div>
         </div>
       </sc-if>
 
@@ -492,7 +492,7 @@
         <div class="screen" style="padding:56px 24px 108px;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:28px;">Panel de staff</div>
-            <span onClick="{{ logoutClick }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Salir</span>
+            <div style="display:flex;gap:10px;align-items:center;"><span onClick="{{ openPwChange }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Contraseña</span><span onClick="{{ logoutClick }}" style="color:#8A8F9C;font-size:13px;cursor:pointer;text-decoration:underline;">Salir</span></div>
           </div>
           <div style="display:flex;background:#15171E;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:4px;margin-top:16px;margin-bottom:18px;">
             <div onClick="{{ setStaffMembersTab }}" style="flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;background:{{ staffMembersTabBg }};color:{{ staffMembersTabFg }};">Socios</div>
@@ -742,6 +742,30 @@
         </div>
       </sc-if>
 
+      <!-- ============ CAMBIAR CONTRASEÑA (modal) ============ -->
+      <sc-if value="{{ pwChangeOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:55;background:rgba(6,7,10,0.8);display:flex;align-items:center;justify-content:center;padding:26px;">
+          <div style="width:100%;background:#14161C;border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;">Cambiar contraseña</div><span onClick="{{ closePwChange }}" style="font-size:20px;color:#8A8F9C;cursor:pointer;">✕</span></div>
+            <div style="margin-top:14px;">
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:7px;">Contraseña actual</div>
+              <input type="password" value="{{ pwCurrentVal }}" onChange="{{ setPwCurrent }}" placeholder="Tu contraseña actual" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+            </div>
+            <div style="margin-top:12px;">
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:7px;">Contraseña nueva</div>
+              <input type="password" value="{{ pwNewVal }}" onChange="{{ setPwNew }}" placeholder="Mínimo 6 caracteres" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+            </div>
+            <div style="margin-top:12px;">
+              <div style="font-size:11px;letter-spacing:1.5px;color:#8A8F9C;text-transform:uppercase;font-weight:700;margin-bottom:7px;">Confirmar contraseña nueva</div>
+              <input type="password" value="{{ pwConfirmVal }}" onChange="{{ setPwConfirm }}" placeholder="Repetila" style="width:100%;height:48px;background:#0F1116;border:1px solid rgba(255,255,255,0.09);border-radius:12px;color:#F4F5F7;font-family:'Barlow',sans-serif;font-size:14px;padding:0 14px;outline:none;" style-focus="border-color:rgba(205,255,74,0.5);">
+            </div>
+            <sc-if value="{{ hasPwError }}" hint-placeholder-val="{{ false }}"><div style="color:#FF8080;font-size:12.5px;margin-top:12px;">{{ pwErrorMsg }}</div></sc-if>
+            <sc-if value="{{ pwSuccess }}" hint-placeholder-val="{{ false }}"><div style="color:#CDFF4A;font-size:12.5px;margin-top:12px;">✓ Contraseña actualizada con éxito</div></sc-if>
+            <button onClick="{{ submitPwChange }}" style="width:100%;height:50px;margin-top:16px;background:#CDFF4A;color:#0C0D11;border:none;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;cursor:pointer;" style-hover="filter:brightness(1.08);">{{ pwSubmitLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+
       <!-- ============ LOADER DE LOGIN (pantalla completa) ============ -->
       <sc-if value="{{ authLoaderOpen }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;z-index:60;background:#0C0D11;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
@@ -795,6 +819,7 @@ class Component extends DCLogic {
     renewCode: '', renewError: '', renewBusy: false, renewOk: false,
     userRole: 'member', staffTab: 'members',
     officialRoutines: [], activeOfficialId: null, viewOfficialId: null, viewOfficialDay: null, officialProgress: {},
+    pwChangeOpen: false, pwCurrent: '', pwNew: '', pwConfirm: '', pwError: '', pwBusy: false, pwSuccess: false,
     exerciseProgress: {}, workoutRoutineId: null, workoutRoutineName: '', workoutList: [],
     builderIsOfficial: false, builderLevel: 'principiante',
     routines: [
@@ -921,6 +946,28 @@ class Component extends DCLogic {
       screen: 'login', authFormOpen: false, authMode: 'login', authEmail: '', authPassword: '', authError: '',
       profileName: '', profilePhoto: '', onboardingDone: false, paidUntil: Date.now() + 12 * 86400000,
     });
+  }
+  openPwChange() { this.setState({ pwChangeOpen: true, pwCurrent: '', pwNew: '', pwConfirm: '', pwError: '', pwSuccess: false }); }
+  closePwChange() { this.setState({ pwChangeOpen: false, pwCurrent: '', pwNew: '', pwConfirm: '', pwError: '', pwSuccess: false }); }
+  setPwCurrent(ev) { this.setState({ pwCurrent: ev.target.value, pwError: '' }); }
+  setPwNew(ev) { this.setState({ pwNew: ev.target.value, pwError: '' }); }
+  setPwConfirm(ev) { this.setState({ pwConfirm: ev.target.value, pwError: '' }); }
+  submitPwChange() {
+    const { pwCurrent, pwNew, pwConfirm } = this.state;
+    const user = this.state.authUser;
+    if (!user) return;
+    if (!pwCurrent || !pwNew || !pwConfirm) { this.setState({ pwError: 'Completá los tres campos.' }); return; }
+    if (pwNew.length < 6) { this.setState({ pwError: 'La contraseña nueva debe tener al menos 6 caracteres.' }); return; }
+    if (pwNew !== pwConfirm) { this.setState({ pwError: 'La confirmación no coincide con la nueva contraseña.' }); return; }
+    this.setState({ pwBusy: true, pwError: '' });
+    const cred = firebase.auth.EmailAuthProvider.credential(user.email, pwCurrent);
+    user.reauthenticateWithCredential(cred)
+      .then(() => user.updatePassword(pwNew))
+      .then(() => this.setState({ pwBusy: false, pwSuccess: true, pwCurrent: '', pwNew: '', pwConfirm: '' }))
+      .catch((err) => {
+        const map = { 'auth/wrong-password': 'La contraseña actual es incorrecta.', 'auth/invalid-credential': 'La contraseña actual es incorrecta.', 'auth/weak-password': 'La contraseña nueva es muy débil.', 'auth/too-many-requests': 'Demasiados intentos. Probá de nuevo en unos minutos.' };
+        this.setState({ pwBusy: false, pwError: map[err.code] || 'No se pudo cambiar la contraseña. Probá de nuevo.' });
+      });
   }
   syncPaidUntil() {
     const user = this.state.authUser;
@@ -1478,6 +1525,12 @@ class Component extends DCLogic {
       showTabs: !isStaff && s.screen !== 'login' && s.screen !== 'freeHome' && s.screen !== 'workout' && s.screen !== 'workoutList' && s.screen !== 'picker' && s.screen !== 'onboarding' && s.screen !== 'staffPanel' && !(s.screen === 'builder' && s.builderIsOfficial),
       showStaffTabs: isStaff && s.screen !== 'login' && s.screen !== 'builder',
       logoutClick: () => this.signOutUser(),
+      pwChangeOpen: s.pwChangeOpen, openPwChange: () => this.openPwChange(), closePwChange: () => this.closePwChange(),
+      pwCurrentVal: s.pwCurrent, setPwCurrent: (ev) => this.setPwCurrent(ev),
+      pwNewVal: s.pwNew, setPwNew: (ev) => this.setPwNew(ev),
+      pwConfirmVal: s.pwConfirm, setPwConfirm: (ev) => this.setPwConfirm(ev),
+      hasPwError: !!s.pwError, pwErrorMsg: s.pwError, pwSuccess: s.pwSuccess, submitPwChange: () => this.submitPwChange(),
+      pwSubmitLabel: s.pwBusy ? 'Guardando…' : 'Guardar contraseña',
       expired, notExpired: !expired, daysLeft, paidUntilText, memColor,
       memLabel: expired ? 'VENCIDA' : (daysLeft <= 5 ? 'POR VENCER' : 'ACTIVA'),
       chipBg: tint(0.12), chipBorder: tint(0.32), chipText: expired ? 'Cuota vencida · renová para entrenar' : ('Socio activo · vence en ' + daysLeft + (daysLeft === 1 ? ' día' : ' días')),
